@@ -76,6 +76,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags('FP8', 'BF16', 'INT4', 'NF4', ['Outliers', '离群值'], 'SmoothQuant'),
   },
   {
+    component: lazy(() => import('./decoding-sampling')),
     id: 'decoding-sampling', number: 9, chapter: 'efficiency-alignment', difficulty: 'foundational',
     title: text('Decoding & Sampling Playground', '文本解码与采样策略实验室'),
     description: text('Reshape a token distribution or search for the best sequence with beams.', '调整词元概率分布，或用束搜索寻找得分更高的序列。'),

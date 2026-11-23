@@ -143,11 +143,11 @@
 ## Milestone 11 (`M11`): Lab 09 — Decoding & Sampling Playground (`decoding-sampling`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 09
 
-- [ ] Implement `src/engine/labs/decoding-sampling/` (ordered Penalty → Temperature → Top-$K$ → Top-$P$ → Min-$P$ pipeline, seeded Monte Carlo rollouts, real Beam Search tree with length penalty & curated Greedy Trap preset) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/decoding-sampling.ts` (100% EN + ZH).
-- [ ] Build `src/labs/decoding-sampling/` (Dual mode: interactive sorted bar + cumulative mass chart with Sample 1×/100× roulette animation AND interactive Beam Search tree SVG with Stepper, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/decoding-sampling/` (ordered Penalty → Temperature → Top-$K$ → Top-$P$ → Min-$P$ pipeline, seeded Monte Carlo rollouts, real Beam Search tree with length penalty & curated Greedy Trap preset) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/decoding-sampling.ts` (100% EN + ZH).
+- [x] Build `src/labs/decoding-sampling/` (Dual mode: interactive sorted bar + cumulative mass chart with Sample 1×/100× roulette animation AND interactive Beam Search tree SVG with Stepper, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

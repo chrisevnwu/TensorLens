@@ -1,0 +1,28 @@
+.sample-stage { display:grid; gap:12px; }
+.sample-stage h2,.sample-stage h3,.sample-inspector h3 { margin:0 0 7px; font-weight:630; font-size:.93rem; }
+.sample-legend { display:flex; flex-wrap:wrap; gap:3px 9px; margin:6px 0; }
+.sample-legend span { display:inline-flex; align-items:center; gap:4px; font-size:.68rem; color:var(--text-secondary); }
+.sample-legend i { width:8px; height:7px; border-radius:2px; }
+.sample-legend .sample-empirical { width:2px; background:var(--accent-tertiary); }
+.sample-stage svg { display:block; width:100%; height:auto; }
+.sample-stage svg text { fill:var(--text-secondary); font:9px var(--font-mono); }
+.sample-bars g[role=button] { cursor:pointer; }
+.sample-roulette { transition:transform .24s cubic-bezier(.16,1,.3,1),opacity .15s; }
+.sample-actions { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
+.sample-actions button { border-radius:5px; border:1px solid var(--border-strong); padding:5px 8px; color:var(--text-primary); font-size:.76rem; background:var(--bg-elevated); }
+.sample-actions button:disabled { opacity:.5; }
+.sample-actions span,.sample-stage p { font-size:.75rem; margin:0; color:var(--text-secondary); }
+.sample-stage output { color:var(--text-primary); font-family:var(--font-mono); }
+.sample-cdf,.custom-logits { padding-top:10px; border-top:1px solid var(--border-subtle); }
+.custom-logits > div { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:3px 8px; }
+.custom-logits label { display:grid; grid-template-columns:minmax(20px,.7fr) minmax(35px,1.2fr) 30px; align-items:center; gap:3px; font-size:.69rem; }
+.custom-logits label span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.custom-logits svg { height:22px; touch-action:none; cursor:ew-resize; }
+.custom-logits output { text-align:end; }
+.sample-inspector dl { margin:0; }
+.sample-inspector dl div { display:flex; align-items:center; justify-content:space-between; padding:4px 0; gap:6px; border-bottom:1px solid var(--border-subtle); }
+.sample-inspector dt { font-size:.74rem; color:var(--text-secondary); }
+.sample-inspector dd { margin:0; font:.73rem var(--font-mono); }
+.sample-hit { animation:sample-land .32s ease-out; }
+@keyframes sample-land { from{transform:translateX(14px);opacity:.25} to{transform:translateX(0);opacity:1} }
+@media(prefers-reduced-motion:reduce){.sample-roulette{transition:none}.sample-hit{animation:none}}
