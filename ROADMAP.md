@@ -121,11 +121,11 @@
 ## Milestone 9 (`M9`): Lab 07 — MoE Router & Load Balancing Sandbox (`moe-routing`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 07
 
-- [ ] Implement `src/engine/labs/moe-routing/` (Top-$K$ softmax gating, capacity factor overflow & token dropping, $\mathcal{L}_{\text{aux}}$ calculation, 30-step router training dynamics comparing `None`, `Aux Loss`, and `Loss-Free Bias`) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/moe-routing.ts` (100% EN + ZH).
-- [ ] Build `src/labs/moe-routing/` (interactive Token→Expert Sankey routing SVG with capacity ceiling lines & dropped-token dashed paths, cross-hover inspector, load-balance trajectory chart, Stepper, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/moe-routing/` (Top-$K$ softmax gating, capacity factor overflow & token dropping, $\mathcal{L}_{\text{aux}}$ calculation, 30-step router training dynamics comparing `None`, `Aux Loss`, and `Loss-Free Bias`) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/moe-routing.ts` (100% EN + ZH).
+- [x] Build `src/labs/moe-routing/` (interactive Token→Expert Sankey routing SVG with capacity ceiling lines & dropped-token dashed paths, cross-hover inspector, load-balance trajectory chart, Stepper, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

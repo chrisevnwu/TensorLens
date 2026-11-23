@@ -12,8 +12,8 @@
 | `M5` | Complete | trace real multi-head attention and shared KV projections | 118 Vitest + 16 Playwright | Pass | `351ea6b` |
 | `M6` | Complete | inspect exact layer Jacobians and residual signal propagation | 144 Vitest + 20 Playwright | Pass | `100fd2b` |
 | `M7` | Complete | profile cache reuse, memory budgets and hardware rooflines | 161 Vitest + 24 Playwright | Pass | `51c5b5f` |
-| `M8` | Complete | trace tiled FlashAttention and SRAM traffic | 175 Vitest + 28 Playwright | Pass | `feat(M8)` |
-| `M9` | Pending | Lab 07: MoE Router & Load Balancing Sandbox | — | — | — |
+| `M8` | Complete | trace tiled FlashAttention and SRAM traffic | 175 Vitest + 28 Playwright | Pass | `84acfbd` |
+| `M9` | Complete | simulate sparse expert routing and load balancing | 190 Vitest + 32 Playwright | Pass | `feat(M9)` |
 | `M10` | Pending | Lab 08: Quantization & Precision Loss Lab | — | — | — |
 | `M11` | Pending | Lab 09: Decoding & Sampling Playground | — | — | — |
 | `M12` | Pending | Lab 10: LoRA & Low-Rank SVD Lab | — | — | — |
@@ -75,6 +75,12 @@ All five gates passed. 161 Vitest + 24 Playwright. Built JavaScript totals 222.6
 
 ### M8 — trace tiled FlashAttention and SRAM traffic
 
-Implemented exact online-softmax tile updates, causal skips, an independent materialized baseline, per-phase memory transfers and an SRAM-constrained real-scale IO chart. An additional 162-case sweep across seeds, dimensions, tile sizes and masks matched analytical byte counts and found maximum absolute output error 6.67e-16. Engine-first checkpoint: 172 tests passed before implementing the lab UI and translations.
+Implemented exact online-softmax tile updates, causal skips, an independent materialized baseline, per-phase memory transfers and an SRAM-constrained real-scale IO chart. An additional 162-case sweep across seeds, dimensions, tile sizes and masks matched analytical byte counts and found a maximum absolute output error below 6.67e-16. Engine-first checkpoint: 172 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 175 Vitest + 28 Playwright. Built JavaScript totals 231.7 KiB gzip across all chunks.
+
+### M9 — simulate sparse expert routing and load balancing
+
+Added a seeded 30-update linear router, capacity-ranked weighted dispatch, analytical Switch gradients and selection-only balancing biases. The Sankey and inspector report dropped assignments and fully dropped tokens separately. An additional sweep of 324 configurations and 10,044 frames conserved all routes, with gate-sum error at most 2.23e-16. Engine-first checkpoint: 187 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 190 Vitest + 32 Playwright. Built JavaScript totals 239.1 KiB gzip across all chunks.

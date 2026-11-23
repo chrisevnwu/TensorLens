@@ -62,6 +62,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags('FlashAttention', ['Online Softmax', '在线 Softmax'], 'SRAM', ['IO-Aware', 'I/O 感知']),
   },
   {
+    component: lazy(() => import('./moe-routing')),
     id: 'moe-routing', number: 7, chapter: 'architecture-inference', difficulty: 'intermediate',
     title: text('MoE Router & Load Balancing', 'MoE 稀疏路由与负载均衡沙盒'),
     description: text('Route tokens to experts and compare strategies for overloaded queues.', '把词元分配给专家，比较不同均衡策略如何缓解过载。'),
