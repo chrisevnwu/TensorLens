@@ -8,8 +8,8 @@
 | `M1` | Complete | ship the bilingual explorer and application shell | 5 Vitest + 4 Playwright | Pass | `21633ec` |
 | `M2` | Complete | implement numerical kernels and the shared lab workbench | 58 Vitest + 4 Playwright | Pass | `8262930` |
 | `M3` | Complete | teach byte-level BPE through ranked merges and byte inspection | 75 Vitest + 8 Playwright | Pass | `e4b01df` |
-| `M4` | Complete | visualize RoPE rotations and relative-position invariance | 95 Vitest + 12 Playwright | Pass | `feat(M4)` |
-| `M5` | Pending | Lab 03: Multi-Head Attention Debugger | — | — | — |
+| `M4` | Complete | visualize RoPE rotations and relative-position invariance | 95 Vitest + 12 Playwright | Pass | `981e9cc` |
+| `M5` | Complete | trace real multi-head attention and shared KV projections | 118 Vitest + 16 Playwright | Pass | `feat(M5)` |
 | `M6` | Pending | Lab 04: LayerNorm, RMSNorm & Residual Stream | — | — | — |
 | `M7` | Pending | Lab 05: KV Cache & Prefill/Decode Profiler | — | — | — |
 | `M8` | Pending | Lab 06: FlashAttention Tiling & SRAM Simulator | — | — | — |
@@ -54,3 +54,9 @@ All five gates passed. 75 Vitest + 8 Playwright. Built JavaScript totals 185.4 K
 Added deterministic query and key embeddings, multi-plane rotations, signed-distance score curves, sinusoidal comparison, PI and NTK scaling. The lab links a draggable score marker, selected plane and workbench stepper. Chromium verified the displayed dot product stays fixed during a common shift. Engine-first checkpoint: 92 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 95 Vitest + 12 Playwright. Built JavaScript totals 193.1 KiB gzip across all chunks.
+
+### M5 — trace real multi-head attention and shared KV projections
+
+Added seeded Q/K/V projections, masked softmax, exact AV and output projections, linked arc and heatmap inspection, and a six-stage bilingual debugger. Browser checks inspect a future cell in both mask modes, verify zero leakage and measure the drop from 288 to 144 KV projection parameters under GQA. Engine-first checkpoint: 113 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 118 Vitest + 16 Playwright. Built JavaScript totals 204.0 KiB gzip across all chunks.

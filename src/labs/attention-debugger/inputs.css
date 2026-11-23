@@ -1,0 +1,9 @@
+.attention-input textarea, .attention-input-chips input {
+  font: inherit; color: var(--text-primary); background: var(--bg-elevated);
+  border: 1px solid var(--border-strong); border-radius: 5px; padding: 5px 7px; max-width: 100%;
+}
+.attention-input textarea { display: block; width: 100%; resize: vertical; }
+.attention-input small { color: var(--text-secondary); }
+.attention-input-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.attention-input-chips input { font-family: var(--font-mono); font-size: .77rem; }
+.attention-step-title { margin: 0 0 .45rem; font-size: .94rem; color: var(--text-primary); }

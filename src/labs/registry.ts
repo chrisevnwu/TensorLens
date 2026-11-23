@@ -34,6 +34,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags('RoPE', ['Sinusoidal', '正弦位置编码'], ['Long Context', '长上下文'], 'NTK'),
   },
   {
+    component: lazy(() => import('./attention-debugger')),
     id: 'attention-debugger', number: 3, chapter: 'sequence-attention', difficulty: 'foundational',
     title: text('Multi-Head Attention Debugger', '自注意力与多头注意力调试器'),
     description: text('Follow a query through scoring, masking and mixing across attention heads.', '追踪查询向量，看多个注意力头如何打分、施加掩码并聚合信息。'),

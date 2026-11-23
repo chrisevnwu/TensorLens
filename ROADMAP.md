@@ -77,11 +77,11 @@
 ## Milestone 5 (`M5`): Lab 03 — Multi-Head Attention Debugger (`attention-debugger`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 03
 
-- [ ] Implement `src/engine/labs/attention-debugger/` (multi-head $QKV$, toggleable $1/\sqrt{d_k}$ scaling, Causal/Bidirectional/Sliding Window masks, Softmax entropy, MHA/GQA/MQA topology metrics) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/attention-debugger.ts` (100% EN + ZH).
-- [ ] Build `src/labs/attention-debugger/` (6-stage Stepper, interactive Attention Heatmap + Token-to-Token Bézier Arc Diagram with cross-hover cell breakdown, MHA/GQA/MQA wiring SVG, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/attention-debugger/` (multi-head $QKV$, toggleable $1/\sqrt{d_k}$ scaling, Causal/Bidirectional/Sliding Window masks, Softmax entropy, MHA/GQA/MQA topology metrics) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/attention-debugger.ts` (100% EN + ZH).
+- [x] Build `src/labs/attention-debugger/` (6-stage Stepper, interactive Attention Heatmap + Token-to-Token Bézier Arc Diagram with cross-hover cell breakdown, MHA/GQA/MQA wiring SVG, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 
