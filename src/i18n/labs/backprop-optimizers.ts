@@ -1,0 +1,46 @@
+import type { ExactStringTree } from '../types'
+const en={
+  presets:{ravine:'Ravine zig-zag',saddle:'Saddle point escape',dead:'Dead ReLU',warmup:'Cosine warmup'},
+  mode:'Experiment mode',modes:{race:'Optimizer race',graph:'Micro-autograd DAG'},
+  landscape:'Loss landscape',landscapes:{ravine:'Ill-conditioned ravine',rosenbrock:'Rosenbrock valley',saddle:'Saddle point',multimodal:'Multimodal surface'},
+  methods:'Visible optimizers',names:{sgd:'SGD',momentum:'SGD + momentum',rmsprop:'RMSProp',adam:'Adam',adamw:'AdamW'},
+  learningRate:'Learning rate',decay:'Decoupled weight decay',schedule:'Learning-rate schedule',schedules:{constant:'Constant',cosine:'Cosine decay','warmup-cosine':'Warmup + cosine'},
+  circuit:'Circuit',circuits:{neuron:'Single neuron',attention:'Attention score',residual:'Residual chain'},activation:'Activation',skip:'Skip connection',optimize:'Step optimization',
+  metrics:{loss:'Best optimizer loss',rate:'Current learning rate',gradient:'Gradient norm',error:'Max grad error',circuitLoss:'Circuit loss',step:'Current step'},
+  none:'No active optimizer',diverged:'Trajectory halted beyond the numerical range',clip:'A weight reached the ±32 control limit and was clipped after this SGD step.',
+  raceGuide:'Choose a starting point on the contour map. Optimizers use the same analytical gradient and schedule; only the update rule changes.',
+  graphGuide:'Step through the backward pass one node at a time. Each incoming contribution is the downstream gradient multiplied by the edge’s local derivative.',
+  finite:'Central differences perturb each scalar by ±10⁻⁵. The maximum error excludes stencils crossing a ReLU corner, where a unique derivative is unavailable.',
+  update:'Step optimization uses the completed reverse pass and updates trainable parameters only.',
+  missions:{
+    race:{title:'Compare SGD and Adam',description:'Run at least 40 steps on the ravine. Find a setting where Adam reaches less than 10% of the SGD loss or converges as SGD diverges.',
+      insight:'One learning rate can overshoot the steep axis. Adam rescales updates using per-coordinate squared-gradient estimates.'},
+    dead:{title:'Expose a dead ReLU',description:'Make the neuron’s pre-activation negative under ReLU. Check that every trainable upstream gradient is zero.',
+      insight:'The local slope of a negative ReLU is zero. The gradient to each upstream weight vanishes even when the prediction misses its target.'},
+    saddle:{title:'Click near the saddle and escape',description:'On the saddle landscape, place the starting point near (0.05, 0.02). Run at least 30 steps and move downhill away from the saddle.',
+      insight:'The two axes have opposite curvature near the origin. A small displacement along the descending direction lets momentum and adaptive methods escape.'},
+  },
+} as const
+const zh:ExactStringTree<typeof en>={
+  presets:{ravine:'峡谷中的之字形轨迹',saddle:'逃离鞍点',dead:'失活 ReLU',warmup:'余弦预热'},
+  mode:'实验模式',modes:{race:'优化器竞赛',graph:'微型自动微分图'},landscape:'损失曲面',
+  landscapes:{ravine:'病态峡谷',rosenbrock:'Rosenbrock 山谷',saddle:'鞍点',multimodal:'多峰曲面'},methods:'可见优化器',
+  names:{sgd:'SGD',momentum:'带动量 SGD',rmsprop:'RMSProp',adam:'Adam',adamw:'AdamW'},
+  learningRate:'学习率',decay:'解耦权重衰减',schedule:'学习率调度',schedules:{constant:'恒定',cosine:'余弦衰减','warmup-cosine':'预热与余弦衰减'},
+  circuit:'计算图',circuits:{neuron:'单神经元',attention:'注意力分数',residual:'残差链'},activation:'激活函数',skip:'跳跃连接',optimize:'执行一步优化',
+  metrics:{loss:'最低优化损失',rate:'当前学习率',gradient:'梯度范数',error:'最大梯度误差',circuitLoss:'计算图损失',step:'当前步数'},
+  none:'无活动优化器',diverged:'轨迹超过数值范围，已停止更新',clip:'有权重在本次 SGD 更新后超过 ±32 的控件范围，已截断。',
+  raceGuide:'在等高线图上选择起点。各优化器使用同一组解析梯度和学习率调度，区别在于更新规则。',
+  graphGuide:'逐节点查看反向传播。每条传入边的贡献等于下游梯度乘以该边的局部导数。',
+  finite:'中心差分对每个标量施加 ±10⁻⁵ 的扰动。如果差分区间跨过 ReLU 拐点，则导数不唯一，此项不计入最大误差。',
+  update:'执行一步优化将使用完整反传结果，仅更新可训练参数。',
+  missions:{
+    race:{title:'对比 SGD 与 Adam',description:'在病态峡谷中运行至少 40 步，让 Adam 的损失低于 SGD 的 10%，或观察 SGD 发散而 Adam 收敛。',
+      insight:'相同的学习率可能沿陡峭方向反复越过最优点。Adam 利用各坐标的梯度平方估计来调整步长。'},
+    dead:{title:'识别失活的 ReLU',description:'将 ReLU 神经元的激活前数值调为负值，检查所有上游可训练参数的梯度是否为零。',
+      insight:'负输入处的 ReLU 局部斜率为零。即便预测偏离目标，所有上游权重仍无法收到梯度。'},
+    saddle:{title:'从鞍点附近出发并逃离',description:'选择鞍点曲面，在 (0.05, 0.02) 附近放置起点。运行至少 30 步，观察优化器沿下降方向远离鞍点。',
+      insight:'在原点附近，两个轴的曲率符号相反。沿下降方向的轻微位移即可让动量或自适应方法逐步离开鞍点。'},
+  },
+}
+export const optimizerCopy={en,zh}

@@ -165,11 +165,11 @@
 ## Milestone 13 (`M13`): Lab 11 — Autograd & Optimizers Arena (`backprop-optimizers`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 11
 
-- [ ] Implement `src/engine/labs/backprop-optimizers/` (3 live reverse-mode autograd micro-circuits with finite-difference verification + 4 analytical 2D landscapes + 5 simultaneous optimizers SGD/Momentum/RMSProp/Adam/AdamW + 3 LR schedules) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/backprop-optimizers.ts` (100% EN + ZH).
-- [ ] Build `src/labs/backprop-optimizers/` (Dual mode: 60fps HiDPI Canvas click-to-drop 2D contour optimizer race with loss & LR sparklines AND interactive layered Autograd DAG SVG with reverse step-by-step chain-rule highlighter, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/backprop-optimizers/` (3 live reverse-mode autograd micro-circuits with finite-difference verification + 4 analytical 2D landscapes + 5 simultaneous optimizers SGD/Momentum/RMSProp/Adam/AdamW + 3 LR schedules) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/backprop-optimizers.ts` (100% EN + ZH).
+- [x] Build `src/labs/backprop-optimizers/` (Dual mode: 60fps HiDPI Canvas click-to-drop 2D contour optimizer race with loss & LR sparklines AND interactive layered Autograd DAG SVG with reverse step-by-step chain-rule highlighter, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

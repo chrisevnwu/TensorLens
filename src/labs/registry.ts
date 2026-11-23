@@ -90,6 +90,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags('LoRA', 'QLoRA', 'SVD', ['Low-Rank', '低秩'], 'PEFT'),
   },
   {
+    component: lazy(() => import('./backprop-optimizers')),
     id: 'backprop-optimizers', number: 11, chapter: 'training-generative', difficulty: 'foundational',
     title: text('Autograd & Optimizers Arena', '反向传播计算图与优化器竞技场'),
     description: text('Trace the chain rule, then race five optimizers across a loss landscape.', '跟随链式法则反向传播，再比较五种优化器在损失曲面上的轨迹。'),

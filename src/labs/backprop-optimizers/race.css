@@ -1,0 +1,15 @@
+.race-stage { display:grid; gap:12px; }
+.race-plane h2,.race-inspector h3 { margin:0 0 7px; font-size:.94rem; font-weight:630; }
+.race-plane canvas { cursor:crosshair; border-radius:5px; }
+.race-plane p,.race-stage p,.race-key span { margin:5px 0; font-size:.74rem; color:var(--text-secondary); }
+.race-plane p span { font-family:var(--font-mono); }
+.race-key { display:flex; flex-wrap:wrap; gap:4px 10px; }
+.race-key span,.race-inspector h4 { display:inline-flex; align-items:center; gap:4px; }
+.race-key i,.race-inspector i { width:7px; height:7px; border-radius:50%; }
+.race-key b { color:var(--accent-warn); font-weight:550; }
+.race-stage .numeric-chart { border-top:1px solid var(--border-subtle); padding-top:9px; }
+.race-inspector > div + div { border-top:1px solid var(--border-subtle); padding-top:5px; }
+.race-inspector h4 { margin:4px 0; font-size:.77rem; }
+.race-inspector dl { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 5px; align-items:center; margin:0 0 5px; }
+.race-inspector dt { font-size:.72rem; color:var(--text-secondary); }
+.race-inspector dd { margin:0; text-align:end; font:.68rem/1.45 var(--font-mono); }

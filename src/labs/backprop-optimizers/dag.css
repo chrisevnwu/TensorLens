@@ -1,0 +1,25 @@
+.dag-stage { min-width: 0; padding: clamp(8px,1.8vw,18px); }
+.dag-stage h2, .dag-inspector h3 { font-size: .95rem; font-weight: 650; margin: 0 0 6px; }
+.dag-stage p, .dag-inspector p { font-size: .8rem; color: var(--text-secondary); margin: 5px 0; }
+.dag-scroll { max-width: 100%; overflow-x: auto; }
+.dag-scroll svg { width: 100%; display: block; }
+.dag-edge path { stroke: var(--border-strong); stroke-width: 1.5; }
+.dag-edge[data-hot=true] path { stroke: var(--accent-warn); stroke-width: 2.4; }
+.dag-edge text { font: 8px var(--font-mono); paint-order: stroke; stroke: var(--bg-surface); stroke-width: 3px; fill: var(--text-secondary); }
+.dag-node { cursor: pointer; }
+.dag-node rect { fill: var(--bg-elevated); stroke: var(--border-strong); }
+.dag-node[data-active=true] rect { fill: color-mix(in srgb,var(--accent-danger) 14%,var(--bg-canvas)); stroke: var(--accent-danger); stroke-width: 1.8; }
+.dag-node[aria-pressed=true] rect, .dag-node:focus-visible rect { stroke: var(--accent-warn); }
+.dag-node text { fill: var(--text-secondary); font: 10px var(--font-mono); }
+.dag-node .dag-op { fill: var(--text-primary); font-size: 12px; }
+.dag-node .dag-adjoint { fill: var(--accent-danger); }
+.dag-now strong { color: var(--accent-warn); }
+.dag-scroll-hint { display: none; }
+@media(max-width:767px){ .dag-scroll-hint { display: block; } }
+.dag-inspector { min-width: 0; }
+.dag-inspector dd { margin: 0; font: .74rem var(--font-mono); overflow-wrap: anywhere; }
+.dag-inspector dt, .dag-inspector table, .dag-inspector h4 { font-size: .72rem; }
+.dag-inspector h4 { margin: 10px 0 3px; }
+.dag-inspector table { width: 100%; table-layout: fixed; }
+.dag-inspector th, .dag-inspector td { text-align: start; border-bottom: 1px solid var(--border-subtle); padding: 3px 2px; overflow-wrap: anywhere; }
+.dag-inspector td { font: .66rem var(--font-mono); }
