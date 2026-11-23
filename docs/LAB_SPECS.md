@@ -1,6 +1,6 @@
-# TensorLens — 15 Interactive Lab Specifications
+# TensorLens — 18 Interactive Lab Specifications
 
-This document is the authoritative mathematical, functional, visual, and testing specification for every lab (`01` through `15`). Every formula here MUST be implemented authentically in `src/engine/labs/<lab-id>/` with zero faked numbers.
+This document is the authoritative mathematical, functional, visual, and testing specification for every lab (`01` through `18`). Every formula here MUST be implemented authentically in `src/engine/labs/<lab-id>/` with zero faked numbers.
 
 ---
 
@@ -605,3 +605,21 @@ The challenges use the exact code to retrieve D01 first, the paraphrase to retri
 Use one prompt, two possible completions and a frozen reference. The trainable scalar $u$ is the policy log-odds of A over B, with $P(A)=\sigma(u)$. Given reference log-odds $u_0$, let $m=\beta(u-u_0)$ and let $a$ be the observed fraction of comparisons preferring A. The mean DPO loss is $a\,\mathrm{softplus}(-m)+(1-a)\,\mathrm{softplus}(m)$ and its derivative with respect to $u$ is $\beta(\sigma(m)-a)$. Trace gradient descent and report the policy probabilities, comparison probability and $D_{\rm KL}(\pi\Vert\pi_{\rm ref})$ in nats. At initialization, when policy equals reference, the loss is $\log 2$ for any preference split. Test that identity, finite-difference derivatives and conflicting labels. [Rafailov et al., Direct Preference Optimization](https://arxiv.org/abs/2305.18290)
 
 The three challenges train on unanimous votes until $P(A)$ reaches 90%, fit a 15–5 split to within one percentage point of the observed preference frequency, and reverse a reference that originally assigns at least 80% probability to A. Learners can switch among generation probability, predicted preference and mean loss while stepping through the same 60 updates.
+
+### Lab 16 — Knowledge Distillation (`knowledge-distillation`)
+
+Two students start with identical, uniform predictions over violin, viola and trumpet. One follows the hard label alone. The other minimizes $(1-\alpha)\,\mathrm{CE}(y,s_1)+\alpha T^2\,D_{\mathrm{KL}}(t_T\Vert s_T)$, where $s_T$ and $t_T$ are student and teacher softmax probabilities at temperature $T$. With respect to the student logits the gradient is $(1-\alpha)(s_1-y)+\alpha T(s_T-t_T)$. Inspect the class probabilities as training progresses. Fix the teacher's winning class and exchange the other two scores to isolate what soft labels teach about alternatives. Verify the gradient by finite differences and the symmetry of the hard-label baseline. [Hinton, Vinyals and Dean](https://arxiv.org/abs/1503.02531)
+
+The challenges follow a hard-label student past 90% confidence in violin, teach a 20-percentage-point lead for viola, and reverse the lead in favor of trumpet while keeping violin first.
+
+### Lab 17 — Speculative Decoding (`speculative-decoding`)
+
+Generate a seeded sequence of 16 symbols from a context-dependent target $p$. For a draft proposal $x\sim q$, accept it with probability $\min(1,p(x)/q(x))$. At the first rejection, discard the remainder of the draft and sample a correction from the normalized positive residual $(p-q)_+$. If a full block is accepted and output space remains, emit one bonus token from the target. The accepted mass $\min(q_i,p_i)$ plus the correction mass $\max(p_i-q_i,0)$ equals $p_i$ even at symbols outside draft support. Expose per-block proposals and target calls, alongside an equal-length autoregressive baseline. Test both a perfect draft and a draft with missing support. [Leviathan, Kalman and Matias](https://proceedings.mlr.press/v202/leviathan23a.html)
+
+The challenges emit 16 tokens in four target calls with a matching draft, select a correction that has zero draft probability, and finish a biased run with a discarded draft suffix in at most ten target calls.
+
+### Lab 18 — Image–Text Contrastive Learning (`image-text-contrastive`)
+
+The images depict one circle, two circles and one triangle. Their captions encode shape and count using explicit four-dimensional features. For unit image and text vectors form $S_{ij}=\hat v_i\cdot\hat t_j/\tau$. The batch position supplies the positive label, so swapping captions changes the supervision. More generally, given the positive assignment $j=\pi(i)$, compute cross-entropy over each row at column $\pi(i)$ and each column at row $\pi^{-1}(j)$, then average the two direction means. Inspect a selected pair, swap captions, vary temperature, remove a count cue, or reorder whole pairs. Test that the loss is invariant to jointly permuting a paired batch, and that wrong pairings increase loss for the displayed data. [Radford et al.](https://proceedings.mlr.press/v139/radford21a.html)
+
+The challenges retrieve the triangle caption with probability above 90%, locate the strongest off-diagonal match after a caption swap, and verify the unchanged loss for the two-circle pair after reordering.

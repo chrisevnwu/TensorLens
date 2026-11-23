@@ -13,11 +13,11 @@
 Modern AI/LLM concepts (BPE subwords, RoPE rotation, Scaled Dot-Product Attention, KV Cache memory bottlenecks, FlashAttention SRAM tiling, MoE load balancing, INT4/NF4 quantization, Flow Matching) are notoriously hard to internalize from static equations or passive videos alone. Existing tutorials either oversimplify with fake diagrams or require spinning up PyTorch notebooks and GPUs.
 
 ### 1.2 Solution
-**TensorLens** is an open-source, browser-native interactive laboratory featuring **15 mathematically authentic visual sandboxes** spanning the entire modern LLM & generative AI stack. Every visualization is backed by real, deterministic TypeScript numerical engines running locally at 60fps — allowing users to tweak parameters, inject edge cases (outliers, network collapses, temperature extremes), step forward/backward through computations, and inspect exact tensor values in real time.
+**TensorLens** is an open-source, browser-native interactive laboratory featuring **18 mathematically authentic visual sandboxes** spanning the entire modern LLM & generative AI stack. Every visualization is backed by real, deterministic TypeScript numerical engines running locally at 60fps — allowing users to tweak parameters, inject edge cases (outliers, network collapses, temperature extremes), step forward/backward through computations, and inspect exact tensor values in real time.
 
 ### 1.3 Core Product Pillars
 1. **Real Math, Not Mock Animations**: Every pixel reflects live computations (actual dot products, IEEE-754 bit rounding, Online Softmax tile rescaling, Jacobi SVD, reverse-mode autograd, closed-form diffusion score fields).
-2. **Unified Lab Workbench**: All 15 labs share one cohesive, Linear/3Blue1Brown-inspired precision workbench so learners never have to relearn UI navigation.
+2. **Unified Lab Workbench**: All 18 labs share one cohesive, Linear/3Blue1Brown-inspired precision workbench so learners never have to relearn UI navigation.
 3. **Active Discovery (Guided Challenges)**: Every lab includes 3 bite-sized interactive missions ("Cause softmax saturation by disabling $\sqrt{d_k}$ scaling", "Eliminate token dropping in MoE") that auto-verify as the user experiments.
 4. **Global Open-Source First**: Default English UI with one-click Simplified Chinese switching, shareable deep-link URLs capturing exact experiment parameters, and PNG/SVG snapshot export for blog posts, slides, and classrooms.
 
@@ -31,9 +31,9 @@ Modern AI/LLM concepts (BPE subwords, RoPE rotation, Scaled Dot-Product Attentio
 
 ---
 
-## 3. Curriculum & 15-Lab Catalog
+## 3. Curriculum & 18-Lab Catalog
 
-The 15 labs are organized into **4 progressive chapters** forming a complete learning journey:
+The 18 labs are organized into **4 progressive chapters** forming a complete learning journey:
 
 | Chapter | # | Lab ID | English Title | Chinese Title | Core Mechanism Visualized |
 | :--- | :---: | :--- | :--- | :--- | :--- |
@@ -52,6 +52,9 @@ The 15 labs are organized into **4 progressive chapters** forming a complete lea
 | **IV. Training & Generative** | 13 | `language-model-loss` | Next-Token Loss & Perplexity | 下一词元损失与困惑度 | Score the observed token, mask positions, compare confidence at equal accuracy |
 | **II. Architecture & Inference** | 14 | `hybrid-retrieval` | Hybrid Retrieval & Rank Fusion | 混合检索与排序融合 | Inspect BM25, cosine similarity, reciprocal rank fusion and Recall@K |
 | **III. Efficiency & Alignment** | 15 | `preference-dpo` | Direct Preference Optimization | 直接偏好优化（DPO） | Fit a two-completion policy using preference pairs and a frozen reference |
+| **III. Efficiency & Alignment** | 16 | `knowledge-distillation` | Knowledge Distillation | 知识蒸馏 | Compare two students as the teacher changes its runner-up |
+| **II. Architecture & Inference** | 17 | `speculative-decoding` | Speculative Decoding | 投机解码 | Verify draft blocks and recover the target token distribution |
+| **IV. Training & Generative** | 18 | `image-text-contrastive` | Image–Text Contrastive Learning | 图文对比学习 | Match shapes to captions by inspecting both directions of a contrastive loss |
 
 ---
 
@@ -61,8 +64,8 @@ The 15 labs are organized into **4 progressive chapters** forming a complete lea
 - **Top Header (`56px` fixed height)**:
   - Left: TensorLens geometric logo + link to Home, plus active Lab breadcrumb & quick switcher dropdown.
   - Center/Right:
-    - Command Palette trigger (`⌘K` / `Ctrl+K`) — instant fuzzy search across all 15 labs, concepts, and presets in both English and Chinese.
-    - Progress Ring pill (e.g., `4 / 45 Challenges`) linking to progress overview.
+    - Command Palette trigger (`⌘K` / `Ctrl+K`) — instant fuzzy search across all 18 labs, concepts, and presets in both English and Chinese.
+    - Progress Ring pill (e.g., `4 / 54 Challenges`) linking to progress overview.
     - Language switcher (`EN | 中文`) — instant zero-reload switching persisted in `localStorage`.
     - Theme toggle (Dark / Light) — instant zero-flicker CSS variable swap persisted in `localStorage` (respecting `prefers-color-scheme` on first visit, defaulting to Dark on unspecified).
     - GitHub repository icon link.
@@ -70,17 +73,17 @@ The 15 labs are organized into **4 progressive chapters** forming a complete lea
 ### 4.2 Landing / Explorer Page (`#/`)
 - **Hero Section**:
   - High-craft animated ambient hero canvas (subtle interactive vector-field / attention-arc mesh running live at 60fps in the background, honoring `prefers-reduced-motion`).
-  - Clear value proposition headline, subtitle, primary CTA ("Start with Lab 01: BPE Tokenizer" or "Continue where you left off"), and secondary CTA ("Browse All 15 Labs").
-  - Compact 3-stat strip: `15 Interactive Labs` · `45 Guided Challenges` · `100% Browser-Native Math`.
+  - Clear value proposition headline, subtitle, primary CTA ("Start with Lab 01: BPE Tokenizer" or "Continue where you left off"), and secondary CTA ("Browse All 18 Labs").
+  - Compact 3-stat strip: `18 Interactive Labs` · `54 Guided Challenges` · `100% Browser-Native Math`.
 - **Interactive Learning Path & Filterable Catalog**:
   - Chapter tabs (`All`, `I. Sequence & Attention`, `II. Architecture & Inference`, `III. Efficiency & Alignment`, `IV. Training & Generative`) + Difficulty filter (`Foundational`, `Intermediate`, `Advanced`).
   - Lab cards arranged in a clean responsive grid (3 columns on desktop, 2 on tablet, 1 on mobile). Each card shows:
-    - Lab number (`01`–`15`), difficulty badge, and completion indicator (`0/3`–`3/3` challenges).
+    - Lab number (`01`–`18`), difficulty badge, and completion indicator (`0/3`–`3/3` challenges).
     - Custom crisp SVG schematic preview icon unique to that lab.
     - Title, one-line punchy description, and 2–3 concept tags (e.g. `Online Softmax`, `SRAM`, `HBM`).
 
 ### 4.3 Unified 4-Zone Lab Workbench (`#/labs/:labId`)
-Every one of the 15 labs MUST render inside the standardized **`LabShell`** layout:
+Every one of the 18 labs MUST render inside the standardized **`LabShell`** layout:
 
 ```text
 +-----------------------------------------------------------------------+

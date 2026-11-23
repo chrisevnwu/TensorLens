@@ -1,6 +1,6 @@
-# TensorLens — Autonomous Execution Roadmap (`M0` – `M16`)
+# TensorLens — Autonomous Execution Roadmap (`M0` – `M17`)
 
-> **Instructions for Codex**: Execute milestones strictly in order (`M0` → `M16`) following `AGENTS.md`.
+> **Instructions for Codex**: Execute milestones strictly in order (`M0` → `M17`) following `AGENTS.md`.
 > After passing every gate for a milestone, mark its checkboxes `[x]`, append metrics to `PROGRESS.md`, commit cleanly (`feat(M<k>): ...`), and proceed directly to the next milestone without pausing.
 
 ---
@@ -204,10 +204,12 @@
 - [x] Verify each pure engine before building its workbench. Integrate three challenges per lab, both languages, share links, presets and PNG export.
 - [x] Pass typecheck, lint, Vitest, production build and Playwright. Refresh the bilingual catalog and its light-mode screenshots.
 
-### Curriculum candidates after M16
+---
 
-| Candidate | Experiment | Connection to the curriculum |
-| --- | --- | --- |
-| Knowledge distillation | Hold the teacher's top choice fixed and change the probabilities of the other classes. Compare the student's update with hard and soft targets. | Extends the next-token loss lab to learning from a teacher distribution. [Hinton et al.](https://arxiv.org/abs/1503.02531) |
-| Speculative decoding | Vary a draft model's agreement with the target. Count accepted tokens and target-model calls, and check the corrected sampling distribution. | Connects sampling to the inference profiler. [Leviathan et al.](https://arxiv.org/abs/2211.17192) |
-| Image–text contrastive learning | Swap two captions in a tiny paired batch, then watch the image–text similarity matrix and bidirectional loss change. | Adds a multimodal use of the similarity scores seen in retrieval. [Radford et al.](https://arxiv.org/abs/2103.00020) |
+## Milestone 17 (`M17`): Distillation, speculative decoding and image–text contrastive learning
+
+- [x] Add Lab 16, Knowledge Distillation, with a hard-label baseline and two teachers that agree on the winner.
+- [x] Add Lab 17, Speculative Decoding, with context-dependent draft verification, residual corrections and target-call accounting.
+- [x] Add Lab 18, Image–Text Contrastive Learning, with inspectable shape and count features and a bidirectional contrastive objective.
+- [x] Verify the engines before the workbenches. Integrate nine bilingual challenges, presets, share links and PNG export into the 18-lab catalog.
+- [x] Pass typecheck, lint, Vitest, production build and Playwright. Refresh the English and Chinese light-mode previews.

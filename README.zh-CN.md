@@ -4,9 +4,9 @@
 
 [![MIT 许可证](https://img.shields.io/badge/license-MIT-287b60)](LICENSE)
 [![CI 使用 Node 24](https://img.shields.io/badge/CI_runtime-Node_24-396c3b)](.github/workflows/ci.yml)
-[![15 个实验室与 45 项挑战](https://img.shields.io/badge/15_labs-45_challenges-266d92)](#实验室目录)
+[![18 个实验室与 54 项挑战](https://img.shields.io/badge/18_labs-54_challenges-266d92)](#实验室目录)
 
-TensorLens 是一个可在浏览器中运行的中英双语实验台，用来探索语言模型和生成模型的计算过程。改变一个词元、一个权重或一个求解步数，就能查看图像背后的数值。15 个实验室都在本地运行小规模、可复现的 TypeScript 模型。公式、字体和模拟代码随静态站点一起分发。
+TensorLens 是一个可在浏览器中运行的中英双语实验台，用来探索语言模型和生成模型的计算过程。改变一个词元、一个权重或一个求解步数，就能查看图像背后的数值。18 个实验室都在本地运行小规模、可复现的 TypeScript 模型。公式、字体和模拟代码随静态站点一起分发。
 
 ![TensorLens 浅色首页与交互实验室目录](docs/images/home-light-zh.png)
 
@@ -37,6 +37,9 @@ TensorLens 是一个可在浏览器中运行的中英双语实验台，用来探
 | 13 | [下一词元损失与困惑度](src/engine/labs/language-model-loss/) | 让四个音符等概率，再查看一次出乎预期的音符给整段预测增加了多少损失。[试试均匀预测](https://chrisevnwu.github.io/TensorLens/#/labs/language-model-loss?preset=uniform) |
 | 14 | [混合检索与排序融合](src/engine/labs/hybrid-retrieval/) | 用故障码和同义改写搜索同一组维修卡，比较 BM25、余弦相似度和融合排名。[试试同义查询](https://chrisevnwu.github.io/TensorLens/#/labs/hybrid-retrieval?preset=synonym) |
 | 15 | [直接偏好优化（DPO）](src/engine/labs/preference-dpo/) | 给两个回答投票，观察偏好有分歧时策略概率怎样逐步偏离参考值。[试试有分歧的投票](https://chrisevnwu.github.io/TensorLens/#/labs/preference-dpo?preset=split) |
+| 16 | [知识蒸馏](src/engine/labs/knowledge-distillation/) | 保持教师最看好的乐器不变，交换另两种乐器的分数，观察哪位学生能学到第二名。 [交换第二名](https://chrisevnwu.github.io/TensorLens/#/labs/knowledge-distillation?preset=swap-runner-up) |
+| 17 | [投机解码](src/engine/labs/speculative-decoding/) | 一次验证三个草稿词元，数一数生成 16 个词元需要调用几次目标模型。 [试试完全匹配的草稿](https://chrisevnwu.github.io/TensorLens/#/labs/speculative-decoding?preset=matched) |
+| 18 | [图文对比学习](src/engine/labs/image-text-contrastive/) | 交换两幅图的描述，沿相似度矩阵的行与列分别追踪损失。 [交换图注](https://chrisevnwu.github.io/TensorLens/#/labs/image-text-contrastive?preset=swapped) |
 
 残差实验显示的是**第一个输出通道**的梯度。针对前置 LayerNorm 的独立不变量测试采用全一方向的探针，利用了残差块对统一平移的响应。RMSNorm 的梯度比值由当前输入和权重测得。KV 缓存和 LoRA 的内存图采用明确的存储假设，推理耗时则由理想屋顶线模型估算，取决于所选硬件的容量和峰值参数。[残差测试](src/engine/labs/norm-residual/__tests__/network.test.ts) · [推理模型](src/engine/labs/kv-cache-profiler/engine.ts) · [训练内存模型](src/engine/labs/lora-svd/memory.ts)
 

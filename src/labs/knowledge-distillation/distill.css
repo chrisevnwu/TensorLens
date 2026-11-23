@@ -1,0 +1,23 @@
+.distill-stage { display: grid; gap: .85rem; min-width: 0; }
+.distill-stage h2 { margin: 0; font-size: 1.04rem; color: var(--text-primary); }
+.distill-stage header p, .distill-scores { margin: .3rem 0 0; font-size: .8rem; color: var(--text-secondary); }
+.distill-stage .wb-control { margin: 0; }
+.distill-legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin-bottom: .5rem; color: var(--text-secondary); font-size: .78rem; }
+.distill-legend span::before { content: ''; display: inline-block; width: .6rem; height: .6rem; border-radius: 2px; margin-inline-end: .35rem; background: var(--accent-primary); }
+.distill-legend span + span::before { background: var(--accent-secondary); }
+.distill-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .35rem; }
+.distill-cards button { min-width: 0; padding: .45rem .25rem; display: flex; gap: .3rem; align-items: center; flex-direction: column; border: 1px solid var(--border-strong); border-radius: .5rem; color: var(--text-primary); background: var(--bg-surface); }
+.distill-cards button[aria-pressed=true] { border-color: var(--accent-primary); background: var(--bg-elevated); }
+.distill-bars { width: 90%; height: 6rem; display: flex; align-items: end; justify-content: center; gap: 3px; border-bottom: 1px solid var(--border-strong); }
+.distill-bars i { display: block; width: 24%; max-width: 1.65rem; background: var(--accent-primary); }
+.distill-bars i + i { background: var(--accent-secondary); }
+.distill-cards strong { font-size: .85rem; }
+.distill-cards small { color: var(--text-secondary); font-size: .7rem; }
+.distill-values { display: flex; justify-content: center; flex-wrap: wrap; gap: .1rem .4rem; font: 600 .72rem var(--font-mono); }
+.distill-values span { color: var(--accent-primary); }
+.distill-values span + span { color: var(--accent-secondary); }
+.distill-scores { margin-top: .65rem; }
+.distill-inspector dl { display: grid; gap: .45rem; margin: .6rem 0; }
+.distill-inspector dl div { display: flex; justify-content: space-between; gap: .3rem; }
+.distill-inspector dt { color: var(--text-secondary); }
+.distill-inspector dd { margin: 0; font-family: var(--font-mono); }

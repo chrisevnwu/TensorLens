@@ -65,12 +65,12 @@ Define module-level defaults and a typed URL codec with `makeUrlCodec` and `useL
 
 ### 4. Register the lazy page and presets
 
-Append a `LabDefinition` to `LAB_REGISTRY` in `src/labs/registry.ts`. The registry imports React's `lazy` and provides the `text` and `tags` helpers. For example, after the current 15 labs the next entry would look like this.
+Append a `LabDefinition` to `LAB_REGISTRY` in `src/labs/registry.ts`. The registry imports React's `lazy` and provides the `text` and `tags` helpers. For example, after the current 18 labs the next entry would look like this.
 
 ```ts
 {
   id: 'vector-centering',
-  number: 16,
+  number: 19,
   chapter: 'architecture-inference',
   difficulty: 'foundational',
   title: text('Vector Centering', '向量中心化'),

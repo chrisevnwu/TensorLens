@@ -124,6 +124,27 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     description: text('Train a two-answer policy on preference votes and compare its probabilities with a frozen reference.', '用偏好票训练一个有两种回答的策略，追踪它与固定参考策略的概率差异。'),
     tags: tags('DPO', ['Alignment', '偏好对齐'], ['KL divergence', 'KL 散度'], ['Preference learning', '偏好学习']),
   },
+  {
+    component: lazy(() => import('./knowledge-distillation')),
+    id: 'knowledge-distillation', number: 16, chapter: 'efficiency-alignment', difficulty: 'intermediate',
+    title: text('Knowledge Distillation', '知识蒸馏'),
+    description: text('Swap the teacher’s second-choice instrument and see which student learns the difference.', '交换教师排在第二、三位的乐器，观察哪位学生能学到这个区别。'),
+    tags: tags(['Distillation', '蒸馏'], ['Soft targets', '软标签'], ['Teacher temperature', '教师温度'], ['KL divergence', 'KL 散度']),
+  },
+  {
+    component: lazy(() => import('./speculative-decoding')),
+    id: 'speculative-decoding', number: 17, chapter: 'architecture-inference', difficulty: 'advanced',
+    title: text('Speculative Decoding', '投机解码'),
+    description: text('Verify draft tokens in blocks and count the target calls needed to generate a sequence.', '让目标模型逐块验证草稿，追踪每个词元如何被接受或纠正，并统计调用次数。'),
+    tags: tags(['Draft model', '草稿模型'], ['Rejection sampling', '拒绝采样'], ['Target calls', '目标模型调用'], ['Speculative sampling', '投机采样']),
+  },
+  {
+    component: lazy(() => import('./image-text-contrastive')),
+    id: 'image-text-contrastive', number: 18, chapter: 'training-generative', difficulty: 'intermediate',
+    title: text('Image–Text Contrastive Learning', '图文对比学习'),
+    description: text('Swap two captions and trace the matching loss along the rows and columns of a similarity matrix.', '交换两条图注，沿着相似度矩阵的行与列，找出图文匹配损失发生变化的位置。'),
+    tags: tags('CLIP', 'InfoNCE', ['Contrastive learning', '对比学习'], ['Cosine similarity', '余弦相似度']),
+  },
 ]
 
 export function getLabById(id: string | null | undefined) {

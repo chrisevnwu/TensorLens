@@ -1,6 +1,6 @@
 # TensorLens — Autonomous Build Progress Log
 
-> Automatically updated by the coding agent upon completing each milestone (`M0`–`M16`).
+> Automatically updated by the coding agent upon completing each milestone (`M0`–`M17`).
 
 | Milestone | Status | Summary | Tests Passed | Build Status | Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -21,6 +21,7 @@
 | `M14` | Complete | compare guided diffusion and flow on matched particle clouds | 348 Vitest + 52 Playwright | Pass | `20a6356` |
 | `M15` | Complete | publish the bilingual release and verify all twelve labs | 395 Vitest + 126 Playwright | Pass | `feat(M15)` |
 | `M16` | Complete | add token loss, hybrid retrieval and preference learning | 438 Vitest + 270 Playwright | Pass | `feat(M16)` |
+| `M17` | Complete | add distillation, speculative decoding and image–text contrastive learning | 470 Vitest + 312 Playwright | Pass | `feat(M17)` |
 
 ## Detailed Milestone Notes
 
@@ -148,3 +149,15 @@ Three new offline, bilingual workbenches bring the catalog to 15 labs and 45 gui
 All nine new challenges were solved on desktop and mobile. A separate layout sweep exercised each new lab at 320, 390, 820 and 1440 CSS pixels, in both languages and both themes. All 48 combinations had zero horizontal overflow or browser warnings and errors.
 
 All five verification gates passed. 438 Vitest tests and 270 Playwright tests passed. The production landing bundle used 101,312 bytes gzip and all 15 lab entries loaded separately.
+
+### M17 — distillation, speculative decoding and image–text contrastive learning
+
+The catalog now includes 18 bilingual labs and 54 guided challenges.
+
+- **Knowledge distillation.** A three-instrument teacher keeps violin first and exchanges the ranks of viola and trumpet. Both students start from identical logits. The hard-label student assigns the same probability to the alternatives throughout training, while the distilled student learns their order. Central differences verify the temperature-scaled gradient.
+- **Speculative decoding.** With a matching draft and three proposals per block, four target calls emit 16 tokens. When the draft can only repeat the previous token, the residual correction still recovers target mass on both other tokens. A seeded trace records acceptance, discarded proposals and corrections.
+- **Image–text contrastive learning.** A batch of three shape images and their captions exposes row and column conditional probabilities. At temperature 0.25, exchanging the two circle captions raises the symmetric loss by 4/3 nats. Reordering the intact pairs preserves it.
+
+All nine new challenges were solved in desktop and mobile browser tests. A separate sweep checked the three new stages at 320, 390, 820 and 1440 CSS pixels in both languages and themes. All 48 combinations had zero horizontal overflow or browser warnings and errors.
+
+All five verification gates passed. 470 Vitest tests and 312 Playwright tests passed. The initial JavaScript bundle used 102,436 bytes gzip. All 18 labs load as separate dynamic entries.

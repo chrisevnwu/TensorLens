@@ -136,6 +136,37 @@ function Preference() {
   </>
 }
 
+function Distillation() {
+  return <>
+    <path className="glyph-faint" d="M9 60h36m24 0h37" />
+    <path d="M13 57V20h7v37zm12 0V34h7v23zm12 0V48h7v9z" />
+    <path d="M48 38h17m-5-5 5 5-5 5" />
+    <path className="glyph-secondary" d="M72 57V25h7v32zm12 0V36h7v21zm12 0V47h7v10z" />
+  </>
+}
+
+function DraftBlocks() {
+  return <>
+    <path className="glyph-faint" d="M11 48h61l14 11h17" strokeDasharray="3 3" />
+    {[12, 36, 60].map(x => <rect key={x} x={x} y="22" width="17" height="17" rx="2" />)}
+    <path d="m15 30 4 4 7-8m13 4 4 4 7-8" />
+    <path className="glyph-secondary" d="m64 26 9 9m0-9-9 9m5 7v12h15" />
+    <rect className="glyph-secondary" x="87" y="45" width="17" height="17" rx="2" />
+  </>
+}
+
+function ContrastivePairs() {
+  return <>
+    <circle cx="20" cy="22" r="5" /><circle cx="16" cy="41" r="4" /><circle cx="26" cy="41" r="4" />
+    <path d="m20 55 6 10H14z" />
+    <path className="glyph-faint" d="M33 22h17m-17 19h17m-17 19h17" />
+    {[0, 1, 2].map(row => [0, 1, 2].map(col =>
+      <rect key={row * 3 + col} className={row === col ? 'glyph-secondary' : 'glyph-faint'}
+        x={55 + col * 16} y={16 + row * 16} width="13" height="13" rx="2"
+        fill={row === col ? 'currentColor' : 'none'} fillOpacity=".45" />))}
+  </>
+}
+
 const glyphs: Record<string, ReactNode> = {
   'bpe-tokenizer': <Tree />,
   'embeddings-rope': <Rotation />,
@@ -152,6 +183,9 @@ const glyphs: Record<string, ReactNode> = {
   'language-model-loss': <TokenLoss />,
   'hybrid-retrieval': <RankFusion />,
   'preference-dpo': <Preference />,
+  'knowledge-distillation': <Distillation />,
+  'speculative-decoding': <DraftBlocks />,
+  'image-text-contrastive': <ContrastivePairs />,
 }
 
 export default function LabPreviewIcon({ id }: { id: string }) {

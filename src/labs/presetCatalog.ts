@@ -13,6 +13,9 @@ import { diffusionCopy } from '../i18n/labs/diffusion-flow'
 import { lossCopy } from '../i18n/labs/language-model-loss'
 import { retrievalCopy } from '../i18n/labs/hybrid-retrieval'
 import { dpoCopy } from '../i18n/labs/preference-dpo'
+import { distillCopy } from '../i18n/labs/knowledge-distillation'
+import { speculativeCopy } from '../i18n/labs/speculative-decoding'
+import { contrastiveCopy } from '../i18n/labs/image-text-contrastive'
 
 type PresetDictionary = { presets: Readonly<Record<string, string>> }
 const dictionaries: Record<string, { en: PresetDictionary; zh: PresetDictionary }> = {
@@ -31,6 +34,9 @@ const dictionaries: Record<string, { en: PresetDictionary; zh: PresetDictionary 
   'language-model-loss': lossCopy,
   'hybrid-retrieval': retrievalCopy,
   'preference-dpo': dpoCopy,
+  'knowledge-distillation': distillCopy,
+  'speculative-decoding': speculativeCopy,
+  'image-text-contrastive': contrastiveCopy,
 }
 
 export function getLabPresets(labId: string) {

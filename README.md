@@ -4,9 +4,9 @@
 
 [![License MIT](https://img.shields.io/badge/license-MIT-287b60)](LICENSE)
 [![CI runtime Node 24](https://img.shields.io/badge/CI_runtime-Node_24-396c3b)](.github/workflows/ci.yml)
-[![15 labs and 45 challenges](https://img.shields.io/badge/15_labs-45_challenges-266d92)](#the-labs)
+[![18 labs and 54 challenges](https://img.shields.io/badge/18_labs-54_challenges-266d92)](#the-labs)
 
-TensorLens is a bilingual, browser-based workbench for exploring how language models and generative models compute. Change a token, a weight, or a solver step and inspect the numbers that produced the picture. All fifteen labs run locally against small, reproducible TypeScript models. The static site includes its equations, fonts, and simulation code.
+TensorLens is a bilingual, browser-based workbench for exploring how language models and generative models compute. Change a token, a weight, or a solver step and inspect the numbers that produced the picture. All eighteen labs run locally against small, reproducible TypeScript models. The static site includes its equations, fonts, and simulation code.
 
 ![TensorLens homepage in light mode with the interactive lab catalog](docs/images/home-light-en.png)
 
@@ -37,6 +37,9 @@ The lab names link to their numerical engines and invariant tests.
 | 13 | [Next-token loss and perplexity](src/engine/labs/language-model-loss/) | Give each of four notes equal probability, then inspect the loss on a surprising note. [Try the uniform predictor](https://chrisevnwu.github.io/TensorLens/#/labs/language-model-loss?preset=uniform) |
 | 14 | [Hybrid retrieval and rank fusion](src/engine/labs/hybrid-retrieval/) | Search the same repair cards with an error code and a paraphrase. Inspect BM25, cosine and fused ranks. [Try the synonym query](https://chrisevnwu.github.io/TensorLens/#/labs/hybrid-retrieval?preset=synonym) |
 | 15 | [Direct preference optimization](src/engine/labs/preference-dpo/) | Give a two-answer policy conflicting votes and follow its probability relative to a frozen reference. [Try the split vote](https://chrisevnwu.github.io/TensorLens/#/labs/preference-dpo?preset=split) |
+| 16 | [Knowledge distillation](src/engine/labs/knowledge-distillation/) | Keep the teacher’s top instrument fixed and swap its second choice. Which student notices? [Swap the runner-up](https://chrisevnwu.github.io/TensorLens/#/labs/knowledge-distillation?preset=swap-runner-up) |
+| 17 | [Speculative decoding](src/engine/labs/speculative-decoding/) | Verify three draft tokens together and count how many target calls produce a 16-token sequence. [Try a matching draft](https://chrisevnwu.github.io/TensorLens/#/labs/speculative-decoding?preset=matched) |
+| 18 | [Image–text contrastive learning](src/engine/labs/image-text-contrastive/) | Swap two shape captions and inspect which rows and columns contribute to the contrastive loss. [Swap the captions](https://chrisevnwu.github.io/TensorLens/#/labs/image-text-contrastive?preset=swapped) |
 
 The residual lab reports gradients for the **first output channel**. Its separate Pre-LayerNorm invariant uses an all-ones probe and the block's response to a uniform shift. RMSNorm gradient ratios are measured for the selected input and weights. The KV and LoRA memory charts use explicit storage assumptions. Inference timing uses an idealized hardware roofline, so the selected capacity and peak rates govern the estimate. [Residual tests](src/engine/labs/norm-residual/__tests__/network.test.ts) · [Inference model](src/engine/labs/kv-cache-profiler/engine.ts) · [Training memory model](src/engine/labs/lora-svd/memory.ts)
 
