@@ -23,7 +23,7 @@ const en = {
 
 const zh: ExactStringTree<typeof en> = {
   title: '探索 AI',
-  titleAccent: '背后的数学。',
+  titleAccent: '背后的数学',
   intro: '打开模型内部，逐步追踪每一次计算，调整参数，观察现代 AI 的运行原理。',
   start: '从 BPE 开始',
   resume: '继续实验',
