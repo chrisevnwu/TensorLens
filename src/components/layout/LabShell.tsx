@@ -19,6 +19,7 @@ export interface LabShellProps {
   presets?: readonly LabPreset[]
   onReset: () => void
   getShareUrl?: () => string
+  exportReady?: boolean
   controls: ReactNode
   challenges: ChallengeStatus[]
   formula?: ReactNode
@@ -103,7 +104,7 @@ export function LabShell(props: LabShellProps) {
     }
   }
   async function download() {
-    if (!stageRef.current || exporting) return
+    if (!stageRef.current || exporting || props.exportReady === false) return
     setExporting(true)
     try {
       await exportSnapshot(stageRef.current, labId, title)
@@ -134,7 +135,7 @@ export function LabShell(props: LabShellProps) {
       <div className="wb-title"><h1>{title}</h1><p>{subtitle}</p></div>
       <div className="wb-actions">
         <button type="button" onClick={share}><Link2 />{t.share}</button>
-        <button type="button" disabled={exporting} onClick={download}><Download />{t.export}</button>
+        <button type="button" disabled={exporting || props.exportReady === false} onClick={download}><Download />{t.export}</button>
         <button type="button" onClick={onReset}><RotateCcw />{t.reset}</button>
         <div className="wb-rail-toggles">
           <button type="button" aria-controls="wb-rail" aria-expanded={!leftCollapsed}

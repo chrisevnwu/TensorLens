@@ -1,0 +1,51 @@
+import type { ExactStringTree } from '../types'
+
+const en={
+  presets:{straight:'10-step flow paths',compare:'DDPM vs DDIM',guidance:'Guide the upper moon',schedule:'Compare noise schedules'},
+  dataset:'Target dataset',datasets:{moons:'Two moons',swiss:'Swiss roll',rings:'Concentric rings',grid:'Four-mode grid'},
+  sampler:'Sampler',samplers:{ddpm:'DDPM',ddim:'DDIM',flow:'Flow matching',compare:'Compare all three'},
+  numSteps:'Solver steps',schedule:'Noise schedule',schedules:{cosine:'Cosine',linear:'Linear'},
+  targetClass:'Target class',classes:{all:'Unconditional',a:'Class A',b:'Class B'},cfgScale:'Guidance scale',
+  showVectorField:'Show vector field',showTrails:'Show trajectories',
+  metrics:{distance:'Mean distance to manifold',straightness:'Path length / displacement',purity:'Class purity',step:'Solver step'},
+  classAShare:'Particles nearest class A',classBShare:'Particles nearest class B',lead:'DDIM in comparison mode',
+  busy:'Computing trajectories for 120 particles…',error:'Trajectory calculation failed. Select a preset to run the solver again.',
+  timeReverse:'Diffusion time, noise → data',timeFlow:'Flow time, noise → data',
+  guide:'All methods start with the same 120 Gaussian particles. Distance measures the mean Euclidean distance to the nearest target. Class purity counts particles whose nearest target has the chosen label.',
+  diffusion:'DDPM draws fresh Gaussian noise from each reverse posterior. DDIM reuses the estimated noise direction and takes deterministic jumps. The variance schedule runs from t = 1 at noise to t = 0 at data.',
+  flow:'Flow matching follows the conditional velocity of a linear noise-to-data interpolation. A midpoint step samples that velocity twice. Its clock runs from 0 to 1.',
+  field:'Diffusion arrows show the score of the smoothed empirical density. Flow arrows show velocity. A path-length-to-displacement ratio of one means all paths move directly to their endpoints.',
+  missions:{
+    guidance:{title:'Steer the upper moon',description:'On Two moons, target Class A and set guidance to at least 2. Finish denoising with at least 90% of particles nearest Class A.',
+      insight:'Guidance amplifies the difference between conditional and unconditional estimates. Each final particle is classified by its nearest labeled reference point.'},
+    straight:{title:'Compare few-step paths',description:'Compare all three samplers in 5 or 10 steps. Reach the final step and measure whether flow paths are straighter than DDPM paths.',
+      insight:'Fresh DDPM noise adds travel along the way. The ratio divides summed path lengths by summed endpoint displacements for the same initial particles.'},
+    field:{title:'Watch the vector field sharpen',description:'Turn on the vector field. View the first 20% of the run, then scrub to the last 20% with the same trajectory settings.',
+      insight:'At high noise, many reference points contribute to the estimate. Near the data, the posterior weight concentrates around nearby points.'},
+  },
+} as const
+const zh:ExactStringTree<typeof en>={
+  presets:{straight:'10 步流匹配路径',compare:'DDPM 与 DDIM 对比',guidance:'引导至上半月',schedule:'对比噪声调度'},
+  dataset:'目标数据集',datasets:{moons:'双月',swiss:'瑞士卷',rings:'同心环',grid:'四模态网格'},
+  sampler:'采样器',samplers:{ddpm:'DDPM',ddim:'DDIM',flow:'流匹配',compare:'三种方法对比'},
+  numSteps:'求解步数',schedule:'噪声调度',schedules:{cosine:'余弦',linear:'线性'},
+  targetClass:'目标类别',classes:{all:'无条件',a:'A 类',b:'B 类'},cfgScale:'引导强度',
+  showVectorField:'显示向量场',showTrails:'显示轨迹',
+  metrics:{distance:'到流形的平均距离',straightness:'路程 / 位移',purity:'类别纯度',step:'求解步数进度'},
+  classAShare:'最近目标点属于 A 类的粒子',classBShare:'最近目标点属于 B 类的粒子',lead:'对比模式中的 DDIM',
+  busy:'正在计算 120 个粒子的轨迹…',error:'轨迹计算失败。可选择预设重新运行求解器。',
+  timeReverse:'扩散时间，从噪声到数据',timeFlow:'流匹配时间，从噪声到数据',
+  guide:'三种方法从相同的 120 个高斯粒子出发。距离取粒子到最近目标点的欧氏距离均值。类别纯度统计最近目标点属于指定类别的粒子占比。',
+  diffusion:'DDPM 在每次反向后验转移时加入新的高斯噪声。DDIM 沿估计的噪声方向做确定性跳步。扩散时间由噪声端的 1 减至数据端的 0。',
+  flow:'流匹配沿噪声到数据的线性插值速度场移动。中点法在一步内计算两次速度，时间从 0 增至 1。',
+  field:'扩散箭头表示平滑经验分布的对数密度梯度，流匹配箭头表示速度。总路程与总位移之比等于 1 时，所有路径都沿直线前进。',
+  missions:{
+    guidance:{title:'让粒子集中到上半月',description:'在双月数据集中选择 A 类，将引导强度调至至少 2。完成去噪，让至少 90% 的粒子最接近 A 类。',
+      insight:'引导会放大条件与无条件估计的差值。生成结束后，每个粒子的类别取决于最近的带标签参考点。'},
+    straight:{title:'对比少步数轨迹',description:'选择三种方法对比，设置 5 或 10 步。运行至末步，测量流匹配轨迹是否比 DDPM 更直。',
+      insight:'每一步加入的新噪声都会增加 DDPM 的路程。直线度指标以相同初始粒子的总路程除以起点到终点的总位移。'},
+    field:{title:'观察向量场如何逐渐聚焦',description:'开启向量场，在前 20% 的阶段观察，再以同一组轨迹参数拖动到最后 20%。',
+      insight:'噪声较强时，许多参考点共同决定估计。接近数据端时，后验权重逐渐集中在邻近的参考点上。'},
+  },
+}
+export const diffusionCopy={en,zh}

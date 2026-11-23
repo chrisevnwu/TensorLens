@@ -1,0 +1,18 @@
+.diffusion-stage h2,.diffusion-inspector h3 { margin:0 0 8px; font-size:.94rem; font-weight:630; }
+.diffusion-key { display:flex; flex-wrap:wrap; gap:4px 10px; margin:6px 0 9px; }
+.diffusion-key span { display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary); font-size:.68rem; }
+.diffusion-key i { display:inline-block; width:7px; height:7px; border-radius:50%; }
+.diff-a { border:1px solid var(--accent-primary); }.diff-b { border:1px solid var(--accent-secondary); }
+.diff-particles { background:var(--text-primary); }.diffusion-key .diff-trails,.diffusion-key .diff-field { width:11px; height:2px; border-radius:0; }
+.diff-trails { background:var(--accent-tertiary); }.diff-field { background:var(--text-muted); }
+.diffusion-panels { display:grid; gap:6px; }.diffusion-panels[data-compare=true] { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.diffusion-run { min-width:0; margin:0; border:1px solid var(--border-strong); border-radius:6px; background:var(--bg-canvas); overflow:hidden; }
+.diffusion-run figcaption { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px; padding:5px 6px; font-size:.71rem; }
+.diffusion-run figcaption span,.diffusion-run p { color:var(--text-secondary); font-size:.64rem; }
+.diffusion-run p { margin:0; padding:4px 6px; }.diffusion-run canvas { cursor:crosshair; }
+.diffusion-choice { display:flex; align-items:center; gap:7px; margin:8px 0; font-size:.74rem; color:var(--text-secondary); }
+.diffusion-choice input { accent-color:var(--accent-warn); min-width:0; flex:1; }
+.diffusion-inspector h4 { margin:6px 0 3px; font-size:.76rem; font-weight:600; }
+.diffusion-inspector dl { margin:0; }.diffusion-inspector dl div { display:flex; justify-content:space-between; gap:6px; padding:3px 0; border-bottom:1px solid var(--border-subtle); }
+.diffusion-inspector dt { color:var(--text-secondary); font-size:.72rem; }.diffusion-inspector dd { margin:0; font:.7rem var(--font-mono); }
+@media(max-width:767px){.diffusion-panels[data-compare=true]{grid-template-columns:repeat(2,minmax(0,1fr))}.diffusion-choice{flex-wrap:wrap}}

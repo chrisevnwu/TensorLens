@@ -17,8 +17,8 @@
 | `M10` | Complete | inspect floating-point encodings and quantify tensor precision loss | 235 Vitest + 36 Playwright | Pass | `557f53d` |
 | `M11` | Complete | trace sampling filters and search competing token sequences | 255 Vitest + 40 Playwright | Pass | `a7851a1` |
 | `M12` | Complete | fit low-rank adapters against exact SVD reconstruction bounds | 282 Vitest + 44 Playwright | Pass | `34b3a30` |
-| `M13` | Complete | trace reverse-mode gradients and race five optimizers | 311 Vitest + 48 Playwright | Pass | `feat(M13)` |
-| `M14` | Pending | Lab 12: Diffusion & Flow Matching Denoising Lab | — | — | — |
+| `M13` | Complete | trace reverse-mode gradients and race five optimizers | 311 Vitest + 48 Playwright | Pass | `00171ab` |
+| `M14` | Complete | compare guided diffusion and flow on matched particle clouds | 348 Vitest + 52 Playwright | Pass | `feat(M14)` |
 | `M15` | Pending | Final polish, 12-lab audit & open-source release pack | — | — | — |
 
 ## Detailed Milestone Notes
@@ -108,3 +108,9 @@ All five gates passed. 282 Vitest + 44 Playwright. Built JavaScript totals 271.2
 Implemented three scalar circuits, edge-by-edge reverse adjoints, finite-difference checks, four analytical loss surfaces, five optimizers, and three LR schedules. A 450-circuit sweep measured a maximum smooth-point gradient error below 3.73e-8. Tested 1,440 optimizer trajectories at parameter extremes, keeping divergence explicit and the last finite state inspectable. The default Adam ravine run reached loss 0.000558 at step 100. Engine-first checkpoint: 308 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 311 Vitest + 48 Playwright. Built JavaScript totals 285.8 KiB gzip across all chunks.
+
+### M14 — compare guided diffusion and flow on matched particle clouds
+
+Added four seeded two-class manifolds, exact empirical mixture fields, strided DDPM, deterministic DDIM, midpoint flow, quiver grids and a cancellable local Web Worker. Across 288 configurations, 864 full solvers produced 4,095,360 finite coordinates. On the 20-step unconditional cosine moons run, mean manifold distance decreased 94.65% for DDIM and 97.02% for flow. All three guided solvers reached 100% Class A purity at CFG 2 for this seed. Engine-first checkpoint: 344 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 348 Vitest + 52 Playwright. Built JavaScript totals 299.4 KiB gzip across all chunks.

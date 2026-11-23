@@ -97,6 +97,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags(['Backprop', '反向传播'], ['Chain Rule', '链式法则'], 'SGD', 'Adam', 'AdamW', ['Cosine LR', '余弦学习率']),
   },
   {
+    component: lazy(() => import('./diffusion-flow')),
     id: 'diffusion-flow', number: 12, chapter: 'training-generative', difficulty: 'advanced',
     title: text('Diffusion & Flow Matching Lab', '扩散模型与 Flow Matching 去噪实验室'),
     description: text('Guide a shared noise cloud to data with three different generative solvers.', '让三种生成求解器从同一团噪声出发，观察通向目标数据的不同路径。'),

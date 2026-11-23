@@ -176,11 +176,11 @@
 ## Milestone 14 (`M14`): Lab 12 — Diffusion & Flow Matching Denoising Lab (`diffusion-flow`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 12
 
-- [ ] Implement `src/engine/labs/diffusion-flow/` (4 2D distributions with binary classes, Linear/Cosine noise schedules, exact closed-form empirical-GMM score denoiser, CFG guidance, DDPM / DDIM / Flow Matching ODE solvers, vector field grid evaluator, straightness & manifold distance metrics) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/diffusion-flow.ts` (100% EN + ZH).
-- [ ] Build `src/labs/diffusion-flow/` (60fps HiDPI Canvas particle swarm + glowing hero trails + dynamic 16×16 score/velocity quiver grid + synchronized 3-way `Compare All 3` canvas view + $\bar\alpha_t$/SNR SVG chart, Stepper, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/diffusion-flow/` (4 2D distributions with binary classes, Linear/Cosine noise schedules, exact closed-form empirical-GMM score denoiser, CFG guidance, DDPM / DDIM / Flow Matching ODE solvers, vector field grid evaluator, straightness & manifold distance metrics) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/diffusion-flow.ts` (100% EN + ZH).
+- [x] Build `src/labs/diffusion-flow/` (60fps HiDPI Canvas particle swarm + glowing hero trails + dynamic 16×16 score/velocity quiver grid + synchronized 3-way `Compare All 3` canvas view + $\bar\alpha_t$/SNR SVG chart, Stepper, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 
