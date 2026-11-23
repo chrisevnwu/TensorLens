@@ -1,0 +1,36 @@
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --bg-canvas: #0b0d12;
+  --bg-surface: #12161f;
+  --bg-elevated: #1a202e;
+  --border-subtle: rgba(255,255,255,.08);
+  --border-strong: rgba(255,255,255,.16);
+  --text-primary: #f1f5f9;
+  --text-secondary: #a1aec3;
+  --text-muted: #91a0b7;
+  --accent-primary: #38bdf8;
+  --accent-secondary: #a78bfa;
+  --accent-tertiary: #34d399;
+  --accent-warn: #fbbf24;
+  --accent-danger: #fb7185;
+  --text-on-accent: #081018;
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg-canvas: #f8fafc;
+  --bg-surface: #fff;
+  --bg-elevated: #f1f5f9;
+  --border-subtle: rgba(15,23,42,.09);
+  --border-strong: rgba(15,23,42,.18);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #526178;
+  --accent-primary: #036e9f;
+  --accent-secondary: #7435ce;
+  --accent-tertiary: #04745a;
+  --accent-warn: #985300;
+  --accent-danger: #bf1641;
+  --text-on-accent: #fff;
+}

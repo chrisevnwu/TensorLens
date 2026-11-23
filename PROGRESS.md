@@ -5,7 +5,7 @@
 | Milestone | Status | Summary | Tests Passed | Build Status | Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `M0` | Complete | bootstrap the static React workspace and verification pipeline | 1 Vitest + 2 Playwright | Pass | `feat(M0)` |
-| `M1` | Pending | Design system, EN/ZH i18n, global shell & landing page | — | — | — |
+| `M1` | Complete | ship the bilingual explorer and application shell | 5 Vitest + 4 Playwright | Pass | `feat(M1)` |
 | `M2` | Pending | Core pure-TS math engine & shared workbench SDK | — | — | — |
 | `M3` | Pending | Lab 01: BPE Tokenizer & Subword Lab | — | — | — |
 | `M4` | Pending | Lab 02: Embeddings & RoPE Geometry | — | — | — |
@@ -30,3 +30,9 @@
 Added Vite 6 and React 19, strict TypeScript, separate Node and jsdom test projects, production-preview Chromium checks, and GitHub Actions CI and Pages workflows. Installed the Playwright Chromium runtime locally.
 
 All five gates passed. 1 Vitest + 2 Playwright. Built JavaScript totals 68.1 KiB gzip across all chunks.
+
+### M1 — ship the bilingual explorer and application shell
+
+Added the typed catalog, persisted preferences and progress, command palette, responsive catalog and projected torus-knot hero. Confirmed keyboard navigation, bilingual search, reload persistence, catalog filters and both viewports in Chromium. GitHub Pages injects the repository URL at build time.
+
+All five gates passed. 5 Vitest + 4 Playwright. Built JavaScript totals 96.6 KiB gzip across all chunks.

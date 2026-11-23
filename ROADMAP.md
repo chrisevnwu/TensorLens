@@ -20,14 +20,14 @@
 ## Milestone 1 (`M1`): Design System, Typed EN/ZH i18n, Global Shell & Landing Page
 **Goal**: Ship the polished Linear/3Blue1Brown visual system, Dark/Light themes, compile-time safe EN/ZH switching, global header, `⌘K` Command Palette, and Home Explorer page with live ambient hero canvas.
 
-- [ ] Implement `src/styles/tokens.css` (complete Dark & Light semantic variables from `docs/PRD.md`) and `src/styles/globals.css` (Tailwind v4, KaTeX CSS import, `tabular-nums`, reduced-motion rules).
-- [ ] Implement `src/store/useAppStore.ts` (persisted Zustand store: `theme`, `locale`, `completedChallenges`, `lastVisitedLabId`, side-panel collapse states).
-- [ ] Implement `src/i18n/types.ts`, `src/i18n/common.ts`, and `src/i18n/index.ts` with `ExactStringTree` compile-time EN/ZH parity.
-- [ ] Implement `src/labs/types.ts` and `src/labs/registry.ts` metadata for all 12 labs (with clean chapter definitions and `LabPreviewIcon.tsx` custom schematic SVG icon for every lab).
-- [ ] Build `src/components/layout/AppHeader.tsx` (Logo, Lab Switcher, `⌘K` trigger, Progress Ring, `EN | 中文` toggle, Dark/Light toggle, GitHub link) and `src/components/layout/CommandPalette.tsx` (bilingual fuzzy search across labs, tags, actions).
-- [ ] Build `src/pages/HomePage.tsx` (60fps HiDPI ambient attention-arc/vector-field hero canvas respecting `prefers-reduced-motion`, 4-chapter tabs, difficulty filter, 12-lab responsive card grid showing progress) and `src/pages/LabPage.tsx` with ErrorBoundary + Suspense.
-- [ ] Update `e2e/smoke.spec.ts` to verify Home render, EN/ZH switching, Dark/Light theme switching, `⌘K` open/search/close, and zero overflow at `1440x900` and `390x844`.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/styles/tokens.css` (complete Dark & Light semantic variables from `docs/PRD.md`) and `src/styles/globals.css` (Tailwind v4, KaTeX CSS import, `tabular-nums`, reduced-motion rules).
+- [x] Implement `src/store/useAppStore.ts` (persisted Zustand store: `theme`, `locale`, `completedChallenges`, `lastVisitedLabId`, side-panel collapse states).
+- [x] Implement `src/i18n/types.ts`, `src/i18n/common.ts`, and `src/i18n/index.ts` with `ExactStringTree` compile-time EN/ZH parity.
+- [x] Implement `src/labs/types.ts` and `src/labs/registry.ts` metadata for all 12 labs (with clean chapter definitions and `LabPreviewIcon.tsx` custom schematic SVG icon for every lab).
+- [x] Build `src/components/layout/AppHeader.tsx` (Logo, Lab Switcher, `⌘K` trigger, Progress Ring, `EN | 中文` toggle, Dark/Light toggle, GitHub link) and `src/components/layout/CommandPalette.tsx` (bilingual fuzzy search across labs, tags, actions).
+- [x] Build `src/pages/HomePage.tsx` (60fps HiDPI ambient attention-arc/vector-field hero canvas respecting `prefers-reduced-motion`, 4-chapter tabs, difficulty filter, 12-lab responsive card grid showing progress) and `src/pages/LabPage.tsx` with ErrorBoundary + Suspense.
+- [x] Update `e2e/smoke.spec.ts` to verify Home render, EN/ZH switching, Dark/Light theme switching, `⌘K` open/search/close, and zero overflow at `1440x900` and `390x844`.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

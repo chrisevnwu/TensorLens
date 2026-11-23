@@ -1,16 +1,42 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './fixture'
 
-test('loads the application without runtime errors or horizontal overflow', async ({ page }) => {
-  const errors: string[] = []
-  page.on('pageerror', error => errors.push(error.message))
-  page.on('console', message => {
-    if (message.type() === 'error' || message.type() === 'warning') errors.push(message.text())
-  })
-
+test('explores the catalog, persists language and theme, and searches both languages', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' })
   await page.goto('./')
   await expect(page).toHaveTitle('TensorLens')
-  await expect(page.getByRole('main').getByRole('heading', { level: 1, name: 'TensorLens' })).toBeVisible()
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
-  expect(overflow).toBeLessThanOrEqual(0)
-  expect(errors).toEqual([])
+  await expect(page.getByRole('main').getByRole('heading', { level: 1 })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Multi-Head Attention Debugger/ }).first()).toBeVisible()
+  await page.getByRole('button', { name: '简体中文', exact: true }).click()
+  await expect(page.locator('html')).toHaveAttribute('lang', /^zh/)
+  await expect(page.getByRole('link', { name: /自注意力与多头注意力调试器/ }).first()).toBeVisible()
+  await page.getByRole('button', { name: '切换为浅色主题' }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  await page.reload()
+  await expect(page.locator('html')).toHaveAttribute('lang', /^zh/)
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0)
+  await page.keyboard.press('Control+k')
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toBeVisible()
+  await dialog.getByRole('combobox').fill('RoPE')
+  await expect(dialog.getByRole('option').first()).toContainText('RoPE')
+  await page.keyboard.press('Escape')
+  await expect(dialog).toBeHidden()
+  await page.getByRole('button', { name: 'English', exact: true }).click()
+  await page.getByRole('button', { name: 'Command palette', exact: true }).click()
+  await dialog.getByRole('combobox').fill('分词')
+  await dialog.getByRole('combobox').press('Enter')
+  await expect(page).toHaveURL(/#\/labs\/bpe-tokenizer/)
+})
+
+test('combines chapter and difficulty filters and recovers from an empty catalog', async ({ page }) => {
+  await page.goto('./')
+  const catalog = page.getByRole('region', { name: 'Lab explorer' })
+  await expect(catalog.getByRole('link')).toHaveCount(12)
+  await catalog.getByRole('button', { name: /Sequence & Attention/ }).click()
+  await expect(catalog.getByRole('link')).toHaveCount(3)
+  await catalog.getByRole('combobox', { name: 'Difficulty' }).selectOption('advanced')
+  await expect(catalog.getByRole('status')).toHaveText(/No labs match/)
+  await catalog.getByRole('button', { name: 'Clear filters' }).click()
+  await expect(catalog.getByRole('link')).toHaveCount(12)
 })

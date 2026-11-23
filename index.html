@@ -3,7 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:," />
+    <link rel="icon" type="image/svg+xml" href="./tensorlens.svg" />
+    <script>
+      try {
+        const state = JSON.parse(localStorage.getItem('tensorlens') || '{}').state || {};
+        const prefersLight = matchMedia('(prefers-color-scheme: light)').matches;
+        document.documentElement.dataset.theme = state.theme || (prefersLight ? 'light' : 'dark');
+        document.documentElement.lang = state.locale === 'zh' ? 'zh-CN' : 'en';
+      } catch { /* The application also initializes defaults with storage disabled. */ }
+    </script>
     <title>TensorLens</title>
   </head>
   <body>
