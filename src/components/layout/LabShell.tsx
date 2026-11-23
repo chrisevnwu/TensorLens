@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, Download, Link2, PanelLeft, PanelRight, RotateCcw } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../i18n'
@@ -36,6 +36,17 @@ export interface LabShellProps {
 const tabs = ['controls', 'inspector', 'challenges'] as const
 type MobileTab = typeof tabs[number]
 const noneCompleted: string[] = []
+const mobileQuery = '(max-width: 767px)'
+
+function subscribeToMobileLayout(notify: () => void) {
+  const query = window.matchMedia?.(mobileQuery)
+  query?.addEventListener('change', notify)
+  return () => query?.removeEventListener('change', notify)
+}
+
+function inMobileLayout() {
+  return window.matchMedia?.(mobileQuery).matches ?? false
+}
 
 export function LabShell(props: LabShellProps) {
   const { labId, title, subtitle, challenges, onReset, onNextStep, onPrevStep, onTogglePlay } = props
@@ -43,7 +54,9 @@ export function LabShell(props: LabShellProps) {
   const t = workbenchCopy[locale]
   const stageRef = useRef<HTMLDivElement>(null)
   const tabletButton = useRef<HTMLButtonElement>(null)
+  const shareButton = useRef<HTMLButtonElement>(null)
   const copyField = useRef<HTMLInputElement>(null)
+  const mobileLayout = useSyncExternalStore(subscribeToMobileLayout, inMobileLayout)
   const [mobileTab, setMobileTab] = useState<MobileTab>('controls')
   const [tabletInspector, setTabletInspector] = useState(false)
   const [message, setMessage] = useState<'copied' | 'exported' | 'exportFailed' | 'manual' | null>(null)
@@ -63,6 +76,7 @@ export function LabShell(props: LabShellProps) {
 
   useEffect(() => {
     if (message === 'manual') {
+      copyField.current?.focus()
       copyField.current?.select()
       return
     }
@@ -75,6 +89,10 @@ export function LabShell(props: LabShellProps) {
     function shortcut(event: KeyboardEvent) {
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.isComposing) return
       if (document.querySelector('[role="dialog"], dialog[open]')) return
+      if (event.key === 'Escape' && message === 'manual') {
+        dismissManualLink()
+        return
+      }
       if (event.key === 'Escape' && tabletInspector) {
         setTabletInspector(false)
         tabletButton.current?.focus()
@@ -91,7 +109,7 @@ export function LabShell(props: LabShellProps) {
     }
     window.addEventListener('keydown', shortcut)
     return () => window.removeEventListener('keydown', shortcut)
-  }, [onReset, onNextStep, onPrevStep, onTogglePlay, tabletInspector])
+  }, [onReset, onNextStep, onPrevStep, onTogglePlay, tabletInspector, message])
 
   async function share() {
     const url = props.getShareUrl?.() ?? window.location.href
@@ -125,6 +143,13 @@ export function LabShell(props: LabShellProps) {
     setMobileTab(selected)
     event.currentTarget.querySelector<HTMLButtonElement>(`#tab-${selected}`)?.focus()
   }
+  function mobilePanel(tab: MobileTab) {
+    return mobileLayout ? { role: 'tabpanel', 'aria-labelledby': `tab-${tab}`, tabIndex: 0 } : {}
+  }
+  function dismissManualLink() {
+    setMessage(null)
+    shareButton.current?.focus()
+  }
   const challengeItems = challenges.map(item => ({
     ...item, completed: item.completed || savedChallenges.includes(item.id),
   }))
@@ -134,7 +159,7 @@ export function LabShell(props: LabShellProps) {
     <header className="wb-toolbar">
       <div className="wb-title"><h1>{title}</h1><p>{subtitle}</p></div>
       <div className="wb-actions">
-        <button type="button" onClick={share}><Link2 />{t.share}</button>
+        <button type="button" ref={shareButton} onClick={share}><Link2 />{t.share}</button>
         <button type="button" disabled={exporting || props.exportReady === false} onClick={download}><Download />{t.export}</button>
         <button type="button" onClick={onReset}><RotateCcw />{t.reset}</button>
         <div className="wb-rail-toggles">
@@ -161,17 +186,17 @@ export function LabShell(props: LabShellProps) {
           onClick={() => setMobileTab(tab)}>{t[tab]}</button>)}
       </div>
       <aside id="wb-rail" className="wb-rail" aria-label={t.controls}>
-        <section id="wb-controls" className="wb-controls">
+        <section id="wb-controls" className="wb-controls" {...mobilePanel('controls')}>
           <h2>{t.controls}</h2>
           {props.presets && props.presets.length > 0 && <PresetBar presets={props.presets} />}
           {props.controls}
         </section>
-        <section id="wb-challenges" className="wb-challenges">
+        <section id="wb-challenges" className="wb-challenges" {...mobilePanel('challenges')}>
           <h2>{t.challenges}</h2>
           <ChallengePanel challenges={challengeItems} />
         </section>
       </aside>
-      <aside className="wb-inspector" id="wb-inspector" aria-label={t.inspector}>
+      <aside className="wb-inspector" id="wb-inspector" aria-label={t.inspector} {...mobilePanel('inspector')}>
         <section><h2>{t.metrics}</h2><div className="wb-metrics">{props.metrics.map(metric =>
           <MetricCard key={metric.label} {...metric} />)}</div></section>
         {props.inspector && <section><h2>{t.details}</h2>{props.inspector}</section>}
@@ -184,7 +209,10 @@ export function LabShell(props: LabShellProps) {
     </nav>
     {message && <div className="wb-toast" role="status">
       {t[message]}
-      {message === 'manual' && <input aria-label={t.share} ref={copyField} value={manualUrl} readOnly onFocus={event => event.target.select()} />}
+      {message === 'manual' && <>
+        <input aria-label={t.share} ref={copyField} value={manualUrl} readOnly onFocus={event => event.target.select()} />
+        <button type="button" onClick={dismissManualLink}>{t.dismiss}</button>
+      </>}
     </div>}
   </main>
 }

@@ -3,6 +3,7 @@ import type { HeatCell } from '../../components/viz/MatrixHeatmap'
 import { LineChart } from '../../components/viz/LineChart'
 import type { LoraResult } from '../../engine/labs/lora-svd/engine'
 import { useI18n } from '../../i18n'
+import { formatExplainedEnergy } from '../../i18n/labs/lora-svd'
 import { loraVisuals } from '../../i18n/labs/lora-visuals'
 import { FactorTile } from './FactorTile'
 import './lora.css'
@@ -37,7 +38,7 @@ export function LoraStage({result,step,cell,onSelectCell,onStepChange,onRankChan
     </div></section>
     <section className="lora-spectrum"><h3>{t.spectrum}</h3>
       <div className="lora-legend"><span><i/>{t.captured}</span><span><i/>{t.discarded}</span>
-        <span>{t.energy} <b>{(approximation.explainedEnergy*100).toFixed(2)}%</b></span></div>
+        <span>{t.energy} <b>{formatExplainedEnergy(approximation.explainedEnergy,locale)}</b></span></div>
       <svg viewBox="0 0 410 98" aria-label={t.spectrum}>
         <text x="3" y="10">σ</text><line x1="16" x2="403" y1="76" y2="76" stroke="var(--border-strong)"/>
         {S.map((v,i)=>{

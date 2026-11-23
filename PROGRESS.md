@@ -18,8 +18,8 @@
 | `M11` | Complete | trace sampling filters and search competing token sequences | 255 Vitest + 40 Playwright | Pass | `a7851a1` |
 | `M12` | Complete | fit low-rank adapters against exact SVD reconstruction bounds | 282 Vitest + 44 Playwright | Pass | `34b3a30` |
 | `M13` | Complete | trace reverse-mode gradients and race five optimizers | 311 Vitest + 48 Playwright | Pass | `00171ab` |
-| `M14` | Complete | compare guided diffusion and flow on matched particle clouds | 348 Vitest + 52 Playwright | Pass | `feat(M14)` |
-| `M15` | Pending | Final polish, 12-lab audit & open-source release pack | — | — | — |
+| `M14` | Complete | compare guided diffusion and flow on matched particle clouds | 348 Vitest + 52 Playwright | Pass | `20a6356` |
+| `M15` | Complete | publish the bilingual release and verify all twelve labs | 395 Vitest + 126 Playwright | Pass | `feat(M15)` |
 
 ## Detailed Milestone Notes
 
@@ -114,3 +114,13 @@ All five gates passed. 311 Vitest + 48 Playwright. Built JavaScript totals 285.8
 Added four seeded two-class manifolds, exact empirical mixture fields, strided DDPM, deterministic DDIM, midpoint flow, quiver grids and a cancellable local Web Worker. Across 288 configurations, 864 full solvers produced 4,095,360 finite coordinates. On the 20-step unconditional cosine moons run, mean manifold distance decreased 94.65% for DDIM and 97.02% for flow. All three guided solvers reached 100% Class A purity at CFG 2 for this seed. Engine-first checkpoint: 344 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 348 Vitest + 52 Playwright. Built JavaScript totals 299.4 KiB gzip across all chunks.
+
+### M15 — publish the bilingual release and verify all twelve labs
+
+Shipped 12 bilingual labs and 36 guided challenges. Reached all 36 completion states in real Chromium sessions. Verified that all 45 preset shortcuts reproduce the full workbench button state, including its step, and accept explicit URL overrides. The command palette searches presets in both languages and restores same-lab browser history.
+
+The 96-case browser matrix covers each lab in both languages, both themes, and at 1440×900 and 390×844. Every case changed a preset and step, opened the copied link in a fresh document, and checked the restored state. Download checks read the PNG signature, exact 2× dimensions and nonblank stage pixels. The matrix recorded zero page errors, console warnings/errors or horizontal overflow. All 12 labs also recovered from four malformed URL configurations each.
+
+Runtime network inspection measured 99,613 bytes of gzipped JavaScript on the landing page. Each of the 12 lab entries was fetched on first navigation, with zero cross-origin HTTP requests in the landing and route sweep. The production build now enforces the 200 kB landing budget and separate dynamic lab entries. Audited bilingual dictionaries and source reachability, removed the obsolete route placeholder, and fixed the light-theme selected mantissa text to reach 4.81:1 contrast. Added English and Chinese READMEs, real workbench screenshots, and a contributor guide for Lab 13. GitHub Pages deployment is configured for a repository with an upstream remote.
+
+All five gates passed. 395 Vitest + 126 Playwright. Built JavaScript totals 304.4 KiB gzip across all chunks.

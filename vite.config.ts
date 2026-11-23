@@ -6,6 +6,7 @@ export default defineConfig({
   base: './',
   plugins: [react(), tailwindcss()],
   build: {
+    manifest: true,
     rollupOptions: {
       output: {
         manualChunks: {

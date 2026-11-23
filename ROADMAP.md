@@ -187,9 +187,9 @@
 ## Milestone 15 (`M15`): Final Polish, Full 12-Lab Audit & Open-Source Release Pack
 **Goal**: Elevate the entire repository to showcase-ready open-source quality with full 12-lab verification, bundle optimization, and bilingual GitHub documentation.
 
-- [ ] Audit bundle sizes from `npm run build`: confirm initial landing chunk is lean (`< 200 KB` gzipped) and all 12 labs load as separate lazy chunks.
-- [ ] Run full Playwright E2E suite across ALL 12 labs in BOTH `en` and `zh`, BOTH `dark` and `light` themes, and BOTH desktop (`1440x900`) and mobile (`390x844`): verify zero console errors, zero page errors, zero horizontal overflow, and working Share URL + Export PNG triggers.
-- [ ] Audit i18n dictionaries and components for zero hardcoded untranslated strings, zero `TODO`/`FIXME` comments, and zero unused files.
-- [ ] Author publication-grade `README.md` (English) and `README.zh-CN.md` (Chinese) with badges, feature highlights, complete 12-lab table, architecture overview, local development commands, and GitHub Pages deployment instructions.
-- [ ] Author `CONTRIBUTING.md` documenting how contributors can add **Lab #13** cleanly using the `LabDefinition` SDK, pure math engine, and typed i18n pattern.
-- [ ] Final clean verification: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`, update `PROGRESS.md` with final summary stats, and create final release commit.
+- [x] Audit bundle sizes from `npm run build`: confirm initial landing chunk is lean (`< 200 KB` gzipped) and all 12 labs load as separate lazy chunks.
+- [x] Run full Playwright E2E suite across ALL 12 labs in BOTH `en` and `zh`, BOTH `dark` and `light` themes, and BOTH desktop (`1440x900`) and mobile (`390x844`): verify zero console errors, zero page errors, zero horizontal overflow, and working Share URL + Export PNG triggers.
+- [x] Audit i18n dictionaries and components for zero hardcoded untranslated strings, zero `TODO`/`FIXME` comments, and zero unused files.
+- [x] Author publication-grade `README.md` (English) and `README.zh-CN.md` (Chinese) with badges, feature highlights, complete 12-lab table, architecture overview, local development commands, and GitHub Pages deployment instructions.
+- [x] Author `CONTRIBUTING.md` documenting how contributors can add **Lab #13** cleanly using the `LabDefinition` SDK, pure math engine, and typed i18n pattern.
+- [x] Final clean verification: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`, update `PROGRESS.md` with final summary stats, and create final release commit.

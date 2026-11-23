@@ -3,6 +3,7 @@ import { ArrowDown, ArrowRight, ArrowUp, CornerDownLeft, Search, X } from 'lucid
 import { useNavigate } from 'react-router-dom'
 import { useI18n } from '../../i18n'
 import { navigationText } from '../../i18n/navigation'
+import { getLabPresets } from '../../labs/presetCatalog'
 import { LAB_REGISTRY } from '../../labs/registry'
 import { useAppStore } from '../../store/useAppStore'
 
@@ -56,6 +57,11 @@ export default function CommandPalette({ onClose }: { onClose: () => void }) {
         lab.description.en, lab.description.zh].join(' '),
       run: () => navigate('/labs/' + lab.id),
     }))
+    const presets: Command[] = LAB_REGISTRY.flatMap(lab => getLabPresets(lab.id).map(preset => ({
+      id: lab.id + '-' + preset.id, title: preset.title[locale], detail: lab.title[locale],
+      keywords: [preset.title.en, preset.title.zh, preset.id].join(' '),
+      run: () => navigate('/labs/' + lab.id + '?preset=' + encodeURIComponent(preset.id)),
+    })))
     const themeKey = theme === 'dark' ? 'light' : 'dark'
     const actions: Command[] = [
       { id: 'home', title: t.explore, keywords: 'home explorer explore labs 主页 总览 探索实验室', run: () => navigate('/') },
@@ -63,7 +69,7 @@ export default function CommandPalette({ onClose }: { onClose: () => void }) {
       { id: 'theme', title: t[themeKey], keywords: 'theme ' + navigationText.en[themeKey] + navigationText.zh[themeKey], run: () => setTheme(themeKey) },
       { id: 'language', title: locale === 'en' ? t.chinese : t.english, keywords: 'English 中文 简体中文 language 语言', run: () => setLocale(locale === 'en' ? 'zh' : 'en') },
     ]
-    return [...labs, ...actions.map(action => ({ ...action, detail: t.actions }))]
+    return [...labs, ...actions.map(action => ({ ...action, detail: t.actions })), ...presets]
   }, [common, locale, navigate, setLocale, setTheme, t, theme])
 
   const results = useMemo(() => commands

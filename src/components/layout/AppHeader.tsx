@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { ChevronDown, Github, Layers3, Moon, Search, Sun } from 'lucide-react'
 import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom'
 import { useI18n } from '../../i18n'
 import { navigationText } from '../../i18n/navigation'
 import { LAB_REGISTRY } from '../../labs/registry'
 import { useAppStore } from '../../store/useAppStore'
-import CommandPalette from './CommandPalette'
+
+const CommandPalette = lazy(() => import('./CommandPalette'))
 
 function Logo() {
   return (
@@ -79,7 +80,7 @@ export default function AppHeader() {
             href={repo || 'https://github.com/search?q=TensorLens&type=repositories'} target="_blank" rel="noreferrer"><Github size={17} /></a>
         </div>
       </nav>
-      {open && <CommandPalette onClose={() => setOpen(false)} />}
+      {open && <Suspense fallback={null}><CommandPalette onClose={() => setOpen(false)} /></Suspense>}
     </header>
   )
 }

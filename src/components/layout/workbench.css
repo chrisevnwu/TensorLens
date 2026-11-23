@@ -14,7 +14,7 @@
 .wb-title p { font-size: .8rem; color: var(--text-secondary); margin: 3px 0 0; }
 .wb-actions, .wb-rail-toggles { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .wb-rail-toggles { border-inline-start: 1px solid var(--border-strong); padding-inline-start: 6px; }
-.wb-actions button, .wb-play-buttons button, .wb-segmented button, .wb-tabs button {
+.wb-actions button, .wb-play-buttons button, .wb-segmented button, .wb-tabs button, .wb-toast button {
   min-height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   color: var(--text-secondary); background: var(--bg-surface); border: 1px solid var(--border-strong);
   border-radius: 6px; padding: 5px 9px; font-family: inherit; font-weight: 550; font-size: .77rem;
@@ -79,6 +79,7 @@
   padding: 11px 15px; background: var(--bg-elevated); color: var(--text-primary);
   border: 1px solid var(--border-strong); border-radius: 7px; font-size: .84rem;
 }
+.wb-toast button { margin-block-start: 6px; }
 .wb-toast input { display: block; width: 100%; margin-block-start: 6px; }
 
 @media (min-width: 1280px) {

@@ -10,6 +10,8 @@ import type { ChapterId, LabDifficulty } from '../labs/types'
 import { useAppStore } from '../store/useAppStore'
 import './home.css'
 
+const totalLabs = LAB_REGISTRY.length
+const totalChallenges = totalLabs * 3
 const levels: readonly LabDifficulty[] = ['foundational', 'intermediate', 'advanced']
 const roman = ['I', 'II', 'III', 'IV']
 
@@ -27,7 +29,7 @@ export default function HomePage() {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const visibleLabs = LAB_REGISTRY.filter(lab =>
     (chapter === 'all' || chapter === lab.chapter) && (difficulty === 'all' || difficulty === lab.difficulty))
-  const totalCompleted = LAB_REGISTRY.reduce((sum, lab) => sum + (progress[lab.id]?.length ?? 0), 0)
+  const totalCompleted = LAB_REGISTRY.reduce((sum, lab) => sum + Math.min(3, progress[lab.id]?.length ?? 0), 0)
 
   function browse() {
     setChapter('all')
@@ -53,7 +55,7 @@ export default function HomePage() {
             {resume ? `${copy.resume} ${String(resume.number).padStart(2, '0')}` : copy.start}
             <ArrowRight size={16} aria-hidden="true" />
           </Link>
-          <button className="hero-browse" onClick={browse}>{copy.browse}<ArrowDown size={15} aria-hidden="true" /></button>
+          <button className="hero-browse" onClick={browse}>{copy.browse.replace('{count}', String(totalLabs))}<ArrowDown size={15} aria-hidden="true" /></button>
         </div>
       </div>
       <div className="hero-field" aria-hidden="true"><AmbientField /></div>
@@ -61,8 +63,8 @@ export default function HomePage() {
 
     <dl className="hero-stats">
       {[
-        { Icon: Layers3, label: copy.labStat, value: 12 },
-        { Icon: FlaskConical, label: copy.challengeStat, value: 36 },
+        { Icon: Layers3, label: copy.labStat, value: totalLabs },
+        { Icon: FlaskConical, label: copy.challengeStat, value: totalChallenges },
         { Icon: Cpu, label: copy.mathStat, value: '100%' },
       ].map(({ Icon, value, label }) => <div key={label}>
         <Icon size={19} strokeWidth={1.5} aria-hidden="true" />
@@ -85,8 +87,8 @@ export default function HomePage() {
       </div>
       {overview && <div className="catalog-progress">
         <strong>{copy.achievements}</strong>
-        <progress aria-label={copy.achievements} value={totalCompleted} max={36} />
-        <span>{totalCompleted}/36</span>
+        <progress aria-label={copy.achievements} value={totalCompleted} max={totalChallenges} />
+        <span>{totalCompleted}/{totalChallenges}</span>
       </div>}
       <div role="group" aria-label={copy.chapter} className="catalog-filters">
         <button aria-pressed={chapter === 'all'} onClick={() => setChapter('all')}>{copy.all}</button>
@@ -97,7 +99,7 @@ export default function HomePage() {
 
       <div className="catalog-grid">
         {visibleLabs.map(lab => {
-          const completed = progress[lab.id]?.length ?? 0
+          const completed = Math.min(3, progress[lab.id]?.length ?? 0)
           return <Link className="lab-card" data-tone={(lab.number - 1) % 5} to={`/labs/${lab.id}`} key={lab.id}>
             <div className="lab-card-figure">
               <span className="lab-index">{copy.lab} {String(lab.number).padStart(2, '0')}</span>

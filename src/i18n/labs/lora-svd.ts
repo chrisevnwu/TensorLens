@@ -1,9 +1,9 @@
-import type { ExactStringTree } from '../types'
+import type { ExactStringTree, Locale } from '../types'
 const en={
   presets:{intrinsic:'Intrinsic low-rank task',stress:'High-rank stress test',broken:'Broken initialization',budget:'70B QLoRA budget'},
   rank:'Adapter rank',alpha:'LoRA alpha',zero:'Initialize B to zero',target:'Target update',
   targets:{'low-rank':'Intrinsic low rank','attention-shift':'Structured attention shift','full-rank':'Full-rank random noise'},model:'Model size',
-  trainable:'Trainable parameters',energy:'Explained energy',mse:'LoRA reconstruction MSE',floor:'SVD optimal MSE',savings:'QLoRA memory savings',
+  trainable:'Trainable parameters',nearlyAll:'Over 99.99%',energy:'Explained energy',mse:'LoRA reconstruction MSE',floor:'SVD optimal MSE',savings:'QLoRA memory savings',
   paramsHint:'{adapter} trainable factors out of {total} toy parameters, including the frozen base.', savingsHint:'Relative to full BF16 fine-tuning for the selected model size.',
   fit:'An adapter fits the desired update ΔW. The full layer becomes W₀ + (α/r)BA. The frozen base is identical at every training step.',
   lineSearch:'Each step updates B, recomputes the residual, then updates A. For each factor, the other is held fixed and an exact line search minimizes the quadratic loss along the gradient direction.',
@@ -21,7 +21,7 @@ const en={
 const zh:ExactStringTree<typeof en>={
   presets:{intrinsic:'内在低秩任务',stress:'高秩压力测试',broken:'非零初始化对照',budget:'70B QLoRA 显存预算'},
   rank:'适配器秩',alpha:'LoRA 缩放系数 α',zero:'将 B 初始化为零',target:'目标更新矩阵',targets:{'low-rank':'内在低秩','attention-shift':'结构化注意力偏移','full-rank':'满秩随机噪声'},model:'模型规模',
-  trainable:'可训练参数',energy:'捕获能量',mse:'LoRA 重建均方误差',floor:'SVD 最优均方误差',savings:'QLoRA 显存节省比例',
+  trainable:'可训练参数',nearlyAll:'高于 99.99%',energy:'捕获能量',mse:'LoRA 重建均方误差',floor:'SVD 最优均方误差',savings:'QLoRA 显存节省比例',
   paramsHint:'含冻结基座在内的小模型共有 {total} 个参数，其中 {adapter} 个来自可训练因子。',savingsHint:'相对于所选规模的 BF16 全参数微调。',
   fit:'适配器拟合目标更新 ΔW，完整层的权重变为 W₀ + (α/r)BA。各训练步使用同一组冻结基座权重。',
   lineSearch:'每步先更新 B，重新计算残差，再更新 A。更新一个因子时固定另一个因子，并沿梯度方向做精确线搜索，将该方向上的二次损失降至最低。',
@@ -38,3 +38,9 @@ const zh:ExactStringTree<typeof en>={
 }
 
 export const loraCopy={en,zh}
+
+export function formatExplainedEnergy(energy: number, locale: Locale) {
+  const precision = { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 } as const
+  const display = energy.toLocaleString(locale, precision)
+  return energy < 1 && display === (1).toLocaleString(locale, precision) ? loraCopy[locale].nearlyAll : display
+}

@@ -14,7 +14,7 @@
 .bits-row-title output { font-family: var(--font-mono); color: var(--text-secondary); font-size: .75rem; overflow-wrap: anywhere; }
 .bits-payload button { margin: 0; padding: 3px 0; width: clamp(17px,1.5vw,23px); border: 1px solid var(--border-strong);
   border-radius: 3px; color: var(--bit-color); font: 600 .83rem var(--font-mono); background: var(--bg-canvas); }
-.bits-payload button[aria-pressed=true] { border-color: var(--bit-color); background: color-mix(in srgb,var(--bit-color) 13%,var(--bg-canvas)); }
+.bits-payload button[aria-pressed=true] { border-color: var(--bit-color); background: color-mix(in srgb,var(--bit-color) 8%,var(--bg-canvas)); }
 .bits-payload button:focus-visible, .bits-row-title button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 1px; }
 .bits-range { margin: 14px 0 0; }
 .bits-range svg { display: block; width: 100%; max-height: 185px; }

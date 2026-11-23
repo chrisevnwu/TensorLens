@@ -61,5 +61,22 @@ it('retains a manually copyable URL when clipboard access is unavailable', async
   const url = 'https://example.test/#/labs/embeddings-rope?step=2'
   mount({ getShareUrl: () => url })
   fireEvent.click(screen.getByRole('button', { name: 'Share URL' }))
-  expect(await screen.findByRole('textbox', { name: 'Share URL' })).toHaveValue(url)
+  const field = await screen.findByRole('textbox', { name: 'Share URL' })
+  expect(field).toHaveValue(url)
+  expect(field).toHaveFocus()
+  fireEvent.keyDown(field, { key: 'Escape' })
+  expect(screen.queryByRole('textbox', { name: 'Share URL' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Share URL' })).toHaveFocus()
+})
+
+it('associates mobile tabs with their panels and follows arrow keys', () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
+  mount()
+  const controls = screen.getByRole('tab', { name: 'Controls' })
+  expect(screen.getByRole('tabpanel', { name: 'Controls' })).toHaveAttribute('id', controls.getAttribute('aria-controls'))
+  fireEvent.keyDown(controls, { key: 'ArrowRight' })
+  const inspector = screen.getByRole('tab', { name: 'Inspector & math' })
+  expect(inspector).toHaveFocus()
+  expect(inspector).toHaveAttribute('aria-selected', 'true')
+  expect(screen.getByRole('tabpanel', { name: 'Inspector & math' })).toHaveAttribute('id', inspector.getAttribute('aria-controls'))
 })

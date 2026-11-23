@@ -42,7 +42,7 @@ export function RopeInspector({ plane }: { plane: RopePlane }) {
   const t = ropeVisuals[locale]
   return <section className="rope-inspector"><h3>{t.plane} {plane.index}</h3>
     <dl>{[
-      [t.frequency, `${plane.frequency.toPrecision(5)} rad`],
+      [t.frequency, `${plane.frequency.toPrecision(5)} ${t.frequencyUnit}`],
       [t.angle, `${plane.relativeAngle.toFixed(4)} rad`],
       ['φq', `${plane.qAngle.toFixed(4)} rad`],
       ['φk', `${plane.kAngle.toFixed(4)} rad`],

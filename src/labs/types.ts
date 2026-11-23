@@ -25,5 +25,5 @@ export interface LabDefinition {
   title: Localized<string>
   description: Localized<string>
   tags: Localized<readonly string[]>
-  component?: LazyExoticComponent<ComponentType>
+  component: LazyExoticComponent<ComponentType>
 }

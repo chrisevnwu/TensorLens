@@ -8,7 +8,7 @@ import { memoryComparison,MODEL_SIZES,type ModelSize } from '../../engine/labs/l
 import { LORA_PRESETS,type LoraPresetId } from '../../engine/labs/lora-svd/presets'
 import { makeLoraTarget,type TargetPreset } from '../../engine/labs/lora-svd/targets'
 import { useI18n } from '../../i18n'
-import { loraCopy } from '../../i18n/labs/lora-svd'
+import { formatExplainedEnergy, loraCopy } from '../../i18n/labs/lora-svd'
 import { LoraStage,LoraInspector } from './LoraStage'
 import { MemoryChart } from './MemoryChart'
 
@@ -59,7 +59,7 @@ export default function LoraLab(){
     stage={<><LoraStage result={result} step={s.step} cell={cell} onSelectCell={next=>update(next)} onStepChange={go} onRankChange={rankChange}/><MemoryChart memory={memory}/></>}
     metrics={[
       {label:t.trainable,value:(100*result.trainableFraction).toFixed(1)+'%',hint:t.paramsHint.replace('{adapter}',String(result.trainableParams)).replace('{total}',String(result.trainableParams+result.baseParams))},
-      {label:t.energy,value:(100*a.explainedEnergy).toFixed(2)+'%',tone:'accent'},{label:t.mse,value:metric(frame.mse)},
+      {label:t.energy,value:formatExplainedEnergy(a.explainedEnergy,locale),tone:'accent'},{label:t.mse,value:metric(frame.mse)},
       {label:t.floor,value:metric(a.svdFloorMse)},{label:t.savings,value:(100*memory.savings).toFixed(1)+'%',hint:t.savingsHint},
     ]}
     inspector={<LoraInspector result={result} step={s.step} cell={cell}/>}
