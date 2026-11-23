@@ -8,7 +8,7 @@
 
 TensorLens is a bilingual, browser-based workbench for exploring how language models and generative models compute. Change a token, a weight, or a solver step and inspect the numbers that produced the picture. All twelve labs run locally against small, reproducible TypeScript models. The static site includes its equations, fonts, and simulation code.
 
-![English dark-theme MoE routing workbench showing token routes, expert loads and the numerical inspector](docs/images/workbench-en.png)
+![TensorLens homepage in light mode with the interactive lab catalog](docs/images/home-light-en.png)
 
 ## Try an experiment
 
