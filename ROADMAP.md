@@ -88,11 +88,11 @@
 ## Milestone 6 (`M6`): Lab 04 — LayerNorm, RMSNorm & Residual Stream (`norm-residual`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 04
 
-- [ ] Implement `src/engine/labs/norm-residual/` (deep 4..32-layer forward + Jacobian gradient-norm simulator supporting Pre-Norm, Post-Norm, No Norm, LayerNorm, RMSNorm, Residual toggle, ReLU/GELU/SwiGLU, outlier injection) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/norm-residual.ts` (100% EN + ZH).
-- [ ] Build `src/labs/norm-residual/` (dual forward-norm & backward-gradient depth trajectory SVG charts, interactive 32-channel LayerNorm vs RMSNorm slice inspector, Stepper across layers, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/norm-residual/` (deep 4..32-layer forward + Jacobian gradient-norm simulator supporting Pre-Norm, Post-Norm, No Norm, LayerNorm, RMSNorm, Residual toggle, ReLU/GELU/SwiGLU, outlier injection) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/norm-residual.ts` (100% EN + ZH).
+- [x] Build `src/labs/norm-residual/` (dual forward-norm & backward-gradient depth trajectory SVG charts, interactive 32-channel LayerNorm vs RMSNorm slice inspector, Stepper across layers, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

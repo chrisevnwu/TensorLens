@@ -41,6 +41,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags(['Self-Attention', '自注意力'], 'Softmax', ['Causal Mask', '因果掩码'], 'MHA/GQA/MQA'),
   },
   {
+    component: lazy(() => import('./norm-residual')),
     id: 'norm-residual', number: 4, chapter: 'architecture-inference', difficulty: 'intermediate',
     title: text('LayerNorm, RMSNorm & Residual Stream', '归一化与残差流实验室'),
     description: text('Follow activations and gradients down a stack of residual blocks.', '逐层追踪残差网络中的激活幅度与梯度变化。'),

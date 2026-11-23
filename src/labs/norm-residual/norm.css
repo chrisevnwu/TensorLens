@@ -1,0 +1,14 @@
+.norm-stage { display: grid; gap: 12px; }
+.norm-stage > .wb-control { margin: 0; }
+.norm-stage .numeric-chart + .numeric-chart { border-top: 1px solid var(--border-subtle); padding-top: 10px; }
+.norm-clipped { color: var(--accent-warn); font-size: .77rem; }
+.norm-inspector h3 { font-weight: 630; margin: 0 0 7px; font-size: .91rem; }
+.norm-inspector label { display: flex; align-items: center; gap: 6px; font-size: .77rem; color: var(--text-secondary); }
+.norm-inspector select { color: var(--text-primary); background: var(--bg-elevated); border: 1px solid var(--border-strong); padding: 2px 4px; border-radius: 4px; }
+.norm-inspector svg { display:block; width:100%; margin:8px 0; }
+.norm-inspector svg text { font: 9px var(--font-mono); }
+.norm-inspector dl { margin: 0 0 8px; }
+.norm-inspector dl > div,.norm-stats > div { display: flex; gap: 8px; justify-content: space-between; padding: 3px; border-bottom: 1px solid var(--border-subtle); }
+.norm-inspector dd,.norm-stats code { margin: 0; color:var(--text-primary); font: .74rem var(--font-mono); }
+.norm-inspector dt,.norm-stats span { color: var(--text-secondary); font-size:.74rem; }
+.norm-inspector [data-active=true] { background:var(--bg-elevated); }

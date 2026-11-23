@@ -9,8 +9,8 @@
 | `M2` | Complete | implement numerical kernels and the shared lab workbench | 58 Vitest + 4 Playwright | Pass | `8262930` |
 | `M3` | Complete | teach byte-level BPE through ranked merges and byte inspection | 75 Vitest + 8 Playwright | Pass | `e4b01df` |
 | `M4` | Complete | visualize RoPE rotations and relative-position invariance | 95 Vitest + 12 Playwright | Pass | `981e9cc` |
-| `M5` | Complete | trace real multi-head attention and shared KV projections | 118 Vitest + 16 Playwright | Pass | `feat(M5)` |
-| `M6` | Pending | Lab 04: LayerNorm, RMSNorm & Residual Stream | — | — | — |
+| `M5` | Complete | trace real multi-head attention and shared KV projections | 118 Vitest + 16 Playwright | Pass | `351ea6b` |
+| `M6` | Complete | inspect exact layer Jacobians and residual signal propagation | 144 Vitest + 20 Playwright | Pass | `feat(M6)` |
 | `M7` | Pending | Lab 05: KV Cache & Prefill/Decode Profiler | — | — | — |
 | `M8` | Pending | Lab 06: FlashAttention Tiling & SRAM Simulator | — | — | — |
 | `M9` | Pending | Lab 07: MoE Router & Load Balancing Sandbox | — | — | — |
@@ -60,3 +60,9 @@ All five gates passed. 95 Vitest + 12 Playwright. Built JavaScript totals 193.1 
 Added seeded Q/K/V projections, masked softmax, exact AV and output projections, linked arc and heatmap inspection, and a six-stage bilingual debugger. Browser checks inspect a future cell in both mask modes, verify zero leakage and measure the drop from 288 to 144 KV projection parameters under GQA. Engine-first checkpoint: 113 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 118 Vitest + 16 Playwright. Built JavaScript totals 204.0 KiB gzip across all chunks.
+
+### M6 — inspect exact layer Jacobians and residual signal propagation
+
+Added a seeded 32-channel network, analytic normalization and activation VJPs, signed trajectory plots and layer/channel inspection. Independent finite differences validate the default output-channel probe. The unit lower bound is proven and tested for the translation direction of a Pre-LayerNorm residual network; arbitrary RMSNorm residual derivatives can contract. A 216-configuration depth-32 sweep stayed finite, with declared ±1e12 branch saturation in 16 extreme combinations. Engine-first checkpoint: 141 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 144 Vitest + 20 Playwright. Built JavaScript totals 212.2 KiB gzip across all chunks.

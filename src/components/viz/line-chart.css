@@ -1,0 +1,11 @@
+.numeric-chart { margin: 0; min-width: 0; }
+.numeric-chart figcaption { color: var(--text-primary); font-size: .94rem; font-weight: 630; }
+.numeric-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 6px 0; }
+.numeric-legend span { display: inline-flex; align-items: center; gap: 4px; font-size: .73rem; color: var(--text-secondary); }
+.numeric-legend b { font: 600 .73rem var(--font-mono); color: var(--text-primary); }
+.numeric-legend i { width: 12px; border-top: 2px solid currentColor; }
+.numeric-legend .numeric-band-key { height: 6px; opacity: .55; background: currentColor; }
+.numeric-chart svg { display: block; width: 100%; height: auto; }
+.numeric-chart svg[role=slider] { touch-action: none; cursor: crosshair; }
+.numeric-chart svg text { font: 10px var(--font-mono); fill: var(--text-secondary); }
+.numeric-grid { stroke: var(--border-strong); }

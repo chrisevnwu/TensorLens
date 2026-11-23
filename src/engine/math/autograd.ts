@@ -1,3 +1,5 @@
+import { geluWithDerivative } from './activations'
+
 export type AutogradOp = 'input' | 'param' | 'add' | 'sub' | 'mul' | 'div'
   | 'pow' | 'exp' | 'log' | 'relu' | 'gelu' | 'tanh' | 'sigmoid'
 
@@ -15,7 +17,6 @@ export interface AutogradNodeSnapshot {
 
 const epsilon = 1e-12
 const maxLog = Math.log(Number.MAX_VALUE)
-const geluScale = Math.sqrt(2 / Math.PI)
 
 export class Value {
   grad = 0
@@ -105,11 +106,8 @@ export class Value {
 
   /** Common tanh-approximation to GELU, differentiated using its own forward expression. */
   gelu(label = 'GELU') {
-    const x = this.value
-    const t = Math.tanh(geluScale * (x + 0.044715 * x ** 3))
-    const gate = (1 + t) / 2
-    const slope = Math.abs(t) === 1 ? gate : gate + (x / 2) * (1 - t * t) * geluScale * (1 + 3 * 0.044715 * x * x)
-    return this.unary('gelu', x * gate, slope, '(1+t)/2 + x·(1−t²)·u′/2', label)
+    const { value, slope } = geluWithDerivative(this.value)
+    return this.unary('gelu', value, slope, '(1+t)/2 + x·(1−t²)·u′/2', label)
   }
 
   tanh(label = 'tanh') {
