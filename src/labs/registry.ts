@@ -27,6 +27,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags('BPE', 'UTF-8', ['Subwords', '子词'], ['Compression', '压缩']),
   },
   {
+    component: lazy(() => import('./embeddings-rope')),
     id: 'embeddings-rope', number: 2, chapter: 'sequence-attention', difficulty: 'intermediate',
     title: text('Embeddings & RoPE Geometry', '词嵌入与 RoPE 旋转位置编码'),
     description: text('Rotate paired coordinates to see how attention measures relative position.', '旋转成对坐标，观察注意力如何度量相对位置。'),

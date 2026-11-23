@@ -66,11 +66,11 @@
 ## Milestone 4 (`M4`): Lab 02 — Embeddings & RoPE Geometry (`embeddings-rope`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 02
 
-- [ ] Implement `src/engine/labs/embeddings-rope/` (RoPE complex-plane rotations, Sinusoidal PE, PI & NTK-Aware scaling, relative-distance decay curves) + Vitest invariant suite (orthogonality `1e-10`, relative shift invariance `1e-10`, origin identity, NTK scaling monotonicity).
-- [ ] Add `src/i18n/labs/embeddings-rope.ts` (100% EN + ZH).
-- [ ] Build `src/labs/embeddings-rope/` (multi-plane 2D polar wheel SVG grid, relative distance decay SVG plot, `Shift Both` invariance slider, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/embeddings-rope/` (RoPE complex-plane rotations, Sinusoidal PE, PI & NTK-Aware scaling, relative-distance decay curves) + Vitest invariant suite (orthogonality `1e-10`, relative shift invariance `1e-10`, origin identity, NTK scaling monotonicity).
+- [x] Add `src/i18n/labs/embeddings-rope.ts` (100% EN + ZH).
+- [x] Build `src/labs/embeddings-rope/` (multi-plane 2D polar wheel SVG grid, relative distance decay SVG plot, `Shift Both` invariance slider, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

@@ -4,11 +4,11 @@
 
 | Milestone | Status | Summary | Tests Passed | Build Status | Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `M0` | Complete | bootstrap the static React workspace and verification pipeline | 1 Vitest + 2 Playwright | Pass | `feat(M0)` |
-| `M1` | Complete | ship the bilingual explorer and application shell | 5 Vitest + 4 Playwright | Pass | `feat(M1)` |
-| `M2` | Complete | implement numerical kernels and the shared lab workbench | 58 Vitest + 4 Playwright | Pass | `feat(M2)` |
-| `M3` | Complete | teach byte-level BPE through ranked merges and byte inspection | 75 Vitest + 8 Playwright | Pass | `feat(M3)` |
-| `M4` | Pending | Lab 02: Embeddings & RoPE Geometry | — | — | — |
+| `M0` | Complete | bootstrap the static React workspace and verification pipeline | 1 Vitest + 2 Playwright | Pass | `7c96b10` |
+| `M1` | Complete | ship the bilingual explorer and application shell | 5 Vitest + 4 Playwright | Pass | `21633ec` |
+| `M2` | Complete | implement numerical kernels and the shared lab workbench | 58 Vitest + 4 Playwright | Pass | `8262930` |
+| `M3` | Complete | teach byte-level BPE through ranked merges and byte inspection | 75 Vitest + 8 Playwright | Pass | `e4b01df` |
+| `M4` | Complete | visualize RoPE rotations and relative-position invariance | 95 Vitest + 12 Playwright | Pass | `feat(M4)` |
 | `M5` | Pending | Lab 03: Multi-Head Attention Debugger | — | — | — |
 | `M6` | Pending | Lab 04: LayerNorm, RMSNorm & Residual Stream | — | — | — |
 | `M7` | Pending | Lab 05: KV Cache & Prefill/Decode Profiler | — | — | — |
@@ -48,3 +48,9 @@ All five gates passed. 58 Vitest + 4 Playwright. Built JavaScript totals 96.6 Ki
 Implemented src/engine/labs/bpe-tokenizer and its lazy workbench, recursive merge inspection, byte-aligned corpus highlights, bilingual missions, URL replay and a real PNG download. Chromium verified that a clicked depth-three merge completes the challenge and shared Unicode input survives reopening. Engine-first checkpoint: 71 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 75 Vitest + 8 Playwright. Built JavaScript totals 185.4 KiB gzip across all chunks.
+
+### M4 — visualize RoPE rotations and relative-position invariance
+
+Added deterministic query and key embeddings, multi-plane rotations, signed-distance score curves, sinusoidal comparison, PI and NTK scaling. The lab links a draggable score marker, selected plane and workbench stepper. Chromium verified the displayed dot product stays fixed during a common shift. Engine-first checkpoint: 92 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 95 Vitest + 12 Playwright. Built JavaScript totals 193.1 KiB gzip across all chunks.
