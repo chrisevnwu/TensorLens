@@ -25,7 +25,7 @@ export default function AmbientField() {
       if (last && animated) elapsed += Math.min(time - last, 45)
       last = time
       ctx.clearRect(0, 0, width, height)
-      const scale = Math.min(width / 3.55, height / 2.75)
+      const scale = Math.min(width / 3.85, height / 3.25)
       projectKnot(vertices, points, -0.55 + elapsed * 0.000075 + cursor * 0.15, 0.89)
       const position = (i: number) => [width * 0.5 + points[i]! * scale, height * 0.50 + points[i+1]! * scale] as const
       for (let ring = 0; ring < rings; ring++) {

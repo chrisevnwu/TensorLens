@@ -34,21 +34,21 @@
 ## Milestone 2 (`M2`): Core Pure-TS Math Engine & Shared Workbench SDK
 **Goal**: Build and exhaustively unit-test the shared pure TypeScript numerical library (`src/engine/math/`) and all shared workbench UI/viz components (`LabShell`, `FormulaBar`, controls, `HiDPICanvas`, `MatrixHeatmap`, PNG exporter, URL state sync).
 
-- [ ] Implement pure math engine modules (zero React/DOM imports):
+- [x] Implement pure math engine modules (zero React/DOM imports):
   - `src/engine/math/prng.ts` (Mulberry32 + Box-Muller + shuffle)
   - `src/engine/math/matrix.ts` (`Matrix`, `stableSoftmax`, `logSumExp`, `dotProduct`, `cosineSimilarity`, `shannonEntropy`, `layerNormVector`, `rmsNormVector`, `mse`, `sqnrDb`)
   - `src/engine/math/svd.ts` (Deterministic Jacobi SVD + `reconstructRankR`)
   - `src/engine/math/autograd.ts` (Scalar reverse-mode `Value` DAG + `backwardTrace()`)
   - `src/engine/math/ieee754.ts` (FP32, FP16, BF16, FP8 E4M3, FP8 E5M2 bit codecs)
   - `src/engine/math/colormaps.ts` (Theme-aware sequential, diverging, categorical color ramps)
-- [ ] Write exhaustive Vitest math invariant tests in `src/engine/math/__tests__/` verifying SVD precision `< 1e-8`, autograd vs numerical finite diffs `< 1e-5`, IEEE-754 edge cases (BF16 vs FP16 overflow, FP8 E4M3 max 448), softmax stability, and PRNG determinism.
-- [ ] Build shared workbench & UI primitives:
+- [x] Write exhaustive Vitest math invariant tests in `src/engine/math/__tests__/` verifying SVD precision `< 1e-8`, autograd vs numerical finite diffs `< 1e-5`, IEEE-754 edge cases (BF16 vs FP16 overflow, FP8 E4M3 max 448), softmax stability, and PRNG determinism.
+- [x] Build shared workbench & UI primitives:
   - `src/components/layout/LabShell.tsx` (4-zone responsive workbench, keyboard shortcuts `Space`/`←`/`→`/`R`, Share URL toast, PNG export button, Prev/Next Lab footer, automatic challenge persistence)
   - `src/components/controls/` (`SliderControl`, `SegmentedControl`, `ToggleControl`, `SelectControl`, `PresetBar`, `StepController`)
   - `src/components/viz/` (`FormulaBar`, `HiDPICanvas`, `MatrixHeatmap`, `MetricCard`, `ChallengePanel`)
   - `src/components/utils/` (`useThemePalette`, `useSimulationLoop`, `useLabUrlState`, `exportSnapshot`)
-- [ ] Write component unit tests for `LabShell`, `FormulaBar`, `ChallengePanel`, and `useLabUrlState`.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Write component unit tests for `LabShell`, `FormulaBar`, `ChallengePanel`, and `useLabUrlState`.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

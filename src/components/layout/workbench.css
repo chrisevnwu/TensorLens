@@ -1,0 +1,112 @@
+.workbench {
+  --rail-width: clamp(280px, 20vw, 310px);
+  --inspector-width: clamp(300px, 22vw, 340px);
+  color: var(--text-primary); font-size: .89rem; min-height: calc(100svh - 56px);
+  margin-inline: auto; max-width: 2100px;
+}
+.wb-toolbar, .wb-neighbors {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 12px clamp(16px, 2.7vw, 44px); border-block-end: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+}
+.wb-toolbar h1 { font-size: clamp(1.18rem, 1.7vw, 1.52rem); font-weight: 650; letter-spacing: -.035em; line-height: 1.2; margin: 0; }
+.wb-title { min-width: 0; }
+.wb-title p { font-size: .8rem; color: var(--text-secondary); margin: 3px 0 0; }
+.wb-actions, .wb-rail-toggles { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.wb-rail-toggles { border-inline-start: 1px solid var(--border-strong); padding-inline-start: 6px; }
+.wb-actions button, .wb-play-buttons button, .wb-segmented button, .wb-tabs button {
+  min-height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  color: var(--text-secondary); background: var(--bg-surface); border: 1px solid var(--border-strong);
+  border-radius: 6px; padding: 5px 9px; font-family: inherit; font-weight: 550; font-size: .77rem;
+}
+.wb-actions svg, .wb-play-buttons svg, .wb-neighbors svg { flex: none; width: 15px; height: 15px; stroke-width: 1.6; }
+.wb-actions button:hover, .wb-play-buttons button:not(:disabled):hover, .wb-segmented button:hover, .wb-tabs button:hover {
+  background: var(--bg-elevated); color: var(--text-primary);
+}
+.wb-actions button:disabled, .wb-play-buttons button:disabled { opacity: .5; }
+.wb-grid { display: grid; grid-template-columns: var(--rail-width) minmax(0,1fr) var(--inspector-width); align-items: stretch; min-height: 61vh; }
+.wb-stage { grid-area: 1 / 2; min-width: 0; overflow-wrap: anywhere; padding: clamp(12px,1.5vw,24px); }
+.wb-stage-surface {
+  overflow-wrap: anywhere; min-width: 0; width: 100%; background: var(--bg-surface);
+  border: 1px solid var(--border-strong); border-radius: 9px; padding: clamp(10px,1.2vw,20px);
+}
+.wb-stage-surface svg, .wb-stage-surface canvas { max-width: 100%; }
+.wb-rail, .wb-inspector {
+  min-width: 0; overflow-wrap: anywhere; padding: 20px 18px; background: var(--bg-surface); font-size: .84rem;
+}
+.wb-rail { grid-area: 1 / 1; border-right: 1px solid var(--border-strong); }
+.wb-inspector { grid-area: 1 / 3; border-left: 1px solid var(--border-strong); }
+.wb-controls > h2, .wb-challenges > h2, .wb-inspector h2 {
+  margin: 0 0 12px; font-weight: 630; font-size: .94rem; line-height: 1.35; letter-spacing: -.02em;
+}
+.wb-inspector section + section, .wb-challenges {
+  margin-top: 18px; padding-top: 17px; border-top: 1px solid var(--border-subtle);
+}
+.wb-inspector section > p { line-height: 1.6; color: var(--text-secondary); }
+.wb-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; }
+.wb-control { margin: 0 0 14px; min-width: 0; padding: 0; border: 0; display: grid; gap: 6px; }
+.wb-control label, .wb-control legend, .wb-toggle { font-size: .81rem; font-weight: 550; line-height: 1.4; }
+.wb-control legend { padding: 0 0 6px; }
+.wb-control-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.wb-control output, .wb-step-line output { font-family: var(--font-mono); color: var(--text-secondary); }
+.wb-control input[type=range], .wb-step-line input[type=range] { display: block; width: 100%; min-width: 0; accent-color: var(--accent-primary); }
+.wb-segmented { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+.wb-segmented button { min-height: 29px; padding: 4px 8px; text-align: start; }
+.wb-segmented button[aria-pressed=true], .wb-tabs button[aria-selected=true], .wb-play-buttons .wb-play {
+  background: color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface));
+  border-color: color-mix(in srgb, var(--accent-primary) 48%, var(--border-strong)); color: var(--text-primary);
+}
+.wb-control select, .wb-play-buttons select, .wb-toast input {
+  min-width: 0; color: var(--text-primary); background: var(--bg-elevated); border: 1px solid var(--border-strong);
+  border-radius: 5px; padding: 6px 8px; font: inherit;
+}
+.wb-toggle { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.wb-toggle input { width: 17px; height: 17px; accent-color: var(--accent-primary); cursor: pointer; }
+.wb-stepper { margin-top: 12px; padding: 12px; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-surface); }
+.wb-step-line { display: flex; align-items: center; gap: 10px; }
+.wb-step-line label, .wb-step-line output { font-size: .75rem; white-space: nowrap; }
+.wb-play-buttons { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.wb-play-buttons button { width: 31px; padding: 4px; }
+.wb-play-buttons select { margin-inline-start: auto; font-size: .76rem; }
+.wb-neighbors { border-block-start: 1px solid var(--border-strong); border-block-end: 0; }
+.wb-neighbors a { display: flex; align-items: center; gap: 10px; color: var(--text-primary); min-width: 0; font-size: .85rem; }
+.wb-neighbors small { display: block; color: var(--text-secondary); font-size: .72rem; margin-block-end: 1px; }
+.wb-neighbors a:hover { color: var(--accent-primary); }
+.wb-next { margin-inline-start: auto; text-align: end; }
+.wb-actions .wb-tablet-toggle, .wb-tabs { display: none; }
+.wb-toast {
+  position: fixed; z-index: 15; inset-block-end: 16px; inset-inline-end: 16px; max-width: calc(100vw - 32px);
+  padding: 11px 15px; background: var(--bg-elevated); color: var(--text-primary);
+  border: 1px solid var(--border-strong); border-radius: 7px; font-size: .84rem;
+}
+.wb-toast input { display: block; width: 100%; margin-block-start: 6px; }
+
+@media (min-width: 1280px) {
+  .workbench[data-left=closed] { --rail-width: 0px; }
+  .workbench[data-right=closed] { --inspector-width: 0px; }
+  .workbench[data-left=closed] .wb-rail, .workbench[data-right=closed] .wb-inspector { display: none; }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .wb-rail-toggles { display: none; }
+  .wb-actions .wb-tablet-toggle { display: inline-flex; }
+  .wb-grid { grid-template-columns: clamp(218px,28vw,290px) minmax(0,1fr); }
+  .wb-inspector { grid-area: 2 / 1 / 3 / -1; border-left: none; border-top: 1px solid var(--border-strong); }
+  .workbench[data-inspector=closed] .wb-inspector { display: none; }
+}
+@media (max-width: 767px) {
+  .wb-toolbar { align-items: flex-start; flex-direction: column; gap: 10px; padding: 14px 12px; }
+  .wb-rail-toggles { display: none; }
+  .wb-grid { min-height: 0; display: flex; flex-direction: column; }
+  .wb-stage { padding: 12px; }
+  .wb-rail { display: contents; }
+  .wb-tabs { display: flex; gap: 4px; padding: 5px 12px 8px; background: var(--bg-canvas); }
+  .wb-tabs button { flex: 1; }
+  .wb-controls, .wb-challenges, .wb-inspector {
+    padding: 16px 14px; margin: 0; background: var(--bg-surface);
+    border: 0; border-top: 1px solid var(--border-subtle);
+  }
+  .workbench:not([data-tab=controls]) .wb-controls, .workbench:not([data-tab=inspector]) .wb-inspector,
+  .workbench:not([data-tab=challenges]) .wb-challenges { display: none; }
+  .wb-neighbors { padding: 12px; align-items: stretch; }
+  .wb-neighbors a { font-size: .75rem; gap: 5px; flex: 0 1 48%; }
+}

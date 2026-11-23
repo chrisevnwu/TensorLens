@@ -16,3 +16,19 @@ code, kbd, output { font-family: var(--font-mono); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+.formula-bar { overflow-x: auto; max-width: 100%; font-size: 1rem; color: var(--text-primary); padding: .8rem 1rem; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-surface); }
+.metric-card { min-width: 0; padding: .8rem; background: var(--bg-elevated); border-radius: 7px; overflow-wrap: anywhere; }
+.metric-card div, .metric-card small { color: var(--text-secondary); font-size: .78rem; }
+.metric-card output { display: block; font-size: 1.04rem; margin-top: .3rem; }
+.metric-card[data-tone=accent] output { color: var(--accent-primary); }
+.metric-card[data-tone=good] output, .challenge-list li[data-complete=true] svg { color: var(--accent-tertiary); }
+.metric-card[data-tone=warn] output { color: var(--accent-warn); }
+.metric-card[data-tone=danger] output { color: var(--accent-danger); }
+.challenge-list { list-style: none; padding: 0; margin: 0; }
+.challenge-list li { border-top: 1px solid var(--border-subtle); padding: .75rem 0; }
+.challenge-heading { display: flex; align-items: baseline; gap: .45rem; font-size: .87rem; }
+.challenge-heading svg { flex-shrink: 0; align-self: center; color: var(--text-muted); }
+.challenge-list p, .challenge-list details { font-size: .8rem; line-height: 1.5; color: var(--text-secondary); margin: .3rem 0 0 1.3rem; }
+.challenge-list summary { color: var(--accent-tertiary); }
+.matrix-heatmap { display: block; width: 100%; max-height: 24rem; }

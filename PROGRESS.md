@@ -6,7 +6,7 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `M0` | Complete | bootstrap the static React workspace and verification pipeline | 1 Vitest + 2 Playwright | Pass | `feat(M0)` |
 | `M1` | Complete | ship the bilingual explorer and application shell | 5 Vitest + 4 Playwright | Pass | `feat(M1)` |
-| `M2` | Pending | Core pure-TS math engine & shared workbench SDK | — | — | — |
+| `M2` | Complete | implement numerical kernels and the shared lab workbench | 58 Vitest + 4 Playwright | Pass | `feat(M2)` |
 | `M3` | Pending | Lab 01: BPE Tokenizer & Subword Lab | — | — | — |
 | `M4` | Pending | Lab 02: Embeddings & RoPE Geometry | — | — | — |
 | `M5` | Pending | Lab 03: Multi-Head Attention Debugger | — | — | — |
@@ -36,3 +36,9 @@ All five gates passed. 1 Vitest + 2 Playwright. Built JavaScript totals 68.1 KiB
 Added the typed catalog, persisted preferences and progress, command palette, responsive catalog and projected torus-knot hero. Confirmed keyboard navigation, bilingual search, reload persistence, catalog filters and both viewports in Chromium. GitHub Pages injects the repository URL at build time.
 
 All five gates passed. 5 Vitest + 4 Playwright. Built JavaScript totals 96.6 KiB gzip across all chunks.
+
+### M2 — implement numerical kernels and the shared lab workbench
+
+Added deterministic PRNG, matrix operations, Jacobi SVD, reverse-mode autodiff, IEEE codecs and colormaps under src/engine/math. Added responsive LabShell, controls, typed URL codec, KaTeX, heatmap, HiDPI canvas, challenge persistence and snapshot export. An independent Chromium check downloaded a 2× composite PNG with canvas, inline SVG and text.
+
+All five gates passed. 58 Vitest + 4 Playwright. Built JavaScript totals 96.6 KiB gzip across all chunks.
