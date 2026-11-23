@@ -6,6 +6,6 @@
 .numeric-legend i { width: 12px; border-top: 2px solid currentColor; }
 .numeric-legend .numeric-band-key { height: 6px; opacity: .55; background: currentColor; }
 .numeric-chart svg { display: block; width: 100%; height: auto; }
-.numeric-chart svg[role=slider] { touch-action: none; cursor: crosshair; }
-.numeric-chart svg text { font: 10px var(--font-mono); fill: var(--text-secondary); }
+.numeric-chart svg[role=slider] { touch-action: pan-y pinch-zoom; cursor: crosshair; }
+.numeric-chart svg text { font: 11px var(--font-mono); fill: var(--text-secondary); }
 .numeric-grid { stroke: var(--border-strong); }

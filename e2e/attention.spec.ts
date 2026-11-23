@@ -44,3 +44,28 @@ test('removes future attention without changing its raw projection, then shares 
   await panel('challenges')
   await expect(page.locator('#wb-challenges li').nth(2)).toHaveAttribute('data-complete', 'true')
 })
+
+test('keeps edited long tokens intact across arc selection and a shared link', async ({ page }) => {
+  await page.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: undefined }))
+  await page.goto('./#/labs/attention-debugger')
+  const tokens = Array.from({ length: 6 }, (_, i) => String(i).padEnd(64, '数'))
+  const tokenInputs = page.locator('.attention-input-chips input')
+  for (const [i, token] of tokens.entries()) await tokenInputs.nth(i).fill(token)
+  const text = page.locator('textarea[name="tokens"]')
+  await expect(text).toHaveValue(tokens.join(' '))
+
+  const query = page.getByRole('button', { name: 'Query 4: ' + tokens[4], exact: true })
+  await query.press('Enter')
+  await expect(query).toHaveAttribute('aria-pressed', 'true')
+  await expect(query).toHaveAttribute('title', tokens[4]!)
+  await expect(query).toHaveCSS('text-overflow', 'ellipsis')
+  expect(await query.evaluate(button => button.scrollWidth > button.clientWidth)).toBe(true)
+
+  await page.getByRole('button', { name: 'Share URL', exact: true }).click()
+  const shared = await page.getByRole('textbox', { name: 'Share URL', exact: true }).inputValue()
+  await page.goto('about:blank')
+  await page.goto(shared)
+  await expect(text).toHaveValue(tokens.join(' '))
+  await expect(query).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.locator('.attention-inspector .attention-pair')).toContainText('q[4] ' + tokens[4])
+})

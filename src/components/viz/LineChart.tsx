@@ -1,4 +1,5 @@
-import type { KeyboardEvent, PointerEvent } from 'react'
+import type { KeyboardEvent } from 'react'
+import { usePlotScrub, usePlotWidth } from './usePlotInteraction'
 import './line-chart.css'
 
 export interface ChartSeries {
@@ -35,8 +36,12 @@ export function formatPlotValue(n: number) {
 /** Equally spaced observations on a shared y-axis. Symlog retains signs and zero. */
 export function LineChart({label,xLabel,xValues,series,band,selectedIndex,onSelectIndex,scale='linear',logThreshold=1}: LineChartProps) {
   const length = series[0]?.values.length ?? 0
+  const { ref, width } = usePlotWidth(510)
+  const left = 60, right = width - 22, top = 14, bottom = 111
+  const scrub = usePlotScrub(onSelectIndex && (pos => {
+    onSelectIndex(Math.max(0, Math.min(length - 1, Math.round((pos - left) * (length - 1) / (right - left)))))
+  }))
   if (!length) return null
-  const left=60, right=492, top=14, bottom=111, width=510
   const threshold = Math.max(Number.EPSILON,logThreshold)
   const transform = (v:number) => scale==='symlog' ? Math.sign(v)*Math.log1p(Math.abs(v)/threshold) : v
   const inverse = (v:number) => scale==='symlog' ? Math.sign(v)*threshold*Math.expm1(Math.abs(v)) : v
@@ -51,11 +56,6 @@ export function LineChart({label,xLabel,xValues,series,band,selectedIndex,onSele
   // Keep the zero baseline legible when a symmetric-log tick lands beside it.
   const crossesZero = lower < 0 && upper > 0
   const tickValues = ticks.filter(tick => !crossesZero || tick === 0 || Math.abs(tick) / extent > .12)
-  function choose(event: PointerEvent<SVGSVGElement>) {
-    const rect = event.currentTarget.getBoundingClientRect()
-    const pos = (event.clientX-rect.left) * width / Math.max(1,rect.width)
-    onSelectIndex?.(Math.max(0,Math.min(length-1,Math.round((pos-left)*(length-1)/(right-left)))))
-  }
   function navigate(event: KeyboardEvent<SVGSVGElement>) {
     const indices: Record<string,number> = {ArrowLeft:point-1,ArrowDown:point-1,ArrowRight:point+1,ArrowUp:point+1,Home:0,End:length-1}
     const value = indices[event.key]
@@ -66,14 +66,14 @@ export function LineChart({label,xLabel,xValues,series,band,selectedIndex,onSele
   return <figure className="numeric-chart">
     <figcaption>{label}</figcaption>
     <div className="numeric-legend">
-      {series.map(s=><span key={s.label}><i style={{color:s.color}} />{s.label} <b>{formatPlotValue(s.values[point]!)}</b></span>)}
+      {series.map(s=><span key={s.label}><i style={{color:s.color, borderTopStyle:s.dashed ? 'dashed' : 'solid'}} />{s.label} <b>{formatPlotValue(s.values[point]!)}</b></span>)}
       {band && <span><i className="numeric-band-key" style={{color:band.color}}/>{band.label}</span>}
     </div>
-    <svg viewBox={`0 0 ${width} 146`} role={onSelectIndex?'slider':'img'} tabIndex={onSelectIndex?0:undefined}
+    <svg ref={ref} viewBox={`0 0 ${width} 146`} role={onSelectIndex?'slider':'img'} tabIndex={onSelectIndex?0:undefined}
       aria-label={label} aria-valuemin={onSelectIndex?0:undefined} aria-valuemax={onSelectIndex?length-1:undefined}
-      aria-valuenow={onSelectIndex?point:undefined} aria-valuetext={onSelectIndex?`${xLabel} ${xValues?.[point] ?? point}`:undefined}
-      onPointerDown={event=>{if(onSelectIndex){event.currentTarget.setPointerCapture(event.pointerId);choose(event)}}}
-      onPointerMove={event=>{if(onSelectIndex && event.currentTarget.hasPointerCapture(event.pointerId))choose(event)}}
+      aria-valuenow={onSelectIndex?point:undefined} aria-valuetext={onSelectIndex ? [xLabel + ' ' + (xValues?.[point] ?? point),
+        ...series.map(s => s.label + ' ' + formatPlotValue(s.values[point]!))].join(', ') : undefined}
+      {...scrub}
       onKeyDown={navigate}>
       {tickValues.map(t=><g key={t}><line className="numeric-grid" x1={left} x2={right} y1={y(inverse(t))} y2={y(inverse(t))}/>
         <text x={left-5} y={y(inverse(t))+3} textAnchor="end">{formatPlotValue(inverse(t))}</text></g>)}

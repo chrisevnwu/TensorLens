@@ -8,11 +8,11 @@ From the repository root, use Node.js 24 with npm.
 
 ```sh
 npm ci
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run dev
 ```
 
-Vite prints the development URL. The production browser tests start their own preview on port 4173. On a clean Linux CI runner, install Chromium with `npx playwright install --with-deps chromium`.
+Vite prints the development URL. The production browser tests start their own preview on port 4174. On a clean Linux CI runner, install the browsers and system packages with `npx playwright install --with-deps chromium firefox webkit`.
 
 ## Add Lab 13
 

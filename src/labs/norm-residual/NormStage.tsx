@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { SegmentedControl } from '../../components/controls'
 import { LineChart, formatPlotValue } from '../../components/viz/LineChart'
 import type { ResidualResult, ResidualConfig } from '../../engine/labs/norm-residual/engine'
@@ -30,10 +29,16 @@ export function NormStage({result,layer,onLayerChange,logScale,onLogScaleChange}
   </div>
 }
 
-export function NormInspector({result,layer,normType}: {result:ResidualResult; layer:number; normType:ResidualConfig['normType']}) {
+interface InspectorProps {
+  result: ResidualResult
+  layer: number
+  normType: ResidualConfig['normType']
+  channel: number
+  onChannelChange: (channel: number) => void
+}
+export function NormInspector({result,layer,normType,channel,onChannelChange}: InspectorProps) {
   const { locale } = useI18n()
   const t = normVisuals[locale]
-  const [channel,setChannel] = useState(0)
   const frame = result.trace[layer]!
   const series = [
     {label:t.raw,values:frame.x,tone:'var(--accent-primary)'},
@@ -43,7 +48,7 @@ export function NormInspector({result,layer,normType}: {result:ResidualResult; l
   const max = Math.max(1e-12,...series.flatMap(s=>s.values.map(Math.abs)))
   return <section className="norm-inspector">
     <h3>{t.slice} · {t.layer} {layer}</h3>
-    <label>{t.channel} <select value={channel} onChange={event=>setChannel(Number(event.target.value))}>
+    <label>{t.channel} <select value={channel} onChange={event=>onChannelChange(Number(event.target.value))}>
       {frame.x.map((_,i)=><option value={i} key={i}>{i}</option>)}
     </select></label>
     <svg viewBox="0 0 270 282" role="img" aria-label={`${t.slice} · ${t.layer} ${layer}`}>
@@ -53,7 +58,11 @@ export function NormInspector({result,layer,normType}: {result:ResidualResult; l
           <line x1={center} x2={center} y1="16" y2="278" stroke="var(--border-strong)"/>
         </g>
       })}
-      {frame.x.map((_,i)=><g key={i} data-channel={i} onPointerEnter={()=>setChannel(i)} onClick={()=>setChannel(i)}>
+      {frame.x.map((_,i)=><g key={i} data-channel={i}
+        onPointerMove={event => {
+          if (event.pointerType !== 'touch' && i !== channel) onChannelChange(i)
+        }}
+        onClick={() => onChannelChange(i)}>
         <rect x="0" y={17+i*8.1} width="270" height="8.1" fill={i===channel?'var(--bg-elevated)':'transparent'}/>
         {(i%8===0||i===31)&&<text x="1" y={23+i*8.1} fill="var(--text-secondary)">{i}</text>}
         {series.map((s,c)=>{

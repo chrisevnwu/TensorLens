@@ -10,5 +10,8 @@ export function FactorTile({label,matrix,cell,onSelectCell,domain,name}:Props){
       <MatrixHeatmap values={grid} label={label} signed domain={domain} selected={cell} onSelect={onSelectCell}/>
     </div></div>
     <small>{matrix.rows} × {matrix.cols}</small>
+    {cell && <span className="matrix-cell-value" title={String(matrix.get(cell.row,cell.col))}>
+      {Number(matrix.get(cell.row,cell.col).toPrecision(5))}
+    </span>}
   </figure>
 }

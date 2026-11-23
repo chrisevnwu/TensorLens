@@ -48,14 +48,14 @@ npm run dev
 
 Open the local address printed by Vite. Append `/#/labs/attention-debugger?preset=causal&step=3` to the local origin to open the masking step directly.
 
-To run the full verification gate, first install Chromium for Playwright. On Linux CI, use `npx playwright install --with-deps chromium` to include system packages.
+To run the full verification gate, first install the three Playwright browser engines. On Linux CI, use `npx playwright install --with-deps chromium firefox webkit` to include system packages.
 
 ```sh
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e
 ```
 
-The build checks the landing JavaScript budget (under 200 kB gzip) and verifies that every lab has its own lazy entry. Vitest runs the engines in Node and component tests in jsdom. Playwright serves the production build on port 4173 and uses Chromium at 1440 × 900 and 390 × 844. For a manual inspection of that build, run `npm run preview` after the tests finish.
+The build checks the landing JavaScript budget (under 200 kB gzip) and verifies that every lab has its own lazy entry. Vitest runs the engines in Node and component tests in jsdom. Playwright serves the production build on port 4174. It exercises desktop and mobile Chromium, tablet-sized WebKit and laptop-sized Firefox. Run `npm run preview` on port 4173 for manual inspection.
 
 ## Architecture
 

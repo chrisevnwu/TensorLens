@@ -4,13 +4,13 @@ import { ExperimentShell } from '../../components/layout/ExperimentShell'
 import { booleanField, choiceField, makeUrlCodec, numberField, useLabUrlState, type UrlStateCodec } from '../../components/utils/useLabUrlState'
 import { FormulaBar } from '../../components/viz/FormulaBar'
 import { simulateFlash, type FlashConfig } from '../../engine/labs/flash-attention/engine'
-import { scalingCurve, tiledBytes } from '../../engine/labs/flash-attention/io'
+import { SCALING_LENGTHS, scalingCurve, tiledBytes } from '../../engine/labs/flash-attention/io'
 import { FLASH_PRESETS, type FlashPresetId } from '../../engine/labs/flash-attention/presets'
 import { useI18n } from '../../i18n'
 import { flashCopy } from '../../i18n/labs/flash-attention'
 import { FlashStage, FlashInspector } from './FlashStage'
 
-interface State extends FlashConfig {preset:FlashPresetId; sramKB:number; step:number; sawNarrow:boolean}
+interface State extends FlashConfig {preset:FlashPresetId; sramKB:number; step:number; scalingLength:number; sawNarrow:boolean}
 const lengths=[8,12,16], blocks=[2,4,8]
 function normalize(s:State):State {
   const available=blocks.filter(b=>s.seqLen%b===0)
@@ -20,12 +20,12 @@ function normalize(s:State):State {
 }
 function presetState(id:FlashPresetId):State {
   const {id:preset,...config}=FLASH_PRESETS.find(p=>p.id===id) ?? FLASH_PRESETS[0]
-  return normalize({...config,preset,step:0,sawNarrow:false})
+  return normalize({...config,preset,step:0,scalingLength:SCALING_LENGTHS[0],sawNarrow:false})
 }
 const initial=presetState('small')
 const fields=makeUrlCodec<State>({
   preset:choiceField(FLASH_PRESETS.map(p=>p.id)),seqLen:choiceField(lengths),blockBr:choiceField(blocks),blockBc:choiceField(blocks),
-  causalMask:booleanField,sramKB:numberField(64,256,1),step:numberField(0,256,1),sawNarrow:booleanField,
+  causalMask:booleanField,sramKB:numberField(64,256,1),scalingLength:choiceField<number>(SCALING_LENGTHS),step:numberField(0,256,1),sawNarrow:booleanField,
 })
 const codec:UrlStateCodec<State>={
   encode:fields.encode,
@@ -79,7 +79,8 @@ export default function FlashLab() {
       {id:'skipping',...t.missions.skipping,completed:causalMask && seqLen===16 && blockBr===4 && blockBc===4 && frame.skippedTiles>=6},
       {id:'tiles',...t.missions.tiles,completed:s.sawNarrow && blockBr===8 && result.flashBytes<baseline},
     ]}
-    stage={<FlashStage result={result} step={step} config={config} scaling={scaling} onStepChange={go} />}
+    stage={<FlashStage result={result} step={step} config={config} scaling={scaling} scalingLength={s.scalingLength}
+      onScalingLengthChange={scalingLength=>setState(old=>({...old,scalingLength}))} onStepChange={go} />}
     metrics={[
       {label:t.flash,value:result.flashBytes+' B',hint:t.total,tone:'accent'},
       {label:t.standard,value:result.standardBytes+' B',hint:t.total},

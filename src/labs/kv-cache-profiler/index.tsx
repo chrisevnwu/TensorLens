@@ -51,7 +51,8 @@ export default function KvLab() {
       {id:'rescue',...t.missions.rescue,completed:['GQA','MLA'].includes(s.attentionType) && s.kvPrecision!=='FP16' && result.kvSavingsRatio>=.75},
       {id:'roofline',...t.missions.roofline,completed:s.batchSize>=32 && result.decodeAI>=10*result.singleBatchDecodeAI},
     ]}
-    stage={<KvStage result={result} hardware={hardware} frame={frame} mode={s.mode} />}
+    stage={<KvStage result={result} hardware={hardware} frame={frame} mode={s.mode}
+      probeAI={s.probeAI} onProbeChange={probeAI=>update({probeAI})} />}
     metrics={[
       {label:t.cache,value:(result.kvBytes/1e9).toFixed(3),tone:result.isOom?'danger':'accent'},
       {label:t.speed,value:result.tokensPerSecond.toFixed(1),hint:speedHint},

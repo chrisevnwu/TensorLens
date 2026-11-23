@@ -1,4 +1,6 @@
 import { useMemo } from 'react'
+import { usePlotWidth } from '../../components/viz/usePlotInteraction'
+import { MatrixCellPicker } from '../../components/viz/MatrixCellPicker'
 import type { HeatCell } from '../../components/viz/MatrixHeatmap'
 import { LineChart } from '../../components/viz/LineChart'
 import type { LoraResult } from '../../engine/labs/lora-svd/engine'
@@ -20,11 +22,14 @@ export function LoraStage({result,step,cell,onSelectCell,onStepChange,onRankChan
   const bound=useMemo(()=>Math.max(1e-12,...target.delta.data.map(Math.abs)),[target])
   const losses=useMemo(()=>result.frames.map(f=>f.mse),[result])
   const floor=useMemo(()=>result.frames.map(()=>approximation.svdFloorMse),[result,approximation.svdFloorMse])
+  const { ref, width } = usePlotWidth(410)
   const {S}=target.svd
+  const slotWidth = (width-24)/S.length
   const peak=S[0]||1
   const selected={cell,onSelectCell}
   return <div className="lora-stage" data-adapter-mse={frame.mse} data-svd-floor={approximation.svdFloorMse} data-explained-energy={approximation.explainedEnergy}><section><h2>{t.factors}</h2>
     <p className="lora-formula">Wₑff = W₀ + (α/r)BA ≈ W₀ + ΔW</p>
+    <MatrixCellPicker rows={target.base.rows} cols={target.base.cols} cell={cell} onSelect={onSelectCell}/>
     <div className="lora-factors">
       <FactorTile label="B" name="B" matrix={frame.B}/><span>×</span>
       <FactorTile label="A" name="A" matrix={frame.A}/><span>→</span>
@@ -39,15 +44,15 @@ export function LoraStage({result,step,cell,onSelectCell,onStepChange,onRankChan
     <section className="lora-spectrum"><h3>{t.spectrum}</h3>
       <div className="lora-legend"><span><i/>{t.captured}</span><span><i/>{t.discarded}</span>
         <span>{t.energy} <b>{formatExplainedEnergy(approximation.explainedEnergy,locale)}</b></span></div>
-      <svg viewBox="0 0 410 98" aria-label={t.spectrum}>
-        <text x="3" y="10">σ</text><line x1="16" x2="403" y1="76" y2="76" stroke="var(--border-strong)"/>
+      <svg ref={ref} viewBox={`0 0 ${width} 98`} aria-label={t.spectrum}>
+        <text x="3" y="10">σ</text><line x1="16" x2={width-8} y1="76" y2="76" stroke="var(--border-strong)"/>
         {S.map((v,i)=>{
-          const x=16+i*24,h=67*v/peak,select=()=>onRankChange(i+1)
+          const x=16+i*slotWidth,h=67*v/peak,select=()=>onRankChange(i+1)
           return <g key={i} role="button" tabIndex={0} aria-label={`r = ${i+1}`} aria-pressed={rank===i+1} data-singular-index={i}
             onClick={select} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select()}}}>
-            <title>σ{i+1} = {v.toPrecision(6)}</title><rect x={x} y="6" width="24" height="90" fill="transparent"/>
-            <rect x={x+3} y={76-h} width="18" height={h} fill={i<rank?'var(--accent-primary)':'var(--text-muted)'} />
-            <text x={x+12} y="89" textAnchor="middle">{i+1}</text></g>
+            <title>σ{i+1} = {v.toPrecision(6)}</title><rect x={x} y="6" width={slotWidth} height="90" fill="transparent"/>
+            <rect x={x+slotWidth*.125} y={76-h} width={slotWidth*.75} height={h} fill={i<rank?'var(--accent-primary)':'var(--text-muted)'} />
+            <text x={x+slotWidth/2} y="89" textAnchor="middle">{i+1}</text></g>
         })}
       </svg>
     </section>

@@ -16,7 +16,7 @@ import { codec,initial,maxDraws,modes,normalize,presetState,type State } from '.
 const equations=[
   String.raw`z'_i=r(z_i)-\lambda_f c_i-\lambda_p\mathbf{1}[c_i>0]`,
   String.raw`p_i=\mathrm{softmax}(z'_i/T)`,String.raw`i\in\mathrm{TopK}(p,K)`,
-  String.raw`k^*=\min\{k:\textstyle\sum_{i=1}^k p_{(i)}\geq P\}`,String.raw`p_i\geq p_{\min}\max_j p_j`,
+  String.raw`k^*=\min\{k:\textstyle\sum_{i=1}^k p_{(i)}\geq P\}`,String.raw`p_i\geq p_{\mathrm{min}}\max_j p_j`,
   String.raw`\tilde p_i=p_i/\textstyle\sum_{j\in S}p_j`,
 ]
 

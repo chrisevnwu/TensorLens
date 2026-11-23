@@ -17,6 +17,7 @@ const en = {
   anyDifficulty: 'All levels',
   lab: 'Lab',
   achievements: 'Challenges completed',
+  results: 'Showing {count} of {total} labs',
   clear: 'Clear filters',
   empty: 'No labs match these filters.',
 } as const
@@ -38,6 +39,7 @@ const zh: ExactStringTree<typeof en> = {
   anyDifficulty: '全部难度',
   lab: '实验',
   achievements: '已完成挑战',
+  results: '显示 {count} 个实验，共 {total} 个',
   clear: '清除筛选',
   empty: '当前筛选条件下没有实验。',
 }

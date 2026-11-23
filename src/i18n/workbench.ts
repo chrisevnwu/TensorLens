@@ -2,6 +2,8 @@ import type { ExactStringTree } from './types'
 
 const en = {
   controls: 'Controls', inspector: 'Inspector & math', challenges: 'Guided challenges',
+  inspectorTab: 'Inspector', challengesTab: 'Challenges',
+  jumpControls: 'Jump to controls', backToStage: 'Back to visualization',
   stage: 'Visualization', metrics: 'Key metrics', details: 'Live inspector', guide: 'Concept guide',
   presets: 'Presets', share: 'Share URL', export: 'Export PNG', reset: 'Reset',
   copied: 'Experiment link copied.', exported: 'Snapshot downloaded.',
@@ -15,6 +17,8 @@ const en = {
 
 const zh: ExactStringTree<typeof en> = {
   controls: '参数控制', inspector: '检查器与公式', challenges: '引导挑战',
+  inspectorTab: '检查器', challengesTab: '挑战',
+  jumpControls: '跳转到参数控制', backToStage: '返回可视化',
   stage: '可视化', metrics: '关键指标', details: '实时检查器', guide: '概念指南',
   presets: '预设', share: '分享链接', export: '导出 PNG', reset: '重置',
   copied: '实验链接已复制。', exported: '快照已下载。',

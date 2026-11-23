@@ -3,11 +3,12 @@ export interface Point {x:number;y:number}
 export interface TargetPoint extends Point {label:0|1}
 export type DatasetId='moons'|'swiss'|'rings'|'grid'
 const perClass=60
+export const PARTICLE_COUNT=2*perClass
 const tau=2*Math.PI
 
 export function makeDataset(id:DatasetId,seed=42):TargetPoint[] {
   const rng=createRng(seed)
-  return Array.from({length:2*perClass},(_,index)=>{
+  return Array.from({length:PARTICLE_COUNT},(_,index)=>{
     const label=index<perClass?0:1
     const k=index%perClass
     // Stratified sampling gives both classes equal mass and retains a complete
@@ -41,7 +42,7 @@ export function makeDataset(id:DatasetId,seed=42):TargetPoint[] {
 }
 
 /** A disjoint seed stream makes the initial prior independent of the chosen dataset. */
-export function gaussianStart(seed=42,count=2*perClass):Point[] {
+export function gaussianStart(seed=42,count=PARTICLE_COUNT):Point[] {
   if(!Number.isSafeInteger(count)||count<0)throw new RangeError('Expected a nonnegative particle count')
   const rng=createRng(seed^0x9e3779b9)
   return Array.from({length:count},()=>({x:rng.nextGaussian(),y:rng.nextGaussian()}))

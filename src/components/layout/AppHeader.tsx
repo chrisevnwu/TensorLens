@@ -29,7 +29,7 @@ export default function AppHeader() {
   const match = useMatch('/labs/:labId')
   const navigate = useNavigate()
   const location = useLocation()
-  const repo = import.meta.env.VITE_REPOSITORY_URL as string | undefined
+  const repo = import.meta.env.VITE_REPOSITORY_URL || 'https://github.com/chrisevnwu/TensorLens'
   const themeLabel = theme === 'dark' ? copy.light : copy.dark
 
   useEffect(() => {
@@ -60,7 +60,11 @@ export default function AppHeader() {
           </select>
         </div>
         <div className="tl-nav-tools">
-          <button type="button" className="tl-search-trigger" aria-label={copy.palette} title={copy.palette} aria-haspopup="dialog" onClick={() => setOpen(true)}>
+          <button type="button" className="tl-search-trigger" aria-label={copy.palette} title={copy.palette} aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K"
+            onClick={event => {
+              event.currentTarget.focus({ preventScroll: true })
+              setOpen(true)
+            }}>
             <Search size={15} /><span>{copy.searchShort}</span><kbd>⌘ K</kbd>
           </button>
           <Link className="tl-progress-link" to="/?progress=1" title={copy.progress} aria-label={copy.progress + ' ' + count + '/' + total}>
@@ -76,8 +80,8 @@ export default function AppHeader() {
           <button type="button" className="tl-icon-btn" aria-label={themeLabel} title={themeLabel} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
             {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
           </button>
-          <a className="tl-icon-btn" aria-label={repo ? copy.source : copy.searchSource} title={repo ? copy.source : copy.searchSource}
-            href={repo || 'https://github.com/search?q=TensorLens&type=repositories'} target="_blank" rel="noreferrer"><Github size={17} /></a>
+          <a className="tl-icon-btn" aria-label={copy.source} title={copy.source}
+            href={repo} target="_blank" rel="noreferrer"><Github size={17} /></a>
         </div>
       </nav>
       {open && <Suspense fallback={null}><CommandPalette onClose={() => setOpen(false)} /></Suspense>}

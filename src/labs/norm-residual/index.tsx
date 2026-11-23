@@ -4,7 +4,7 @@ import { ExperimentShell } from '../../components/layout/ExperimentShell'
 import { booleanField, choiceField, makeUrlCodec, numberField, useLabUrlState, type UrlStateCodec } from '../../components/utils/useLabUrlState'
 import { FormulaBar } from '../../components/viz/FormulaBar'
 import type { Activation } from '../../engine/labs/norm-residual/branch'
-import { simulateResidual, type Placement, type ResidualConfig } from '../../engine/labs/norm-residual/engine'
+import { WIDTH, simulateResidual, type Placement, type ResidualConfig } from '../../engine/labs/norm-residual/engine'
 import type { NormType } from '../../engine/labs/norm-residual/normalization'
 import { NORM_PRESETS, type NormPresetId } from '../../engine/labs/norm-residual/presets'
 import { useI18n } from '../../i18n'
@@ -14,6 +14,7 @@ import { NormInspector, NormStage } from './NormStage'
 interface State extends ResidualConfig {
   preset: NormPresetId
   step: number
+  channel: number
   logScale: boolean
   seenLayerNorm: boolean
   seenRmsNorm: boolean
@@ -34,13 +35,13 @@ function observe(state: State) {
 
 function presetState(id: NormPresetId): State {
   const {id:preset, ...config} = NORM_PRESETS.find(p => p.id === id) ?? NORM_PRESETS[0]
-  return observe({ ...config, preset, step: 0, logScale: false, seenLayerNorm:false, seenRmsNorm:false })
+  return observe({ ...config, preset, step: 0, channel: 0, logScale: false, seenLayerNorm:false, seenRmsNorm:false })
 }
 
 const fields = makeUrlCodec<State>({
   preset: choiceField(NORM_PRESETS.map(p => p.id)), numLayers: numberField(4,32,1), placement:choiceField(placements),
   normType: choiceField(norms), useResidual:booleanField, activation:choiceField(activations), weightGain:numberField(.5,1.8,.1),
-  outlierMag:numberField(0,20,1), step:numberField(0,32,1), logScale:booleanField, seenLayerNorm:booleanField, seenRmsNorm:booleanField,
+  outlierMag:numberField(0,20,1), step:numberField(0,32,1), channel:numberField(0,WIDTH-1,1), logScale:booleanField, seenLayerNorm:booleanField, seenRmsNorm:booleanField,
 })
 const initial = presetState('modern')
 const codec: UrlStateCodec<State> = {
@@ -102,7 +103,7 @@ export default function ResidualLab() {
       {label:t.cosine,value:numeric(result.signalCosine)},
       {label:t.saved,value:String(result.flopsSaved),hint:t.savedHint.replace('{rms}',String(result.rmsNormFlops)).replace('{ln}',String(result.layerNormFlops))},
     ]}
-    inspector={<NormInspector result={result} layer={state.step} normType={normType} />}
+    inspector={<NormInspector result={result} layer={state.step} channel={state.channel} onChannelChange={channel=>update({channel})} normType={normType} />}
     explainer={<><p>{t.guide}</p><p>{t.symmetry}</p><p>{t.comparison}</p></>}
   />
 }

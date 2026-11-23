@@ -81,6 +81,7 @@
 .chapter-numeral { font-family: var(--font-mono); font-size: .71rem; color: var(--text-muted); }
 .catalog-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .lab-card {
+  scroll-margin-block: 64px 10px;
   --glyph: var(--accent-primary);
   display: flex; flex-direction: column; min-width: 0; overflow: hidden;
   border: 1px solid var(--border-strong); border-radius: 10px; background: var(--bg-surface);
@@ -122,6 +123,8 @@
 .lab-completion { display: inline-flex; align-items: center; gap: 3px; font: 500 .71rem/1.25 var(--font-mono); color: var(--text-secondary); }
 .catalog-progress { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 16px; font-size: .84rem; color: var(--text-secondary); }
 .catalog-progress progress { accent-color: var(--accent-tertiary); }
+.catalog-results { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -.35rem 0 .8rem; color: var(--text-secondary); font-size: .82rem; }
+.catalog-results button { border: 0; background: transparent; color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; padding: 4px; }
 .catalog-empty { text-align: center; padding: 24px; background: var(--bg-surface); border-radius: 8px; }
 @media (max-width: 1023px) {
   .home-page { width: calc(100% - 60px); }
@@ -157,4 +160,8 @@
     radial-gradient(ellipse at center, color-mix(in srgb, var(--accent-secondary) 7%, transparent), transparent 69%);
   background-size: 15px 15px, 100% 100%;
   mask-image: radial-gradient(ellipse at center, black 38%, transparent 78%);
+}
+
+@media (pointer: coarse) {
+  .catalog-filters button, .difficulty-select select, .catalog-results button, .catalog-empty button { min-height: 40px; }
 }

@@ -3,7 +3,7 @@ import { SegmentedControl, SliderControl, ToggleControl } from '../../components
 import { ExperimentShell } from '../../components/layout/ExperimentShell'
 import { booleanField, choiceField, makeUrlCodec, numberField, stringField, useLabUrlState, type UrlStateCodec } from '../../components/utils/useLabUrlState'
 import { FormulaBar } from '../../components/viz/FormulaBar'
-import { parseTokens, simulateAttention, type AttentionConfig, type MaskType } from '../../engine/labs/attention-debugger/engine'
+import { MAX_TOKENS, parseTokens, simulateAttention, type AttentionConfig, type MaskType } from '../../engine/labs/attention-debugger/engine'
 import { ATTENTION_PRESETS, type AttentionPresetId } from '../../engine/labs/attention-debugger/presets'
 import type { AttentionTopology } from '../../engine/labs/attention-debugger/topology'
 import { useI18n } from '../../i18n'
@@ -24,7 +24,8 @@ interface State extends Omit<AttentionConfig, 'tokens'> {
 const masks: MaskType[] = ['causal', 'bidirectional', 'sliding']
 const topologies: AttentionTopology[] = ['MHA','GQA','MQA']
 const counts = [1,2,4]
-const maxText = 384
+const maxChip = 64
+const maxText = MAX_TOKENS * maxChip + MAX_TOKENS - 1
 
 function presetState(id: AttentionPresetId): State {
   const { id: preset, tokens, ...config } = ATTENTION_PRESETS.find(p => p.id === id) ?? ATTENTION_PRESETS[0]
@@ -60,6 +61,7 @@ export default function AttentionLab() {
   const tokens = useMemo(() => parseTokens(text), [text])
   const result = useMemo(() => simulateAttention({ tokens, numHeads, useScaling, logitScale, maskType, windowSize, topology }),
     [tokens, numHeads, useScaling, logitScale, maskType, windowSize, topology])
+  const tokenTextLength = tokens.join(' ').length
   const head = result.heads[state.selectedHead]!
   const cell = { row: state.row, col: state.col }
   const futureBlocked = maskType === 'causal' && tokens.length > 1 && tokens.every((_, i) =>
@@ -89,7 +91,8 @@ export default function AttentionLab() {
         <small>{t.tokenHint}</small>
       </label>
       <div className="attention-input-chips">{tokens.map((token,index) => <input key={index} value={token}
-        aria-label={t.token + ' ' + (index+1)} size={Math.min(15,Math.max(2,[...token].length))} maxLength={64}
+        aria-label={t.token + ' ' + (index+1)} size={Math.min(15,Math.max(2,[...token].length))}
+        maxLength={Math.max(0, Math.min(maxChip, maxText - tokenTextLength + token.length))}
         onChange={event => update({ tokens: tokens.map((value,i) => i === index ? event.target.value : value).join(' ') })} />)}</div>
       <SegmentedControl label={t.numHeads} value={numHeads} options={counts.map(value => ({ value, label: String(value) }))} onChange={value => update({numHeads:value})} />
       <SegmentedControl label={t.selectedHead} value={state.selectedHead} options={result.heads.map((_,i) => ({value:i, label:'H' + i}))}

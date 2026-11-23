@@ -12,11 +12,13 @@ interface Props {
   result:FlashResult
   config:FlashConfig
   scaling:ScalingPoint[]
+  scalingLength:number
+  onScalingLengthChange:(length:number)=>void
   step:number
   onStepChange:(step:number)=>void
 }
 const fmt=(n:number)=>n===-Infinity?'−∞':n.toFixed(4)
-export function FlashStage({result,config,scaling,step,onStepChange}: Props){
+export function FlashStage({result,config,scaling,step,onStepChange,scalingLength,onScalingLengthChange}: Props){
   const {locale}=useI18n(),t=flashVisuals[locale]
   const f=result.trace[step]!
   return <div className="flash-stage">
@@ -33,7 +35,7 @@ export function FlashStage({result,config,scaling,step,onStepChange}: Props){
       {!f.scores.length&&<p>{t.noScore}</p>}
       <div className="flash-current">m = [{f.m.map(fmt).join(', ')}]<br/>ℓ = [{f.l.map(fmt).join(', ')}]</div>
     </section><TileMap {...{result,config,step,onStepChange}}/></div>
-    <FlashIO {...{result,step,scaling}}/>
+    <FlashIO {...{result,step,scaling,scalingLength,onScalingLengthChange}}/>
   </div>
 }
 

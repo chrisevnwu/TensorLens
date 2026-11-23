@@ -124,3 +124,13 @@ The 96-case browser matrix covers each lab in both languages, both themes, and a
 Runtime network inspection measured 99,613 bytes of gzipped JavaScript on the landing page. Each of the 12 lab entries was fetched on first navigation, with zero cross-origin HTTP requests in the landing and route sweep. The production build now enforces the 200 kB landing budget and separate dynamic lab entries. Audited bilingual dictionaries and source reachability, removed the obsolete route placeholder, and fixed the light-theme selected mantissa text to reach 4.81:1 contrast. Added English and Chinese READMEs, real workbench screenshots, and a contributor guide for Lab 13. GitHub Pages deployment is configured for a repository with an upstream remote.
 
 All five gates passed. 395 Vitest + 126 Playwright. Built JavaScript totals 304.4 KiB gzip across all chunks.
+
+### Post-release — responsive inspection and reproducible exports
+
+The tablet inspector opens beside the stage and restores keyboard focus after dismissal or rotation. Phone users can move between the graph and the active parameters. The catalog keeps its filters and originating card when returning from a lab. Bilingual lab and preset searches work together in the command palette, including short landscape screens.
+
+Narrow chart axes now use readable type, wide charts map pointer coordinates through their actual SVG transform, and scrolling across a chart on a phone preserves the selected step. Quantization and LoRA support precise matrix-cell inspection with the keyboard. Diffusion compares the selected particle's path length and displacement across solvers. Share links preserve the selected particle, residual channel, FlashAttention sequence length, KV probe and long attention tokens. PNG export freezes all visual layers at click time and clips scrolled content to its visible area.
+
+Additional browser sweeps exercised all 12 labs at five phone and tablet widths, in both languages and both themes (240 configurations). Thirty long-input cases covered BPE and attention with continuous ASCII, Chinese, emoji and URL punctuation. Slow-decoding LoRA exports retained the values from the selected frame, and exported BPE tokens stayed inside the scrolled panel.
+
+All five verification gates passed. Vitest ran 397 tests. Playwright ran 228 tests on desktop and mobile Chromium, tablet WebKit and laptop Firefox. The landing page loaded 100,124 bytes of gzipped JavaScript, with separate lazy entries for all 12 labs.

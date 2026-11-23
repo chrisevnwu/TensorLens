@@ -10,7 +10,7 @@
 .quant-all { background:var(--accent-primary); fill:var(--accent-primary); }
 .quant-local { background:var(--accent-secondary); fill:var(--accent-secondary); }
 .quant-key .quant-tick { width:2px; background:var(--accent-warn); }
-.quant-hist text { font:10px var(--font-mono); fill:var(--text-secondary); }
+.quant-hist text { font:11px var(--font-mono); fill:var(--text-secondary); }
 .quant-hist p { font-size:.73rem; color:var(--text-secondary); margin:4px 0; }
 .quant-hist b { font-family:var(--font-mono); color:var(--text-primary); }
 .quant-inspector dl { margin:0; }

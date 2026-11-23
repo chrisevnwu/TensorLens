@@ -2,6 +2,7 @@ import type {SamplingResult} from '../../engine/labs/decoding-sampling/engine'
 import type {MonteCarloState} from '../../engine/labs/decoding-sampling/monte-carlo'
 import {useI18n} from '../../i18n'
 import {samplingVisuals} from '../../i18n/labs/sampling-visuals'
+import {usePlotWidth} from '../../components/viz/usePlotInteraction'
 import {TokenBars} from './TokenBars'
 import {CustomLogits} from './CustomLogits'
 import './sampling.css'
@@ -13,7 +14,9 @@ interface Props {
 export function SampleStage(p:Props){
   const {locale}=useI18n(),t=samplingVisuals[locale]
   const {result,samples,topP}=p
-  const x=(i:number)=>32+402*(i+1)/result.order.length,y=(prob:number)=>89-71*prob
+  const { ref, width } = usePlotWidth(450)
+  const left=39,right=width-18
+  const x=(i:number)=>left+(right-left)*(i+1)/result.order.length,y=(prob:number)=>89-71*prob
   return <div className="sample-stage">
     <TokenBars {...p}/>
     <div className="sample-actions"><button data-draw-count="1" onClick={()=>p.onSample(1)}>{t.draw}</button>
@@ -23,14 +26,14 @@ export function SampleStage(p:Props){
     </div>
     {samples.lastIndex!==null&&<p>{t.last} <output data-last-token={samples.lastIndex}>{p.tokens[samples.lastIndex]}</output></p>}
     <section className="sample-cdf"><h3>{t.mass}</h3>
-      <svg viewBox="0 0 450 116" role="img" aria-label={t.mass}>
-        {[0,.5,1].map(v=><g key={v}><line x1="32" x2="434" y1={y(v)} y2={y(v)} stroke="var(--border-strong)"/>
-          <text x="27" y={y(v)+3} textAnchor="end">{v*100}%</text></g>)}
-        <polyline points={['32,89',...result.cumulative.map((v,i)=>`${x(i)},${y(v)}`)].join(' ')} fill="none" stroke="var(--accent-tertiary)" strokeWidth="2"/>
-        <line x1="32" x2="434" y1={y(topP)} y2={y(topP)} stroke="var(--accent-warn)" strokeDasharray="4 3"/>
-        <text x="434" y={y(topP)-4} textAnchor="end">Top-P {(100*topP).toFixed(1)}%</text>
+      <svg ref={ref} viewBox={`0 0 ${width} 121`} role="img" aria-label={t.mass}>
+        {[0,.5,1].map(v=><g key={v}><line x1={left} x2={right} y1={y(v)} y2={y(v)} stroke="var(--border-strong)"/>
+          <text x={left-5} y={y(v)+3} textAnchor="end">{v*100}%</text></g>)}
+        <polyline points={[`${left},89`,...result.cumulative.map((v,i)=>`${x(i)},${y(v)}`)].join(' ')} fill="none" stroke="var(--accent-tertiary)" strokeWidth="2"/>
+        <line x1={left} x2={right} y1={y(topP)} y2={y(topP)} stroke="var(--accent-warn)" strokeDasharray="4 3"/>
+        <text x={right} y={y(topP)-4} textAnchor="end">Top-P {(100*topP).toFixed(1)}%</text>
         {[...new Set([0,Math.max(0,Math.floor(result.order.length/2)-1),result.order.length-1])].map(i=><text key={i} x={x(i)} y="104" textAnchor="middle">{i+1}</text>)}
-        <text x="225" y="115" textAnchor="middle">{t.rank}</text>
+        <text x={(left+right)/2} y="120" textAnchor="middle">{t.rank}</text>
       </svg></section>
     {p.custom&&<CustomLogits logits={p.logits} tokens={p.tokens} onChange={p.onLogitChange} onSelect={p.onSelectToken}/>}
   </div>

@@ -11,13 +11,13 @@ type ModelId = typeof MODEL_PROFILES[number]['id']
 type HardwareId = typeof HARDWARE_PROFILES[number]['id']
 export interface KvState {
   preset:Scenario; modelId:ModelId; hardwareId:HardwareId; mode:typeof modes[number]; attentionType:AttentionType
-  contextLength:number; batchSize:number; kvPrecision:KvPrecision; step:number
+  contextLength:number; batchSize:number; kvPrecision:KvPrecision; step:number; probeAI:number
   paramsB:number; layers:number; qHeads:number; kvHeads:number; headDim:number
   latentDim:number; ropeDim:number; hiddenSize:number; weightBytes:number
 }
 
 export function scenario(preset:Scenario):KvState {
-  const result:KvState = {preset,modelId:'llama8',hardwareId:'h100',mode:'both',attentionType:'GQA',contextLength:8192,batchSize:1,kvPrecision:'FP16',step:0,
+  const result:KvState = {preset,modelId:'llama8',hardwareId:'h100',mode:'both',attentionType:'GQA',contextLength:8192,batchSize:1,kvPrecision:'FP16',step:0,probeAI:0,
     paramsB:8,layers:32,qHeads:32,kvHeads:8,headDim:128,latentDim:512,ropeDim:64,hiddenSize:0,weightBytes:2}
   if (preset==='batch') return {...result,attentionType:'MHA',contextLength:32768,batchSize:8}
   if (preset==='latent') return {...result,modelId:'deepseek',attentionType:'MLA',kvPrecision:'FP8'}
@@ -38,6 +38,10 @@ const fields=makeUrlCodec<KvState>({
   preset:choiceField(scenarios),modelId:choiceField(MODEL_PROFILES.map(p=>p.id)),hardwareId:choiceField(HARDWARE_PROFILES.map(p=>p.id)),
   mode:choiceField(modes),attentionType:choiceField(attentionTypes),contextLength:numberField(512,131072,1),
   batchSize:numberField(1,64,1),kvPrecision:choiceField(precisions),step:numberField(0,8,1),
+  probeAI:(raw,fallback)=>{
+    const value=Number(raw)
+    return raw.trim() && Number.isFinite(value) && value>=0 ? value : fallback
+  },
   paramsB:numberField(...customRanges.paramsB),layers:numberField(...customRanges.layers),qHeads:numberField(...customRanges.qHeads),
   kvHeads:numberField(...customRanges.kvHeads),headDim:numberField(...customRanges.headDim),latentDim:numberField(...customRanges.latentDim),
   ropeDim:numberField(...customRanges.ropeDim),hiddenSize:numberField(...customRanges.hiddenSize),weightBytes:choiceField<number>([.5,1,2,4]),

@@ -3,7 +3,7 @@ import { createRng } from '../../math/prng'
 import { createBranch, type Activation } from './branch'
 import { normalize, type NormType } from './normalization'
 
-const WIDTH = 32
+export const WIDTH = 32
 export type Placement = 'pre-norm' | 'post-norm' | 'none'
 export interface ResidualConfig {
   numLayers: number

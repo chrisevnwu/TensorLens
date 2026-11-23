@@ -1,0 +1,5 @@
+.matrix-picker { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin: 8px 0; }
+.matrix-picker label { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: .78rem; }
+.matrix-picker select { min-width: 3.4rem; min-height: 32px; padding: 2px 5px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--bg-surface); color: var(--text-primary); font: .78rem var(--font-mono); }
+.matrix-cell-value { display: block; overflow-wrap: anywhere; margin-top: 3px; color: var(--text-primary); font: .73rem/1.4 var(--font-mono); }
+@media (pointer: coarse) { .matrix-picker select { min-height: 44px; } }

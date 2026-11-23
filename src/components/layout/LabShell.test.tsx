@@ -70,7 +70,7 @@ it('retains a manually copyable URL when clipboard access is unavailable', async
 })
 
 it('associates mobile tabs with their panels and follows arrow keys', () => {
-  vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }))
+  vi.stubGlobal('matchMedia', (query: string) => ({ matches: query.includes('max-width'), addEventListener: vi.fn(), removeEventListener: vi.fn() }))
   mount()
   const controls = screen.getByRole('tab', { name: 'Controls' })
   expect(screen.getByRole('tabpanel', { name: 'Controls' })).toHaveAttribute('id', controls.getAttribute('aria-controls'))

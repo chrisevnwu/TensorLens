@@ -14,16 +14,16 @@
 .wb-title p { font-size: .8rem; color: var(--text-secondary); margin: 3px 0 0; }
 .wb-actions, .wb-rail-toggles { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .wb-rail-toggles { border-inline-start: 1px solid var(--border-strong); padding-inline-start: 6px; }
-.wb-actions button, .wb-play-buttons button, .wb-segmented button, .wb-tabs button, .wb-toast button {
+:is(.wb-actions, .wb-rail-toggles, .wb-drawer-heading) > button, .wb-play-buttons button, .wb-segmented button, .wb-tabs button, .wb-toast button {
   min-height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   color: var(--text-secondary); background: var(--bg-surface); border: 1px solid var(--border-strong);
   border-radius: 6px; padding: 5px 9px; font-family: inherit; font-weight: 550; font-size: .77rem;
 }
-.wb-actions svg, .wb-play-buttons svg, .wb-neighbors svg { flex: none; width: 15px; height: 15px; stroke-width: 1.6; }
-.wb-actions button:hover, .wb-play-buttons button:not(:disabled):hover, .wb-segmented button:hover, .wb-tabs button:hover {
+:is(.wb-actions, .wb-rail-toggles, .wb-drawer-heading) > button > svg, .wb-play-buttons svg, .wb-neighbors svg { flex: none; width: 15px; height: 15px; stroke-width: 1.6; }
+:is(.wb-actions, .wb-rail-toggles, .wb-drawer-heading) > button:hover, .wb-play-buttons button:not(:disabled):hover, .wb-segmented button:hover, .wb-tabs button:hover {
   background: var(--bg-elevated); color: var(--text-primary);
 }
-.wb-actions button:disabled, .wb-play-buttons button:disabled { opacity: .5; }
+:is(.wb-actions, .wb-rail-toggles, .wb-drawer-heading) > button:disabled, .wb-play-buttons button:disabled { opacity: .5; }
 .wb-grid { display: grid; grid-template-columns: var(--rail-width) minmax(0,1fr) var(--inspector-width); align-items: stretch; min-height: 61vh; }
 .wb-stage { grid-area: 1 / 2; min-width: 0; overflow-wrap: anywhere; padding: clamp(12px,1.5vw,24px); }
 .wb-stage-surface {
@@ -73,7 +73,8 @@
 .wb-neighbors small { display: block; color: var(--text-secondary); font-size: .72rem; margin-block-end: 1px; }
 .wb-neighbors a:hover { color: var(--accent-primary); }
 .wb-next { margin-inline-start: auto; text-align: end; }
-.wb-actions .wb-tablet-toggle, .wb-tabs { display: none; }
+.wb-panels { display: contents; }
+.wb-panel-bar { display: none; }
 .wb-toast {
   position: fixed; z-index: 15; inset-block-end: 16px; inset-inline-end: 16px; max-width: calc(100vw - 32px);
   padding: 11px 15px; background: var(--bg-elevated); color: var(--text-primary);
@@ -89,10 +90,23 @@
 }
 @media (min-width: 768px) and (max-width: 1279px) {
   .wb-rail-toggles { display: none; }
-  .wb-actions .wb-tablet-toggle { display: inline-flex; }
   .wb-grid { grid-template-columns: clamp(218px,28vw,290px) minmax(0,1fr); }
-  .wb-inspector { grid-area: 2 / 1 / 3 / -1; border-left: none; border-top: 1px solid var(--border-strong); }
-  .workbench[data-inspector=closed] .wb-inspector { display: none; }
+  .wb-inspector-drawer {
+    position: fixed; inset: 0 0 0 auto; margin: 0; padding: 0 20px 24px;
+    width: min(420px, 49vw); max-width: none; height: 100dvh; max-height: none;
+    overflow-y: auto; overscroll-behavior: contain; color: var(--text-primary);
+    border: 0; border-inline-start: 1px solid var(--border-strong);
+  }
+  .wb-inspector-drawer::backdrop { background: color-mix(in srgb, var(--text-primary) 22%, transparent); }
+  :root:has(.wb-inspector-drawer[open]) { overflow: hidden; }
+  .wb-drawer-heading {
+    position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between;
+    align-items: center; gap: 12px; margin: 0 -20px 18px; padding: 10px 16px 10px 20px;
+    background: var(--bg-surface); border-bottom: 1px solid var(--border-strong);
+  }
+  .wb-drawer-heading h2 { margin: 0; font-size: 1.08rem; }
+  .wb-drawer-heading > button { width: 44px; min-height: 44px; }
+  .wb-drawer-heading > button > svg { width: 18px; height: 18px; }
 }
 @media (max-width: 767px) {
   .wb-toolbar { align-items: flex-start; flex-direction: column; gap: 10px; padding: 14px 12px; }
@@ -100,8 +114,25 @@
   .wb-grid { min-height: 0; display: flex; flex-direction: column; }
   .wb-stage { padding: 12px; }
   .wb-rail { display: contents; }
-  .wb-tabs { display: flex; gap: 4px; padding: 5px 12px 8px; background: var(--bg-canvas); }
-  .wb-tabs button { flex: 1; }
+  .wb-stage { scroll-margin-top: 64px; }
+  .wb-panels { display: block; scroll-margin-top: 56px; }
+  .wb-panel-bar {
+    position: sticky; top: 56px; z-index: 2; display: flex; gap: 8px; align-items: stretch;
+    padding: 5px 12px 8px; background: var(--bg-canvas); border-bottom: 1px solid var(--border-subtle);
+  }
+  .wb-tabs { flex: 1; display: flex; gap: 4px; }
+  .wb-tabs button { flex: 1; min-height: 44px; padding: 4px; }
+  .wb-stage-return {
+    display: grid; place-items: center; flex: 0 0 44px; border: 1px solid var(--border-strong);
+    border-radius: 6px; background: var(--bg-surface); color: var(--text-secondary);
+  }
+  .wb-actions { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); width: 100%; }
+  .wb-actions > button { min-height: 44px; }
+  .wb-stepper { padding: 8px; }
+  .wb-play-buttons { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)) 48px; gap: 2px; }
+  .wb-play-buttons button, .wb-play-buttons select { min-height: 44px; width: 100%; }
+  .wb-play-buttons select { padding-inline: 2px; }
+
   .wb-controls, .wb-challenges, .wb-inspector {
     padding: 16px 14px; margin: 0; background: var(--bg-surface);
     border: 0; border-top: 1px solid var(--border-subtle);
@@ -110,4 +141,7 @@
   .workbench:not([data-tab=challenges]) .wb-challenges { display: none; }
   .wb-neighbors { padding: 12px; align-items: stretch; }
   .wb-neighbors a { font-size: .75rem; gap: 5px; flex: 0 1 48%; }
+}
+@media (max-width: 430px) {
+  .wb-actions > button { flex-direction: column; gap: 2px; padding: 5px 2px; }
 }

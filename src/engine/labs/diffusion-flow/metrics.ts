@@ -23,6 +23,17 @@ export function manifoldMetrics(particles:readonly Point[],targets:readonly Targ
   return {meanDistance:distance/n,purityA:a/n,purityB:b/n}
 }
 
+export function trajectoryDistances(path: readonly Point[]) {
+  const start = path[0], end = path.at(-1)
+  if (!start || !end) return { pathLength: 0, displacement: 0 }
+  let pathLength = 0
+  for (let i = 1; i < path.length; i++) {
+    const previous = path[i-1]!, current = path[i]!
+    pathLength += Math.hypot(current.x - previous.x, current.y - previous.y)
+  }
+  return { pathLength, displacement: Math.hypot(end.x - start.x, end.y - start.y) }
+}
+
 /** Aggregate path length / aggregate displacement. A stationary ensemble has ratio one. */
 export function pathStraightness(frames:readonly (readonly Point[])[]){
   const start=frames[0]

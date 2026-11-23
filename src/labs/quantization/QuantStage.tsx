@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { MatrixCellPicker } from '../../components/viz/MatrixCellPicker'
 import { MatrixHeatmap, type HeatCell } from '../../components/viz/MatrixHeatmap'
 import type { QuantResult } from '../../engine/labs/quantization/engine'
 import { useI18n } from '../../i18n'
@@ -15,10 +16,14 @@ export function QuantStage({result,cell,onSelectCell}:Props){
     bound:Math.max(1e-12,...result.original.data.map(Math.abs),...result.dequantized.data.map(Math.abs)),
   }),[result])
   return <div className="quant-stage"><h2>{t.tensors}</h2>
+    <MatrixCellPicker rows={result.original.rows} cols={result.original.cols} cell={cell} onSelect={onSelectCell}/>
     <div className="quant-maps">{(['original','dequantized','error'] as const).map(key=><figure key={key} data-quant-map={key}>
       <figcaption>{t[key]}</figcaption>
       <MatrixHeatmap values={matrices[key]} label={t[key]} signed={key!=='error'} domain={key==='error'?result.maxAbsError:matrices.bound}
         selected={cell} onSelect={onSelectCell}/>
+      <span className="matrix-cell-value" title={String(matrices[key][cell.row]![cell.col]!)}>
+        {Number(matrices[key][cell.row]![cell.col]!.toPrecision(5))}
+      </span>
     </figure>)}</div>
     <QuantHistogram result={result} row={cell.row} col={cell.col}/>
   </div>

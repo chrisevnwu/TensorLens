@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from 'react'
-import { ArrowLeft, ArrowRight, Download, Link2, PanelLeft, PanelRight, RotateCcw } from 'lucide-react'
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from 'react'
+import { ArrowLeft, ArrowRight, ArrowUp, Download, Link2, PanelLeft, PanelRight, RotateCcw, SlidersHorizontal, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../i18n'
 import { workbenchCopy } from '../../i18n/workbench'
@@ -37,15 +37,42 @@ const tabs = ['controls', 'inspector', 'challenges'] as const
 type MobileTab = typeof tabs[number]
 const noneCompleted: string[] = []
 const mobileQuery = '(max-width: 767px)'
+const desktopQuery = '(min-width: 1280px)'
 
-function subscribeToMobileLayout(notify: () => void) {
-  const query = window.matchMedia?.(mobileQuery)
-  query?.addEventListener('change', notify)
-  return () => query?.removeEventListener('change', notify)
+function subscribeToLayout(notify: () => void) {
+  const queries = [mobileQuery, desktopQuery].map(query => window.matchMedia?.(query))
+  for (const query of queries) query?.addEventListener('change', notify)
+  return () => { for (const query of queries) query?.removeEventListener('change', notify) }
 }
 
-function inMobileLayout() {
-  return window.matchMedia?.(mobileQuery).matches ?? false
+function currentLayout() {
+  if (!window.matchMedia || window.matchMedia(desktopQuery).matches) return 'desktop'
+  return window.matchMedia(mobileQuery).matches ? 'mobile' : 'tablet'
+}
+
+function InspectorDrawer({ children, label, closeLabel, onOpenChange }: {
+  children: ReactNode; label: string; closeLabel: string; onOpenChange: (open: boolean) => void
+}) {
+  const dialog = useRef<HTMLDialogElement>(null)
+  const trigger = useRef<HTMLButtonElement>(null)
+  const [open, setOpen] = useState(false)
+  return <>
+    <button type="button" ref={trigger} aria-controls="wb-inspector" aria-haspopup="dialog" aria-expanded={open}
+      onClick={() => { dialog.current?.showModal(); setOpen(true); onOpenChange(true) }}><PanelRight />{label}</button>
+    <dialog ref={dialog} className="wb-inspector wb-inspector-drawer" id="wb-inspector" aria-labelledby="wb-drawer-title"
+      onClose={() => { setOpen(false); onOpenChange(false); trigger.current?.focus({ preventScroll: true }) }}
+      onClick={event => {
+        if (event.target !== event.currentTarget) return
+        const { left, right, top, bottom } = event.currentTarget.getBoundingClientRect()
+        if (event.clientX < left || event.clientX >= right || event.clientY < top || event.clientY >= bottom) dialog.current?.close()
+      }}>
+      <div className="wb-drawer-heading">
+        <h2 id="wb-drawer-title">{label}</h2>
+        <button type="button" aria-label={closeLabel} title={closeLabel} onClick={() => dialog.current?.close()}><X /></button>
+      </div>
+      {children}
+    </dialog>
+  </>
 }
 
 export function LabShell(props: LabShellProps) {
@@ -53,12 +80,13 @@ export function LabShell(props: LabShellProps) {
   const { locale } = useI18n()
   const t = workbenchCopy[locale]
   const stageRef = useRef<HTMLDivElement>(null)
-  const tabletButton = useRef<HTMLButtonElement>(null)
+  const stageSection = useRef<HTMLElement>(null)
+  const panels = useRef<HTMLDivElement>(null)
+  const drawerOpen = useRef(false)
   const shareButton = useRef<HTMLButtonElement>(null)
   const copyField = useRef<HTMLInputElement>(null)
-  const mobileLayout = useSyncExternalStore(subscribeToMobileLayout, inMobileLayout)
+  const layout = useSyncExternalStore(subscribeToLayout, currentLayout)
   const [mobileTab, setMobileTab] = useState<MobileTab>('controls')
-  const [tabletInspector, setTabletInspector] = useState(false)
   const [message, setMessage] = useState<'copied' | 'exported' | 'exportFailed' | 'manual' | null>(null)
   const [manualUrl, setManualUrl] = useState('')
   const [exporting, setExporting] = useState(false)
@@ -67,6 +95,17 @@ export function LabShell(props: LabShellProps) {
   const rightCollapsed = useAppStore(state => state.rightCollapsed)
   const { setLeftCollapsed, setRightCollapsed, markChallengeCompleted } = useAppStore.getState()
   const { previous, next } = getAdjacentLabs(labId)
+
+  useLayoutEffect(() => {
+    if (layout === 'tablet' || !drawerOpen.current) return
+    drawerOpen.current = false
+    if (layout === 'mobile') {
+      panels.current?.querySelector<HTMLButtonElement>('#tab-inspector')?.focus({ preventScroll: true })
+      panels.current?.scrollIntoView?.({ block: 'start' })
+    } else {
+      document.getElementById('wb-inspector-toggle')?.focus({ preventScroll: true })
+    }
+  }, [layout])
 
   useEffect(() => {
     for (const item of challenges) {
@@ -93,11 +132,6 @@ export function LabShell(props: LabShellProps) {
         dismissManualLink()
         return
       }
-      if (event.key === 'Escape' && tabletInspector) {
-        setTabletInspector(false)
-        tabletButton.current?.focus()
-        return
-      }
       const target = event.target instanceof Element ? event.target : null
       if (target?.closest('input, select, textarea, [contenteditable]:not([contenteditable="false"]), [role="slider"], [role="tablist"]')) return
       if (event.key === ' ' && target?.closest('button, a, summary, [role="button"]')) return
@@ -109,7 +143,7 @@ export function LabShell(props: LabShellProps) {
     }
     window.addEventListener('keydown', shortcut)
     return () => window.removeEventListener('keydown', shortcut)
-  }, [onReset, onNextStep, onPrevStep, onTogglePlay, tabletInspector, message])
+  }, [onReset, onNextStep, onPrevStep, onTogglePlay, message])
 
   async function share() {
     const url = props.getShareUrl?.() ?? window.location.href
@@ -140,25 +174,43 @@ export function LabShell(props: LabShellProps) {
     if (nextIndex === undefined) return
     event.preventDefault()
     const selected = tabs[nextIndex]!
-    setMobileTab(selected)
-    event.currentTarget.querySelector<HTMLButtonElement>(`#tab-${selected}`)?.focus()
+    selectMobileTab(selected)
+  }
+  function selectMobileTab(tab: MobileTab) {
+    setMobileTab(tab)
+    panels.current?.querySelector<HTMLButtonElement>(`#tab-${tab}`)?.focus({ preventScroll: true })
+    panels.current?.scrollIntoView?.({ block: 'start' })
+  }
+  function jumpTo(target: HTMLElement | null) {
+    target?.focus({ preventScroll: true })
+    target?.scrollIntoView({ block: 'start' })
   }
   function mobilePanel(tab: MobileTab) {
-    return mobileLayout ? { role: 'tabpanel', 'aria-labelledby': `tab-${tab}`, tabIndex: 0 } : {}
+    return layout === 'mobile' ? { role: 'tabpanel', 'aria-labelledby': `tab-${tab}`, tabIndex: 0 } : {}
   }
   function dismissManualLink() {
     setMessage(null)
     shareButton.current?.focus()
   }
+  const tabLabels = { controls: t.controls, inspector: t.inspectorTab, challenges: t.challengesTab }
   const challengeItems = challenges.map(item => ({
     ...item, completed: item.completed || savedChallenges.includes(item.id),
   }))
 
+  const inspectorContent = <>
+    <section><h2>{t.metrics}</h2><div className="wb-metrics">{props.metrics.map(metric =>
+      <MetricCard key={metric.label} {...metric} />)}</div></section>
+    {props.inspector && <section><h2>{t.details}</h2>{props.inspector}</section>}
+    <section><h2>{t.guide}</h2>{props.explainer}</section>
+  </>
+
   return <main className="workbench" data-left={leftCollapsed ? 'closed' : 'open'}
-    data-right={rightCollapsed ? 'closed' : 'open'} data-inspector={tabletInspector ? 'open' : 'closed'} data-tab={mobileTab}>
+    data-right={rightCollapsed ? 'closed' : 'open'} data-tab={mobileTab}>
     <header className="wb-toolbar">
       <div className="wb-title"><h1>{title}</h1><p>{subtitle}</p></div>
       <div className="wb-actions">
+        {layout === 'mobile' && <button type="button" aria-label={t.jumpControls} title={t.jumpControls}
+          onClick={() => selectMobileTab('controls')}><SlidersHorizontal />{t.controls}</button>}
         <button type="button" ref={shareButton} onClick={share}><Link2 />{t.share}</button>
         <button type="button" disabled={exporting || props.exportReady === false} onClick={download}><Download />{t.export}</button>
         <button type="button" onClick={onReset}><RotateCcw />{t.reset}</button>
@@ -166,42 +218,49 @@ export function LabShell(props: LabShellProps) {
           <button type="button" aria-controls="wb-rail" aria-expanded={!leftCollapsed}
             aria-label={leftCollapsed ? t.expandControls : t.collapseControls} title={leftCollapsed ? t.expandControls : t.collapseControls}
             onClick={() => setLeftCollapsed(!leftCollapsed)}><PanelLeft /></button>
-          <button type="button" aria-controls="wb-inspector" aria-expanded={!rightCollapsed}
+          <button type="button" id="wb-inspector-toggle" aria-controls="wb-inspector" aria-expanded={!rightCollapsed}
             aria-label={rightCollapsed ? t.expandInspector : t.collapseInspector} title={rightCollapsed ? t.expandInspector : t.collapseInspector}
             onClick={() => setRightCollapsed(!rightCollapsed)}><PanelRight /></button>
         </div>
-        <button type="button" className="wb-tablet-toggle" ref={tabletButton} aria-controls="wb-inspector" aria-expanded={tabletInspector}
-          onClick={() => setTabletInspector(!tabletInspector)}><PanelRight />{t.inspector}</button>
+        {layout === 'tablet' && <InspectorDrawer label={t.inspector} closeLabel={t.dismiss} onOpenChange={open => {
+          drawerOpen.current = open
+          if (open) setMobileTab('inspector')
+        }}>
+          {inspectorContent}
+        </InspectorDrawer>}
       </div>
     </header>
     <div className="wb-grid">
-      <section className="wb-stage" aria-label={t.stage}>
+      <section className="wb-stage" aria-label={t.stage} ref={stageSection} tabIndex={-1}>
         {props.formula}
         <div className="wb-stage-surface" ref={stageRef}>{props.stage}</div>
         {props.stepper}
       </section>
-      <div className="wb-tabs" role="tablist" aria-label={title} onKeyDown={navigateTabs}>
-        {tabs.map(tab => <button type="button" role="tab" id={`tab-${tab}`} aria-controls={`wb-${tab}`}
-          tabIndex={mobileTab === tab ? 0 : -1} key={tab} aria-selected={mobileTab === tab}
-          onClick={() => setMobileTab(tab)}>{t[tab]}</button>)}
+      <div className="wb-panels" ref={panels}>
+        <div className="wb-panel-bar">
+          <button type="button" className="wb-stage-return" aria-label={t.backToStage} title={t.backToStage}
+            onClick={() => jumpTo(stageSection.current)}><ArrowUp size={18} /></button>
+          <div className="wb-tabs" role="tablist" aria-label={title} onKeyDown={navigateTabs}>
+            {tabs.map(tab => <button type="button" role="tab" id={`tab-${tab}`} aria-controls={`wb-${tab}`}
+              tabIndex={mobileTab === tab ? 0 : -1} key={tab} aria-label={t[tab]} aria-selected={mobileTab === tab}
+              onClick={() => selectMobileTab(tab)}>{tabLabels[tab]}</button>)}
+          </div>
+        </div>
+        <aside id="wb-rail" className="wb-rail" aria-label={t.controls}>
+          <section id="wb-controls" className="wb-controls" {...mobilePanel('controls')}>
+            <h2>{t.controls}</h2>
+            {props.presets && props.presets.length > 0 && <PresetBar presets={props.presets} />}
+            {props.controls}
+          </section>
+          <section id="wb-challenges" className="wb-challenges" {...mobilePanel('challenges')}>
+            <h2>{t.challenges}</h2>
+            <ChallengePanel challenges={challengeItems} />
+          </section>
+        </aside>
+        {layout !== 'tablet' && <aside className="wb-inspector" id="wb-inspector" aria-label={t.inspector} {...mobilePanel('inspector')}>
+          {inspectorContent}
+        </aside>}
       </div>
-      <aside id="wb-rail" className="wb-rail" aria-label={t.controls}>
-        <section id="wb-controls" className="wb-controls" {...mobilePanel('controls')}>
-          <h2>{t.controls}</h2>
-          {props.presets && props.presets.length > 0 && <PresetBar presets={props.presets} />}
-          {props.controls}
-        </section>
-        <section id="wb-challenges" className="wb-challenges" {...mobilePanel('challenges')}>
-          <h2>{t.challenges}</h2>
-          <ChallengePanel challenges={challengeItems} />
-        </section>
-      </aside>
-      <aside className="wb-inspector" id="wb-inspector" aria-label={t.inspector} {...mobilePanel('inspector')}>
-        <section><h2>{t.metrics}</h2><div className="wb-metrics">{props.metrics.map(metric =>
-          <MetricCard key={metric.label} {...metric} />)}</div></section>
-        {props.inspector && <section><h2>{t.details}</h2>{props.inspector}</section>}
-        <section><h2>{t.guide}</h2>{props.explainer}</section>
-      </aside>
     </div>
     <nav className="wb-neighbors" aria-label={t.neighbors}>
       {previous && <Link to={`/labs/${previous.id}`}><ArrowLeft /><span><small>{t.previousLab}</small>{previous.title[locale]}</span></Link>}

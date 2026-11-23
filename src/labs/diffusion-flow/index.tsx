@@ -63,9 +63,11 @@ export default function DiffusionLab(){
         Math.abs(flowFrame.straightness-1)<Math.abs(ddpmFrame.straightness-1)},
       {id:'field',...t.missions.field,completed:fieldSeen},
     ]}
-    stage={<>{ready && result?<DiffusionStage result={result} config={config} step={step} showVectorField={s.showVectorField} showTrails={s.showTrails}/>:
-      <p role="status">{error?t.error:t.busy}</p>}
-      <NoiseChart schedule={schedule} step={step} numSteps={numSteps} onStepChange={go}/></>}
+    stage={ready && result ? <>
+      <DiffusionStage result={result} config={config} step={step} selected={s.particle}
+        onSelect={particle=>setState(old=>({...old,particle}))} showVectorField={s.showVectorField} showTrails={s.showTrails}/>
+      <NoiseChart schedule={schedule} step={step} numSteps={numSteps} onStepChange={go}/>
+    </> : <p role="status">{error?t.error:t.busy}</p>}
     metrics={[
       {label:t.metrics.distance,value:distance,hint:leadHint,tone:'accent'},
       {label:t.metrics.straightness,value:straightness,hint:leadHint},

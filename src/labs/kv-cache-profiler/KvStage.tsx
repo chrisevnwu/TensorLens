@@ -13,15 +13,17 @@ interface Props {
   frame:DecodeFrame
   result:ProfileResult
   hardware:HardwareProfile
+  probeAI:number
+  onProbeChange:(value:number)=>void
   mode:PathMode
 }
-export function KvStage({frame,result,hardware,mode}: Props) {
+export function KvStage({frame,result,hardware,mode,probeAI,onProbeChange}: Props) {
   const {locale}=useI18n(), t=kvVisuals[locale]
   return <div className="kv-stage"><section>
     <h2>{t.trace}<small>{t[frame.phase]} {frame.step||''}</small></h2>
     <div className="kv-key">{(['new','reused','redundant','masked'] as const).map(k=><span key={k}><i className={'kv-'+k}/>{t[k]}</span>)}</div>
     <div className="kv-paths">{(['cached','uncached'] as const).map(path=><DecodeMatrix key={path} {...{path,frame,mode}}/>)}</div>
-  </section><div className="kv-profile"><MemoryBudget result={result}/><Roofline result={result} hardware={hardware}/></div></div>
+  </section><div className="kv-profile"><MemoryBudget result={result}/><Roofline {...{result,hardware,probeAI,onProbeChange}}/></div></div>
 }
 
 export function KvInspector({frame,result}: Pick<Props,'frame'|'result'>) {

@@ -5,7 +5,7 @@
 .sample-legend i { width:8px; height:7px; border-radius:2px; }
 .sample-legend .sample-empirical { width:2px; background:var(--accent-tertiary); }
 .sample-stage svg { display:block; width:100%; height:auto; }
-.sample-stage svg text { fill:var(--text-secondary); font:9px var(--font-mono); }
+.sample-stage svg text { fill:var(--text-secondary); font:11px var(--font-mono); }
 .sample-bars g[role=button] { cursor:pointer; }
 .sample-roulette { transition:transform .24s cubic-bezier(.16,1,.3,1),opacity .15s; }
 .sample-actions { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
@@ -17,7 +17,7 @@
 .custom-logits > div { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:3px 8px; }
 .custom-logits label { display:grid; grid-template-columns:minmax(20px,.7fr) minmax(35px,1.2fr) 30px; align-items:center; gap:3px; font-size:.69rem; }
 .custom-logits label span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.custom-logits svg { height:22px; touch-action:none; cursor:ew-resize; }
+.custom-logits svg { height:22px; touch-action:pan-y pinch-zoom; cursor:ew-resize; }
 .custom-logits output { text-align:end; }
 .sample-inspector dl { margin:0; }
 .sample-inspector dl div { display:flex; align-items:center; justify-content:space-between; padding:4px 0; gap:6px; border-bottom:1px solid var(--border-subtle); }
@@ -26,3 +26,5 @@
 .sample-hit { animation:sample-land .32s ease-out; }
 @keyframes sample-land { from{transform:translateX(14px);opacity:.25} to{transform:translateX(0);opacity:1} }
 @media(prefers-reduced-motion:reduce){.sample-roulette{transition:none}.sample-hit{animation:none}}
+@media (pointer:coarse) { .custom-logits svg { min-height:36px; } }
+.sample-bars { max-height:440px; }.sample-cdf svg { max-height:200px; }

@@ -1,9 +1,10 @@
-import type { KeyboardEvent, PointerEvent } from 'react'
+import type { KeyboardEvent } from 'react'
+import { usePlotScrub, usePlotWidth } from '../../components/viz/usePlotInteraction'
 import type { DistancePoint, ScalingMode } from '../../engine/labs/embeddings-rope/engine'
 import { useI18n } from '../../i18n'
 import { ropeVisuals } from '../../i18n/labs/rope-visuals'
 
-const left = 45, right = 480, top = 12, bottom = 124, width = 500
+const left = 45, top = 12, bottom = 124
 const curveColors = { none: 'var(--accent-primary)', pi: 'var(--accent-secondary)', ntk: 'var(--accent-tertiary)', sinusoidal: 'var(--accent-warn)' }
 
 interface Props {
@@ -16,6 +17,8 @@ interface Props {
 
 export function DecayCurve({points, distance, mode, compare, onChange}: Props) {
   const { locale } = useI18n()
+  const { ref, width } = usePlotWidth(500)
+  const right = width - 20
   const t = ropeVisuals[locale]
   const modes = ['none', 'pi', 'ntk'] as const
   const lines = compare ? [mode, 'sinusoidal'] as const : [...modes.filter(m => m !== mode), mode]
@@ -27,11 +30,9 @@ export function DecayCurve({points, distance, mode, compare, onChange}: Props) {
   const x = (d: number) => left + (right-left) * d / limit
   const y = (v: number) => bottom - (bottom-top) * (v-lo) / (hi-lo)
   const point = points[distance]!
-  function choose(event: PointerEvent<SVGSVGElement>) {
-    const box = event.currentTarget.getBoundingClientRect()
-    const sx = (event.clientX-box.left) * width / Math.max(box.width,1)
+  const scrub = usePlotScrub(sx => {
     onChange(Math.max(0,Math.min(limit,Math.round((sx-left) * limit / (right-left)))))
-  }
+  })
   function key(event: KeyboardEvent<SVGSVGElement>) {
     const keys: Record<string, number> = { ArrowLeft: distance - 1, ArrowDown: distance - 1, ArrowRight: distance + 1, ArrowUp: distance + 1, Home: 0, End: limit }
     const n = keys[event.key]
@@ -42,13 +43,9 @@ export function DecayCurve({points, distance, mode, compare, onChange}: Props) {
   }
   return <section className="rope-decay"><h2>{t.decay}</h2>
     <div className="rope-legend">{lines.map(key => <span key={key}><i style={{color: curveColors[key]}} />{t[key]}</span>)}</div>
-    <svg viewBox={`0 0 ${width} 156`} role="slider" tabIndex={0} aria-label={t.offset} aria-valuemin={0}
+    <svg ref={ref} viewBox={`0 0 ${width} 156`} role="slider" tabIndex={0} aria-label={t.offset} aria-valuemin={0}
       aria-valuemax={limit} aria-valuenow={distance} aria-valuetext={`|Δ| = ${distance}, ${t.dot} = ${point[mode].toFixed(4)}`}
-      onKeyDown={key} onPointerDown={event => {
-        event.currentTarget.setPointerCapture(event.pointerId)
-        choose(event)
-      }}
-      onPointerMove={event => { if (event.currentTarget.hasPointerCapture(event.pointerId)) choose(event) }}>
+      onKeyDown={key} {...scrub}>
       {[0, .5, 1].map(f => {
         const v = lo + f * (hi-lo)
         return <g key={f}><line className="rope-grid-line" x1={left} x2={right} y1={y(v)} y2={y(v)} />

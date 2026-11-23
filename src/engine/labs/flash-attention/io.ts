@@ -18,6 +18,8 @@ export function tiledBytes(n: number, d: number, br: number, bc: number, causal:
   return elements * elementBytes
 }
 
+export const SCALING_LENGTHS = [512,1024,2048,4096,8192,16384,32768] as const
+
 export interface ScalingPoint {
   n: number
   d: number
@@ -39,7 +41,7 @@ export function scalingCurve(sramKB: number, causal: boolean): ScalingPoint[] {
   }
   let tile = 8
   while (footprint(tile+8,d) <= capacity && tile < 512) tile += 8
-  return [512,1024,2048,4096,8192,16384,32768].map(n => ({
+  return SCALING_LENGTHS.map(n => ({
     n, d, tile, sramBytes:footprint(tile,d), standardBytes:standardBytes(n,d),
     flashBytes:tiledBytes(n,d,tile,tile,causal),
   }))

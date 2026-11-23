@@ -1,4 +1,4 @@
-import {useMemo,useState} from 'react'
+import {useMemo} from 'react'
 import {SOLVERS,type DiffusionResult,type DiffusionConfig,type SolverFrame,type SolverId} from '../../engine/labs/diffusion-flow/engine'
 import {fieldGrid,type FieldVector} from '../../engine/labs/diffusion-flow/grid'
 import {useI18n} from '../../i18n'
@@ -6,11 +6,10 @@ import {diffusionVisuals} from '../../i18n/labs/diffusion-visuals'
 import {ParticleCanvas} from './ParticleCanvas'
 import './diffusion.css'
 
-interface Props {result:DiffusionResult;config:DiffusionConfig;step:number;showVectorField:boolean;showTrails:boolean}
+interface Props {result:DiffusionResult;config:DiffusionConfig;step:number;showVectorField:boolean;showTrails:boolean;selected:number;onSelect:(index:number)=>void}
 
-export function DiffusionStage({result,config,step,showVectorField,showTrails}:Props){
+export function DiffusionStage({result,config,step,showVectorField,showTrails,selected,onSelect}:Props){
   const {locale}=useI18n(),t=diffusionVisuals[locale]
-  const [selected,setSelected]=useState(0)
   const panels=SOLVERS.flatMap(solver=>{
     const frames=result.runs[solver]
     return frames?[{solver,frames}]:[]
@@ -40,14 +39,15 @@ export function DiffusionStage({result,config,step,showVectorField,showTrails}:P
     <div className="diffusion-key">
       <span><i className="diff-a"/>{t.classA}</span><span><i className="diff-b"/>{t.classB}</span>
       <span><i className="diff-particles"/>{t.particles}</span>
-      {showTrails&&<span><i className="diff-trails"/>{t.trails}</span>}
+      {showTrails&&<><span><i className="diff-trails"/>{t.trails}</span>
+        <span><i className="diff-selected"/>{t.selectedTrail}</span></>}
       {showVectorField&&<span><i className="diff-field"/>{panels.length>1?`${t.score} / ${t.velocity}`:panels[0]!.solver==='flow'?t.velocity:t.score}</span>}
     </div>
     <div className="diffusion-panels" data-compare={panels.length>1}>{panels.map(({solver,frames})=>
-      <ParticleCanvas key={solver} target={result.target} {...{solver,frames,step,extent,selected}} onSelect={setSelected}
+      <ParticleCanvas key={solver} target={result.target} {...{solver,frames,step,extent,selected}} onSelect={onSelect}
         field={showVectorField?makeField(solver,frames[step]!):[]} compact={panels.length>1} trails={showTrails}/>)}</div>
     <label className="diffusion-choice">{t.particle} <input type="range" min="0" max={first.particles.length-1} value={selected}
-      onChange={e=>setSelected(e.currentTarget.valueAsNumber)}/><output>#{selected}</output></label>
+      onChange={e=>onSelect(e.currentTarget.valueAsNumber)}/><output>#{selected}</output></label>
   </section>
 }
 

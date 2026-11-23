@@ -1,4 +1,4 @@
-.lora-stage { display:grid; gap:12px; }
+.lora-stage { display:grid; gap:12px; container-type:inline-size; }
 .lora-stage h2,.lora-stage h3,.lora-inspector h3 { margin:0 0 6px; font-size:.93rem; font-weight:630; }
 .lora-formula { font:.82rem var(--font-mono); color:var(--text-secondary); margin:4px 0 10px; }
 .lora-factors { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); gap:6px; align-items:center; }
@@ -11,7 +11,7 @@
 .factor-tile small { font: .64rem var(--font-mono); color:var(--text-muted); }
 .lora-spectrum,.lora-stage .numeric-chart { padding-top:10px; border-top:1px solid var(--border-subtle); }
 .lora-spectrum svg { display:block; width:100%; max-height:132px; }
-.lora-spectrum text { fill:var(--text-secondary); font:9px var(--font-mono); }
+.lora-spectrum text { fill:var(--text-secondary); font:11px var(--font-mono); }
 .lora-spectrum g[role=button] { cursor:pointer; }
 .lora-legend { display:flex; gap:4px 10px; flex-wrap:wrap; }
 .lora-legend span { display:inline-flex; align-items:center; gap:5px; font-size:.7rem; color:var(--text-secondary); }
@@ -22,3 +22,4 @@
 .lora-inspector dt,.lora-inspector p { color:var(--text-secondary); font-size:.75rem; }
 .lora-inspector dd,.lora-inspector code { color:var(--text-primary); font:.71rem/1.5 var(--font-mono); margin:0; }
 .lora-inspector p { margin:7px 0; }.lora-inspector code { overflow-wrap:anywhere; }
+@container (max-width: 30rem) { .lora-grids { grid-template-columns:repeat(2,minmax(0,1fr)); } }

@@ -42,7 +42,7 @@ export interface AttentionResult {
 }
 
 const MODEL_DIM = 12
-const MAX_TOKENS = 8
+export const MAX_TOKENS = 8
 const POSITION_ANGLE = 2 * Math.PI / (MAX_TOKENS + 1)
 
 export function parseTokens(text: string) {

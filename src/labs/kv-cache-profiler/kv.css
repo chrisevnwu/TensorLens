@@ -25,8 +25,8 @@
 .kv-budget dt { display:flex; align-items:center; gap:5px; color:var(--text-secondary); }
 .kv-budget dt i { width:8px; height:8px; border-radius:2px; }
 .kv-budget dd { margin:0; font:500 .71rem var(--font-mono); }
-.kv-roof text { fill:var(--text-secondary); font:8px var(--font-mono); }
-.kv-roof svg { cursor:crosshair; touch-action:manipulation; }
+.kv-roof text { fill:var(--text-secondary); font:11px var(--font-mono); }
+.kv-roof svg { cursor:crosshair; touch-action:pan-y pinch-zoom; }
 .kv-oom { display:inline-block; margin:5px 0 0; background:color-mix(in srgb,var(--accent-danger) 12%,var(--bg-canvas)); color:var(--accent-danger); border-radius:4px; padding:3px 6px; font:600 .73rem var(--font-mono); animation:kv-overload 1.4s ease-in-out 2 alternate; }
 @keyframes kv-overload { from{box-shadow:0 0 0 transparent} to{box-shadow:0 0 8px color-mix(in srgb,var(--accent-danger) 28%,transparent)} }
 .kv-output { margin:9px 0; }

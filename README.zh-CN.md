@@ -48,14 +48,14 @@ npm run dev
 
 打开 Vite 输出的本地地址。在站点地址后加上 `/#/labs/attention-debugger?preset=causal&step=3`，可以直接进入因果掩码的计算步骤。
 
-首次运行完整验证前，请安装 Playwright 使用的 Chromium。在 Linux CI 中可用 `npx playwright install --with-deps chromium` 一并安装所需系统包。
+首次运行完整验证前，请安装 Playwright 使用的三种浏览器引擎。在 Linux CI 中可用 `npx playwright install --with-deps chromium firefox webkit` 一并安装所需系统包。
 
 ```sh
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e
 ```
 
-构建会校验首页 JavaScript 压缩后小于 200 kB，并检查每个实验室是否有独立的懒加载入口。Vitest 在 Node 中测试引擎，在 jsdom 中测试组件。Playwright 使用端口 4173 启动生产构建的预览，并在 Chromium 的 1440 × 900 和 390 × 844 两种视口下运行。测试结束后可使用 `npm run preview` 手动检查同一份构建。
+构建会校验首页 JavaScript 压缩后小于 200 kB，并检查每个实验室是否有独立的懒加载入口。Vitest 在 Node 中测试引擎，在 jsdom 中测试组件。Playwright 在端口 4174 验证生产构建，覆盖桌面与手机尺寸的 Chromium、平板尺寸的 WebKit 和笔记本尺寸的 Firefox。可同时运行 `npm run preview`，在端口 4173 手动体验。
 
 ## 代码结构
 

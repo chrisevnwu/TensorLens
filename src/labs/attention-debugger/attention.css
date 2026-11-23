@@ -16,9 +16,18 @@
 .attention-pair-readout { font-size: .69rem; color: var(--text-secondary); padding: 5px 0; }
 .attention-pair-readout b { color: var(--text-primary); font-family: var(--font-mono); }
 .attention-arcs svg,.head-wiring svg { width: 100%; display: block; }
-.attention-arcs svg { background: var(--bg-canvas); border-radius: 6px; border: 1px solid var(--border-subtle); }
-.attention-arcs svg text,.head-wiring svg text { font: 9px var(--font-mono); fill: var(--text-primary); }
-.attention-arcs g[role=button],.attention-arcs path,.head-wiring g[role=button] { cursor: pointer; }
+.attention-arc-plot { background: var(--bg-canvas); border-radius: 6px; border: 1px solid var(--border-subtle); }
+.attention-arc-labels { display: grid; }
+.attention-arc-labels button {
+  display: block; min-width: 0; min-height: 26px; padding: 2px 3px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font: .68rem var(--font-mono); text-align: center; color: var(--text-secondary);
+  border: 0; border-radius: 4px; background: transparent; cursor: pointer;
+}
+.attention-arc-labels button[aria-pressed=true] { color: var(--text-primary); font-weight: 650; }
+.attention-arc-labels button:hover { background: var(--bg-elevated); }
+.head-wiring svg text { font: 9px var(--font-mono); fill: var(--text-primary); }
+.attention-arcs g,.attention-arcs path,.head-wiring g[role=button] { cursor: pointer; }
 .head-wiring { padding-top: 12px; border-top: 1px solid var(--border-subtle); }
 .head-wiring svg { max-height: 118px; }
 .head-wiring rect { fill: var(--bg-elevated); }

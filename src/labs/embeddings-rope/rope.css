@@ -20,8 +20,8 @@
 .rope-full-turn { stroke-width: .8; opacity: .65; stroke-dasharray: 2 2; }
 .rope-phase-dot { fill: var(--accent-warn); }
 .rope-decay { border-top: 1px solid var(--border-subtle); padding-top: 14px; }
-.rope-decay svg { display: block; width: 100%; height: auto; cursor: crosshair; touch-action: none; }
-.rope-decay text { font: .65rem var(--font-mono); fill: var(--text-secondary); }
+.rope-decay svg { display: block; width: 100%; height: auto; cursor: crosshair; touch-action: pan-y pinch-zoom; }
+.rope-decay text { font: 11px var(--font-mono); fill: var(--text-secondary); }
 .rope-grid-line { stroke: var(--border-strong); }
 .rope-inspector dl { display: grid; gap: 4px; margin: 0 0 10px; }
 .rope-inspector dl > div { display: flex; align-items: center; justify-content: space-between; gap: 6px; }

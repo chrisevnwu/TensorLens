@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import { ArrowDown, ArrowRight, ArrowUp, CornerDownLeft, Search, X } from 'lucide-react'
+import { ArrowDown, ArrowRight, ArrowUp, CornerDownLeft, FlaskConical, Search, SlidersHorizontal, Terminal, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useI18n } from '../../i18n'
 import { navigationText } from '../../i18n/navigation'
@@ -10,10 +10,13 @@ import { useAppStore } from '../../store/useAppStore'
 interface Command {
   id: string
   title: string
+  kind: 'lab' | 'preset' | 'action'
   keywords: string
   detail?: string
   run: () => void
 }
+
+const commandIcons = { lab: FlaskConical, preset: SlidersHorizontal, action: Terminal }
 
 function score(text: string, query: string) {
   const source = text.normalize('NFKC').toLowerCase()
@@ -51,23 +54,23 @@ export default function CommandPalette({ onClose }: { onClose: () => void }) {
   const t = navigationText[locale]
   const commands = useMemo(() => {
     const labs: Command[] = LAB_REGISTRY.map(lab => ({
-      id: lab.id, title: lab.title[locale],
+      id: lab.id, kind: 'lab', title: lab.title[locale],
       detail: common.chapters[lab.chapter],
       keywords: [lab.id, lab.title.en, lab.title.zh, ...lab.tags.en, ...lab.tags.zh,
-        lab.description.en, lab.description.zh].join(' '),
+        lab.description.en, lab.description.zh, 'Lab ' + String(lab.number).padStart(2, '0'), '实验 ' + String(lab.number).padStart(2, '0')].join(' '),
       run: () => navigate('/labs/' + lab.id),
     }))
     const presets: Command[] = LAB_REGISTRY.flatMap(lab => getLabPresets(lab.id).map(preset => ({
-      id: lab.id + '-' + preset.id, title: preset.title[locale], detail: lab.title[locale],
-      keywords: [preset.title.en, preset.title.zh, preset.id].join(' '),
+      id: lab.id + '-' + preset.id, kind: 'preset' as const, title: preset.title[locale], detail: lab.title[locale],
+      keywords: [preset.title.en, preset.title.zh, preset.id, lab.id, lab.title.en, lab.title.zh].join(' '),
       run: () => navigate('/labs/' + lab.id + '?preset=' + encodeURIComponent(preset.id)),
     })))
     const themeKey = theme === 'dark' ? 'light' : 'dark'
     const actions: Command[] = [
-      { id: 'home', title: t.explore, keywords: 'home explorer explore labs 主页 总览 探索实验室', run: () => navigate('/') },
-      { id: 'progress', title: t.progress, keywords: 'progress challenges 挑战进度', run: () => navigate('/?progress=1') },
-      { id: 'theme', title: t[themeKey], keywords: 'theme ' + navigationText.en[themeKey] + navigationText.zh[themeKey], run: () => setTheme(themeKey) },
-      { id: 'language', title: locale === 'en' ? t.chinese : t.english, keywords: 'English 中文 简体中文 language 语言', run: () => setLocale(locale === 'en' ? 'zh' : 'en') },
+      { id: 'home', kind: 'action', title: t.explore, keywords: 'home explorer explore labs 主页 总览 探索实验室', run: () => navigate('/') },
+      { id: 'progress', kind: 'action', title: t.progress, keywords: 'progress challenges 挑战进度', run: () => navigate('/?progress=1') },
+      { id: 'theme', kind: 'action', title: t[themeKey], keywords: 'theme ' + navigationText.en[themeKey] + navigationText.zh[themeKey], run: () => setTheme(themeKey) },
+      { id: 'language', kind: 'action', title: locale === 'en' ? t.chinese : t.english, keywords: 'English 中文 简体中文 language 语言', run: () => setLocale(locale === 'en' ? 'zh' : 'en') },
     ]
     return [...labs, ...actions.map(action => ({ ...action, detail: t.actions })), ...presets]
   }, [common, locale, navigate, setLocale, setTheme, t, theme])
@@ -87,7 +90,7 @@ export default function CommandPalette({ onClose }: { onClose: () => void }) {
     input.current?.focus()
     return () => {
       dialog.close()
-      if (previous instanceof HTMLElement) previous.focus()
+      if (previous instanceof HTMLElement) previous.focus({ preventScroll: true })
     }
   }, [])
 
@@ -125,20 +128,25 @@ export default function CommandPalette({ onClose }: { onClose: () => void }) {
           <button type="button" onClick={onClose} aria-label={t.close}><X size={17} /></button>
         </div>
         <div className="tl-command-list" role="listbox" aria-label={t.search} id={listId} ref={options}>
-          {results.map((command, index) => (
-            <button key={command.id} type="button" role="option" tabIndex={-1} id={listId + '-' + command.id}
+          {results.map((command, index) => {
+            const Icon = commandIcons[command.kind]
+            return <button key={command.id} type="button" role="option" tabIndex={-1} id={listId + '-' + command.id}
               aria-selected={index === selected} onPointerMove={event => { if (event.pointerType === 'mouse') setSelected(index) }}
               onClick={() => execute(command)}>
+              <Icon size={17} className="tl-command-icon" aria-hidden="true" />
               <span><strong>{command.title}</strong><small>{command.detail}</small></span>
-              <ArrowRight size={16} />
+              <ArrowRight size={16} className="tl-command-arrow" aria-hidden="true" />
             </button>
-          ))}
+          })}
         </div>
-        {!results.length && <p className="tl-empty-search" role="status">{t.noResults}</p>}
-        <div className="tl-palette-keys" aria-hidden="true">
+        {!results.length && <div className="tl-empty-search">
+          <p role="status">{t.noResults}</p>
+          <button type="button" onClick={() => { setQuery(''); input.current?.focus() }}>{t.clearSearch}</button>
+        </div>}
+        {results.length > 0 && <div className="tl-palette-keys" aria-hidden="true">
           <kbd><ArrowUp size={11} /></kbd><kbd><ArrowDown size={11} /></kbd> {t.move}
           <kbd><CornerDownLeft size={11} /></kbd> {t.open}
-        </div>
+        </div>}
       </div>
     </dialog>
   )

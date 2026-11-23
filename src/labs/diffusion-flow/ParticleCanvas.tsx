@@ -1,4 +1,5 @@
 import {HiDPICanvas} from '../../components/viz/HiDPICanvas'
+import {trajectoryDistances} from '../../engine/labs/diffusion-flow/metrics'
 import type {Point,TargetPoint} from '../../engine/labs/diffusion-flow/data'
 import type {SolverFrame,SolverId} from '../../engine/labs/diffusion-flow/engine'
 import type {FieldVector} from '../../engine/labs/diffusion-flow/grid'
@@ -18,6 +19,8 @@ function viewport(width:number,height:number,extent:number) {
 export function ParticleCanvas({target,solver,frames,step,field,extent,trails,selected,onSelect,compact}:Props){
   const {locale}=useI18n(),t=diffusionVisuals[locale]
   const frame=frames[step]!,initial=frames[0]!.particles[0]!,first=frame.particles[0]!,selectedPoint=frame.particles[selected]!
+  const selectedPath=frames.slice(0,step+1).map(f=>f.particles[selected]!)
+  const {pathLength,displacement}=trajectoryDistances(selectedPath)
   const count=frame.particles.length,heroes=trails?Math.min(12,count):0
   return <figure className="diffusion-run" data-solver={solver} data-particle-count={count} data-start-x={initial.x}
     data-start-y={initial.y} data-x={first.x} data-y={first.y} data-mean-distance={frame.meanDistance} data-purity-a={frame.purityA}
@@ -63,7 +66,7 @@ export function ParticleCanvas({target,solver,frames,step,field,extent,trails,se
           }
           ctx.stroke()
         }
-        ctx.strokeStyle=palette.good;ctx.lineWidth=compact?1:1.25;ctx.globalAlpha=.73
+        ctx.strokeStyle=palette.good;ctx.lineWidth=compact?1:1.25;ctx.globalAlpha=.46
         ctx.beginPath()
         for(let h=0;h<heroes;h++){
           const index=Math.floor(h*count/heroes)
@@ -73,6 +76,15 @@ export function ParticleCanvas({target,solver,frames,step,field,extent,trails,se
           }
         }
         ctx.stroke()
+        if(trails && step>0){
+          ctx.globalAlpha=1;ctx.strokeStyle=palette.warn;ctx.lineWidth=compact?1.8:2.25
+          ctx.lineJoin='round';ctx.beginPath()
+          selectedPath.forEach((p,i)=>{
+            if(i===0)ctx.moveTo(...pos(p))
+            else ctx.lineTo(...pos(p))
+          })
+          ctx.stroke()
+        }
         ctx.globalAlpha=.86;ctx.fillStyle=palette.text;ctx.beginPath()
         for(const p of frame.particles){
           const [x,y]=pos(p),r=compact?1.25:1.8
@@ -82,6 +94,12 @@ export function ParticleCanvas({target,solver,frames,step,field,extent,trails,se
         const [mx,my]=pos(selectedPoint)
         ctx.strokeStyle=palette.warn;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(mx,my,compact?3.8:5,0,2*Math.PI);ctx.stroke()
       }}/>
-    <p>#{selected} <code>({selectedPoint.x.toFixed(3)}, {selectedPoint.y.toFixed(3)})</code></p>
+    <div className="diffusion-reading">
+      <p className="diffusion-position"><b>#{selected}</b> <code>({selectedPoint.x.toFixed(3)}, {selectedPoint.y.toFixed(3)})</code></p>
+      <dl>
+        <div><dt>{t.pathLength}</dt><dd>{pathLength.toFixed(3)}</dd></div>
+        <div><dt>{t.displacement}</dt><dd>{displacement.toFixed(3)}</dd></div>
+      </dl>
+    </div>
   </figure>
 }

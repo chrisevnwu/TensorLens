@@ -12,7 +12,7 @@ it('selects the same query/key indices from arc and matrix interactions', () => 
   const {container} = render(<AttentionStage result={result} headIndex={0} step={4} cell={{row:0,col:0}}
     onSelectCell={onSelectCell} onSelectHead={vi.fn()} />)
   fireEvent.click(screen.getByRole('button', {name:'Query 1: b'}))
-  fireEvent.pointerEnter(container.querySelectorAll('.attention-map .matrix-heatmap > rect')[2]!)
+  fireEvent.pointerEnter(container.querySelector('.attention-map [data-row="1"][data-col="0"]')!)
   expect(onSelectCell.mock.calls).toEqual([[{row:1,col:0}],[{row:1,col:0}]])
 })
 
