@@ -7,7 +7,7 @@
 | `M0` | Complete | bootstrap the static React workspace and verification pipeline | 1 Vitest + 2 Playwright | Pass | `feat(M0)` |
 | `M1` | Complete | ship the bilingual explorer and application shell | 5 Vitest + 4 Playwright | Pass | `feat(M1)` |
 | `M2` | Complete | implement numerical kernels and the shared lab workbench | 58 Vitest + 4 Playwright | Pass | `feat(M2)` |
-| `M3` | Pending | Lab 01: BPE Tokenizer & Subword Lab | — | — | — |
+| `M3` | Complete | teach byte-level BPE through ranked merges and byte inspection | 75 Vitest + 8 Playwright | Pass | `feat(M3)` |
 | `M4` | Pending | Lab 02: Embeddings & RoPE Geometry | — | — | — |
 | `M5` | Pending | Lab 03: Multi-Head Attention Debugger | — | — | — |
 | `M6` | Pending | Lab 04: LayerNorm, RMSNorm & Residual Stream | — | — | — |
@@ -42,3 +42,9 @@ All five gates passed. 5 Vitest + 4 Playwright. Built JavaScript totals 96.6 KiB
 Added deterministic PRNG, matrix operations, Jacobi SVD, reverse-mode autodiff, IEEE codecs and colormaps under src/engine/math. Added responsive LabShell, controls, typed URL codec, KaTeX, heatmap, HiDPI canvas, challenge persistence and snapshot export. An independent Chromium check downloaded a 2× composite PNG with canvas, inline SVG and text.
 
 All five gates passed. 58 Vitest + 4 Playwright. Built JavaScript totals 96.6 KiB gzip across all chunks.
+
+### M3 — teach byte-level BPE through ranked merges and byte inspection
+
+Implemented src/engine/labs/bpe-tokenizer and its lazy workbench, recursive merge inspection, byte-aligned corpus highlights, bilingual missions, URL replay and a real PNG download. Chromium verified that a clicked depth-three merge completes the challenge and shared Unicode input survives reopening. Engine-first checkpoint: 71 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 75 Vitest + 8 Playwright. Built JavaScript totals 185.4 KiB gzip across all chunks.

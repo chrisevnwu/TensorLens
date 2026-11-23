@@ -1,3 +1,4 @@
+import { lazy } from 'react'
 import type { Localized } from '../i18n/types'
 import type { ChapterId, LabDefinition } from './types'
 
@@ -19,6 +20,7 @@ function tags(...items: (string | [string, string])[]): Localized<readonly strin
 
 export const LAB_REGISTRY: readonly LabDefinition[] = [
   {
+    component: lazy(() => import('./bpe-tokenizer')),
     id: 'bpe-tokenizer', number: 1, chapter: 'sequence-attention', difficulty: 'foundational',
     title: text('BPE Tokenizer & Subword Lab', '分词器与 BPE 合并实验室'),
     description: text('Merge byte pairs and watch a vocabulary emerge from raw text.', '从原始文本出发，逐步合并字节对，观察词表如何形成。'),

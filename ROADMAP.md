@@ -55,11 +55,11 @@
 ## Milestone 3 (`M3`): Lab 01 — BPE Tokenizer & Subword Lab (`bpe-tokenizer`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 01
 
-- [ ] Implement `src/engine/labs/bpe-tokenizer/` (real UTF-8 byte-level BPE trainer, merge-tree builder, encoder/decoder, 3 presets) + Vitest invariant suite (UTF-8 CJK/Emoji round-trip identity, monotonic compression, determinism).
-- [ ] Add `src/i18n/labs/bpe-tokenizer.ts` (100% EN + ZH).
-- [ ] Build `src/labs/bpe-tokenizer/` (color-coded token chips, recursive binary BPE merge-tree inspector, dual compression/token-count SVG curve, Stepper, URL codec, 3 auto-verified Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add Playwright E2E check in `e2e/labs.spec.ts`.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/bpe-tokenizer/` (real UTF-8 byte-level BPE trainer, merge-tree builder, encoder/decoder, 3 presets) + Vitest invariant suite (UTF-8 CJK/Emoji round-trip identity, monotonic compression, determinism).
+- [x] Add `src/i18n/labs/bpe-tokenizer.ts` (100% EN + ZH).
+- [x] Build `src/labs/bpe-tokenizer/` (color-coded token chips, recursive binary BPE merge-tree inspector, dual compression/token-count SVG curve, Stepper, URL codec, 3 auto-verified Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add Playwright E2E check in `e2e/labs.spec.ts`.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 
