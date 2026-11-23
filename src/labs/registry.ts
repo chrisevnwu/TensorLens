@@ -69,6 +69,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags('MoE', ['Top-K Gating', 'Top-K 门控'], ['Capacity Factor', '容量因子'], ['Expert Collapse', '专家坍缩']),
   },
   {
+    component: lazy(() => import('./quantization')),
     id: 'quantization', number: 8, chapter: 'efficiency-alignment', difficulty: 'intermediate',
     title: text('Quantization & Precision Loss Lab', '量化与精度损失实验室'),
     description: text('Inspect floating-point bits and measure what low-bit weights discard.', '拆解浮点数的位表示，测量低比特权重量化带来的误差。'),

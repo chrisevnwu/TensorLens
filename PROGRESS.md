@@ -13,8 +13,8 @@
 | `M6` | Complete | inspect exact layer Jacobians and residual signal propagation | 144 Vitest + 20 Playwright | Pass | `100fd2b` |
 | `M7` | Complete | profile cache reuse, memory budgets and hardware rooflines | 161 Vitest + 24 Playwright | Pass | `51c5b5f` |
 | `M8` | Complete | trace tiled FlashAttention and SRAM traffic | 175 Vitest + 28 Playwright | Pass | `84acfbd` |
-| `M9` | Complete | simulate sparse expert routing and load balancing | 190 Vitest + 32 Playwright | Pass | `feat(M9)` |
-| `M10` | Pending | Lab 08: Quantization & Precision Loss Lab | — | — | — |
+| `M9` | Complete | simulate sparse expert routing and load balancing | 190 Vitest + 32 Playwright | Pass | `ff036ec` |
+| `M10` | Complete | inspect floating-point encodings and quantify tensor precision loss | 235 Vitest + 36 Playwright | Pass | `feat(M10)` |
 | `M11` | Pending | Lab 09: Decoding & Sampling Playground | — | — | — |
 | `M12` | Pending | Lab 10: LoRA & Low-Rank SVD Lab | — | — | — |
 | `M13` | Pending | Lab 11: Autograd & Optimizers Arena | — | — | — |
@@ -84,3 +84,9 @@ All five gates passed. 175 Vitest + 28 Playwright. Built JavaScript totals 231.7
 Added a seeded 30-update linear router, capacity-ranked weighted dispatch, analytical Switch gradients and selection-only balancing biases. The Sankey and inspector report dropped assignments and fully dropped tokens separately. An additional sweep of 324 configurations and 10,044 frames conserved all routes, with gate-sum error at most 2.23e-16. Engine-first checkpoint: 187 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 190 Vitest + 32 Playwright. Built JavaScript totals 239.1 KiB gzip across all chunks.
+
+### M10 — inspect floating-point encodings and quantify tensor precision loss
+
+Implemented five editable floating-point formats and nine tensor quantizers, including the QLoRA NF4 codebook, per-group scale overhead and reversible channel migration. Two isolated spikes of magnitude 20 in distinct channels give 8.082 dB with per-tensor INT4 and 21.921 dB with group-of-eight NF4. Verified all histogram counts and independent SQNR across 432 configurations. FP32 rounding is checked against Math.fround, including for the nonrepresentable decimal 3.1415927. Engine-first checkpoint: 232 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 235 Vitest + 36 Playwright. Built JavaScript totals 250.7 KiB gzip across all chunks.

@@ -132,11 +132,11 @@
 ## Milestone 10 (`M10`): Lab 08 — Quantization & Precision Loss Lab (`quantization`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 08
 
-- [ ] Implement `src/engine/labs/quantization/` (FP16/BF16/FP8/INT8/INT4/NF4 group-wise quantization, channel outlier injection, SmoothQuant channel scaling, bit-flipper inspector, exact MSE/SQNR/Cosine Sim metrics) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/quantization.ts` (100% EN + ZH).
-- [ ] Build `src/labs/quantization/` (Dual mode: synchronized Original/Dequantized/Error heatmaps + quantization-grid histogram overlay AND clickable IEEE-754/FP8 bit-box laboratory, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/quantization/` (FP16/BF16/FP8/INT8/INT4/NF4 group-wise quantization, channel outlier injection, SmoothQuant channel scaling, bit-flipper inspector, exact MSE/SQNR/Cosine Sim metrics) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/quantization.ts` (100% EN + ZH).
+- [x] Build `src/labs/quantization/` (Dual mode: synchronized Original/Dequantized/Error heatmaps + quantization-grid histogram overlay AND clickable IEEE-754/FP8 bit-box laboratory, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

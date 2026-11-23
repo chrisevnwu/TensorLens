@@ -1,4 +1,4 @@
-import { useId, type KeyboardEvent } from 'react'
+import { useId, useLayoutEffect, useMemo, useRef, type KeyboardEvent } from 'react'
 import { useAppStore } from '../../store/useAppStore'
 import { divergingColor, sequentialColor } from '../../engine/math/colormaps'
 
@@ -16,14 +16,23 @@ export function MatrixHeatmap({ values, label, signed = false, domain, selected,
   const theme = useAppStore(state => state.theme)
   const hatch = useId().replace(/[^a-z0-9-]/gi, '') + '-mask'
   const rows = values.length, cols = values[0]?.length ?? 0
+  const selectionHandler = useRef(onSelect)
+  useLayoutEffect(() => { selectionHandler.current = onSelect }, [onSelect])
+  const cells = useMemo(() => {
+    const bound = domain ?? values.reduce((max, row) =>
+      row.reduce((limit, value) => Number.isFinite(value) ? Math.max(limit, Math.abs(value)) : limit, max), 1e-12)
+    function color(value: number) {
+      if (!Number.isFinite(value)) return 'url(#' + hatch + ')'
+      return signed ? divergingColor(value, bound, theme) : sequentialColor(value / Math.max(bound, 1e-12), theme)
+    }
+    return values.map((row,r) => row.map((value,c) =>
+      <rect key={r+'-'+c} data-row={r} data-col={c} x={c*10+.2} y={r*10+.2} width="9.6" height="9.6" rx=".6" fill={color(value)}
+        onPointerEnter={() => selectionHandler.current?.({row:r,col:c})} onClick={() => selectionHandler.current?.({row:r,col:c})}>
+        <title>{`[${r}, ${c}] = ${value === -Infinity ? '−∞' : value.toPrecision(5)}`}</title>
+      </rect>))
+  }, [domain, hatch, signed, theme, values])
   if (!rows || !cols) return null
-  const bound = domain ?? values.reduce((max, row) =>
-    row.reduce((limit, value) => Number.isFinite(value) ? Math.max(limit, Math.abs(value)) : limit, max), 1e-12)
 
-  function color(value: number) {
-    if (!Number.isFinite(value)) return 'url(#' + hatch + ')'
-    return signed ? divergingColor(value, bound, theme) : sequentialColor(value / Math.max(bound, 1e-12), theme)
-  }
   function navigate(event: KeyboardEvent<SVGSVGElement>) {
     const delta: Record<string, [number,number]> = { ArrowUp:[-1,0], ArrowDown:[1,0], ArrowLeft:[0,-1], ArrowRight:[0,1] }
     const offset = delta[event.key]
@@ -40,11 +49,8 @@ export function MatrixHeatmap({ values, label, signed = false, domain, selected,
     <defs><pattern id={hatch} width="4" height="4" patternUnits="userSpaceOnUse">
       <rect width="4" height="4" fill="var(--bg-elevated)" /><path d="M-1 1L1 -1M0 4L4 0M3 5L5 3" stroke="var(--text-muted)" strokeWidth=".6" />
     </pattern></defs>
-    {values.map((row,r) => row.map((value,c) =>
-      <rect key={r+'-'+c} data-row={r} data-col={c} x={c*10+.2} y={r*10+.2} width="9.6" height="9.6" rx=".6" fill={color(value)}
-        stroke={selected?.row === r && selected.col === c ? 'var(--text-primary)' : 'none'}
-        onPointerEnter={() => onSelect?.({row:r,col:c})} onClick={() => onSelect?.({row:r,col:c})}>
-        <title>{`[${r}, ${c}] = ${value === -Infinity ? '−∞' : value.toPrecision(5)}`}</title>
-      </rect>))}
+    {cells}
+    {selected && <path transform={`translate(${selected.col*10},${selected.row*10})`} d="M.3 .3h9.4v9.4H.3z"
+      fill="none" stroke="var(--text-primary)" strokeWidth=".8" pointerEvents="none" />}
   </svg>
 }

@@ -1,0 +1,20 @@
+.quant-stage h2,.quant-hist h3,.quant-inspector h3 { margin:0 0 8px; font-weight:630; font-size:.93rem; }
+.quant-maps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.quant-maps figure { min-width:0; margin:0; }
+.quant-maps figcaption { font-size:.73rem; color:var(--text-secondary); margin:0 0 4px; }
+.quant-maps svg,.quant-hist svg { display:block; width:100%; }
+.quant-hist { border-top:1px solid var(--border-subtle); padding-top:12px; margin-top:14px; }
+.quant-key { display:flex; flex-wrap:wrap; gap:4px 12px; margin:6px 0; }
+.quant-key span { display:inline-flex; align-items:center; gap:5px; font-size:.69rem; color:var(--text-secondary); }
+.quant-key i { width:8px; height:8px; border-radius:2px; }
+.quant-all { background:var(--accent-primary); fill:var(--accent-primary); }
+.quant-local { background:var(--accent-secondary); fill:var(--accent-secondary); }
+.quant-key .quant-tick { width:2px; background:var(--accent-warn); }
+.quant-hist text { font:10px var(--font-mono); fill:var(--text-secondary); }
+.quant-hist p { font-size:.73rem; color:var(--text-secondary); margin:4px 0; }
+.quant-hist b { font-family:var(--font-mono); color:var(--text-primary); }
+.quant-inspector dl { margin:0; }
+.quant-inspector dl > div { display:flex; justify-content:space-between; gap:6px; border-bottom:1px solid var(--border-subtle); padding:4px 0; }
+.quant-inspector dt { color:var(--text-secondary); font-size:.75rem; }
+.quant-inspector dd { margin:0; font:.74rem var(--font-mono); text-align:end; }
+@media(max-width:767px){.quant-maps{gap:4px}.quant-maps figcaption{font-size:.66rem}}

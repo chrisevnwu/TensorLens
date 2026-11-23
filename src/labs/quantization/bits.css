@@ -1,0 +1,32 @@
+.bits-stage { padding: clamp(10px,2vw,20px); min-width: 0; }
+.bits-stage h2, .bits-range figcaption { margin: 0 0 6px; font-size: .95rem; font-weight: 650; }
+.bits-stage p { margin: 0 0 12px; color: var(--text-secondary); font-size: .8rem; }
+.bits-stage [data-part=sign] { --bit-color: var(--accent-danger); }
+.bits-stage [data-part=exponent] { --bit-color: var(--accent-secondary); }
+.bits-stage [data-part=mantissa] { --bit-color: var(--accent-primary); }
+.bits-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: .78rem; color: var(--text-secondary); }
+.bits-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: var(--bit-color); margin-right: 4px; }
+.bits-stage section { padding: 10px 0; border-bottom: 1px solid var(--border-subtle); }
+.bits-row-title, .bits-payload { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; }
+.bits-row-title { justify-content: space-between; margin: 0 0 4px; }
+.bits-row-title button { color: var(--text-secondary); font-family: var(--font-mono); padding: 1px 4px; border-radius: 3px; }
+.bits-stage [data-active=true] .bits-row-title button { color: var(--accent-primary); background: var(--bg-elevated); }
+.bits-row-title output { font-family: var(--font-mono); color: var(--text-secondary); font-size: .75rem; overflow-wrap: anywhere; }
+.bits-payload button { margin: 0; padding: 3px 0; width: clamp(17px,1.5vw,23px); border: 1px solid var(--border-strong);
+  border-radius: 3px; color: var(--bit-color); font: 600 .83rem var(--font-mono); background: var(--bg-canvas); }
+.bits-payload button[aria-pressed=true] { border-color: var(--bit-color); background: color-mix(in srgb,var(--bit-color) 13%,var(--bg-canvas)); }
+.bits-payload button:focus-visible, .bits-row-title button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 1px; }
+.bits-range { margin: 14px 0 0; }
+.bits-range svg { display: block; width: 100%; max-height: 185px; }
+.bits-range text { font: 10px var(--font-mono); fill: var(--text-secondary); }
+.bits-range p { margin: 2px 0 0; }
+.bits-inspector dl { margin: 5px 0; font-size: .8rem; }
+.bits-inspector dl div { padding: 4px 0; border-top: 1px solid var(--border-subtle); }
+.bits-inspector dt { color: var(--text-secondary); }
+.bits-inspector dd { font-family: var(--font-mono); margin: 1px 0; overflow-wrap: anywhere; }
+.bits-stage { container-type: inline-size; }
+@container (min-width: 600px) {
+  .bits-payload button { width: min(22px, calc((100% - 62px) / 32)); }
+}
+.wb-control input[name=value] { width: 100%; padding: 6px 8px; border-radius: 4px; border: 1px solid var(--border-strong);
+  background: var(--bg-elevated); color: var(--text-primary); font-family: var(--font-mono); }
