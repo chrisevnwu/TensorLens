@@ -14,7 +14,7 @@ npm run dev
 
 Vite prints the development URL. The production browser tests start their own preview on port 4174. On a clean Linux CI runner, install the browsers and system packages with `npx playwright install --with-deps chromium firefox webkit`.
 
-## Add Lab 13
+## Add a lab
 
 ### 1. Specify the model and its experiments
 
@@ -65,12 +65,12 @@ Define module-level defaults and a typed URL codec with `makeUrlCodec` and `useL
 
 ### 4. Register the lazy page and presets
 
-Append a `LabDefinition` to `LAB_REGISTRY` in `src/labs/registry.ts`. The registry imports React's `lazy` and provides the `text` and `tags` helpers. A Lab 13 entry for the example would look like this.
+Append a `LabDefinition` to `LAB_REGISTRY` in `src/labs/registry.ts`. The registry imports React's `lazy` and provides the `text` and `tags` helpers. For example, after the current 15 labs the next entry would look like this.
 
 ```ts
 {
   id: 'vector-centering',
-  number: 13,
+  number: 16,
   chapter: 'architecture-inference',
   difficulty: 'foundational',
   title: text('Vector Centering', '向量中心化'),

@@ -1,0 +1,20 @@
+.dpo-stage { display: grid; gap: 1rem; min-width: 0; }
+.dpo-stage h2, .dpo-stage h3 { margin: 0; color: var(--text-primary); font-size: 1rem; }
+.dpo-pair > p { margin: .3rem 0 .8rem; color: var(--text-secondary); font-size: .83rem; }
+.dpo-answers { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .6rem; }
+.dpo-answers article { padding: .65rem .75rem; background: var(--bg-elevated); border-radius: .35rem; }
+.dpo-answers article b { color: var(--accent-primary); font: 650 .9rem var(--font-mono); }
+.dpo-answers article + article b { color: var(--accent-secondary); }
+.dpo-answers article p { margin: .35rem 0; color: var(--text-primary); font-size: .82rem; }
+.dpo-answers article span { color: var(--text-secondary); font-size: .73rem; }
+.dpo-distribution { display: grid; gap: .55rem; border-top: 1px solid var(--border-subtle); padding-top: .8rem; }
+.dpo-odds > div:first-child { display: flex; flex-wrap: wrap; gap: .25rem .7rem; justify-content: space-between; align-items: baseline; color: var(--text-secondary); font-size: .78rem; }
+.dpo-odds strong { color: var(--text-primary); font: 600 .76rem var(--font-mono); }
+.dpo-track { display: flex; margin-top: .25rem; height: .56rem; overflow: hidden; border-radius: .2rem; background: var(--accent-secondary); }
+.dpo-track i { display: block; height: 100%; background: var(--accent-primary); }
+.dpo-trajectory { display: grid; gap: .65rem; min-width: 0; }
+.dpo-trajectory .wb-control { margin: 0; }
+.dpo-calculation dl { margin: .65rem 0; display: grid; gap: .35rem; }
+.dpo-calculation dl > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem .75rem; }
+.dpo-calculation dt { color: var(--text-secondary); font-size: .77rem; }
+.dpo-calculation dd { margin: 0; color: var(--text-primary); font: .78rem var(--font-mono); }

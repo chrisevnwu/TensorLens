@@ -1,6 +1,6 @@
-# TensorLens — Autonomous Execution Roadmap (`M0` – `M15`)
+# TensorLens — Autonomous Execution Roadmap (`M0` – `M16`)
 
-> **Instructions for Codex**: Execute milestones strictly in order (`M0` → `M15`) following `AGENTS.md`.
+> **Instructions for Codex**: Execute milestones strictly in order (`M0` → `M16`) following `AGENTS.md`.
 > After passing every gate for a milestone, mark its checkboxes `[x]`, append metrics to `PROGRESS.md`, commit cleanly (`feat(M<k>): ...`), and proceed directly to the next milestone without pausing.
 
 ---
@@ -193,3 +193,21 @@
 - [x] Author publication-grade `README.md` (English) and `README.zh-CN.md` (Chinese) with badges, feature highlights, complete 12-lab table, architecture overview, local development commands, and GitHub Pages deployment instructions.
 - [x] Author `CONTRIBUTING.md` documenting how contributors can add **Lab #13** cleanly using the `LabDefinition` SDK, pure math engine, and typed i18n pattern.
 - [x] Final clean verification: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`, update `PROGRESS.md` with final summary stats, and create final release commit.
+
+---
+
+## Milestone 16 (`M16`): Prediction, retrieval and preference learning
+
+- [x] Add Lab 13, Next-Token Loss & Perplexity, with a labeled sequence, a scoring mask and a hand-checkable uniform baseline.
+- [x] Add Lab 14, Hybrid Retrieval & Rank Fusion, with BM25, interpretable feature vectors and relevance judgments for Recall@K.
+- [x] Add Lab 15, Direct Preference Optimization, with a frozen reference policy and a trace of updates from pairwise preferences.
+- [x] Verify each pure engine before building its workbench. Integrate three challenges per lab, both languages, share links, presets and PNG export.
+- [x] Pass typecheck, lint, Vitest, production build and Playwright. Refresh the bilingual catalog and its light-mode screenshots.
+
+### Curriculum candidates after M16
+
+| Candidate | Experiment | Connection to the curriculum |
+| --- | --- | --- |
+| Knowledge distillation | Hold the teacher's top choice fixed and change the probabilities of the other classes. Compare the student's update with hard and soft targets. | Extends the next-token loss lab to learning from a teacher distribution. [Hinton et al.](https://arxiv.org/abs/1503.02531) |
+| Speculative decoding | Vary a draft model's agreement with the target. Count accepted tokens and target-model calls, and check the corrected sampling distribution. | Connects sampling to the inference profiler. [Leviathan et al.](https://arxiv.org/abs/2211.17192) |
+| Image–text contrastive learning | Swap two captions in a tiny paired batch, then watch the image–text similarity matrix and bidirectional loss change. | Adds a multimodal use of the similarity scores seen in retrieval. [Radford et al.](https://arxiv.org/abs/2103.00020) |

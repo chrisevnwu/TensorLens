@@ -7,7 +7,7 @@ import { LAB_REGISTRY } from './registry'
 import { getLabPresets } from './presetCatalog'
 
 // Exercise the actual workbench controller, preset buttons, stepper and URL codec.
-// Reading the share URL directly keeps these 45 cold-navigation checks independent of clipboard APIs.
+// Reading the share URL directly keeps these cold-navigation checks independent of clipboard APIs.
 vi.mock('../components/layout/LabShell', () => ({
   LabShell: ({ presets, getShareUrl, stepper }: LabShellProps) => <>
     <PresetBar presets={presets!} />

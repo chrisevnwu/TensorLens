@@ -1,6 +1,6 @@
 # TensorLens — Autonomous Build Progress Log
 
-> Automatically updated by the coding agent upon completing each milestone (`M0`–`M15`).
+> Automatically updated by the coding agent upon completing each milestone (`M0`–`M16`).
 
 | Milestone | Status | Summary | Tests Passed | Build Status | Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -20,6 +20,7 @@
 | `M13` | Complete | trace reverse-mode gradients and race five optimizers | 311 Vitest + 48 Playwright | Pass | `00171ab` |
 | `M14` | Complete | compare guided diffusion and flow on matched particle clouds | 348 Vitest + 52 Playwright | Pass | `20a6356` |
 | `M15` | Complete | publish the bilingual release and verify all twelve labs | 395 Vitest + 126 Playwright | Pass | `feat(M15)` |
+| `M16` | Complete | add token loss, hybrid retrieval and preference learning | 438 Vitest + 270 Playwright | Pass | `feat(M16)` |
 
 ## Detailed Milestone Notes
 
@@ -134,3 +135,16 @@ Narrow chart axes now use readable type, wide charts map pointer coordinates thr
 Additional browser sweeps exercised all 12 labs at five phone and tablet widths, in both languages and both themes (240 configurations). Thirty long-input cases covered BPE and attention with continuous ASCII, Chinese, emoji and URL punctuation. Slow-decoding LoRA exports retained the values from the selected frame, and exported BPE tokens stayed inside the scrolled panel.
 
 All five verification gates passed. Vitest ran 397 tests. Playwright ran 228 tests on desktop and mobile Chromium, tablet WebKit and laptop Firefox. The landing page loaded 100,124 bytes of gzipped JavaScript, with separate lazy entries for all 12 labs.
+
+
+### M16 — prediction, retrieval and preference learning
+
+Three new offline, bilingual workbenches bring the catalog to 15 labs and 45 guided challenges. Each exposes its intermediate calculations through keyboard-accessible controls, presets, shareable selections and PNG export.
+
+- **Next-token loss and perplexity.** Two predictors can both score 6/7 correct and assign different losses to the held-out sequence. A uniform four-note predictor has perplexity 4. An empty scoring mask leaves the mean and perplexity undefined.
+- **Hybrid retrieval and rank fusion.** BM25 and three explicitly authored topic features rank six repair cards. With the mixed query, D02 ranks second on both source lists and first after reciprocal rank fusion at a smoothing constant of 60.
+- **Direct preference optimization.** In the reversal preset, 2 of 20 votes favor A while the frozen policy generates A with probability 0.8. After 60 gradient updates, the policy generates A with probability about 0.308 and predicts an A-preference frequency of about 0.100.
+
+All nine new challenges were solved on desktop and mobile. A separate layout sweep exercised each new lab at 320, 390, 820 and 1440 CSS pixels, in both languages and both themes. All 48 combinations had zero horizontal overflow or browser warnings and errors.
+
+All five verification gates passed. 438 Vitest tests and 270 Playwright tests passed. The production landing bundle used 101,312 bytes gzip and all 15 lab entries loaded separately.

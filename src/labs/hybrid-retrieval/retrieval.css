@@ -1,0 +1,45 @@
+.retrieval-stage { display: grid; gap: 18px; padding: clamp(8px, 2vw, 20px); min-width: 0; }
+.retrieval-query { border-inline-start: 3px solid var(--accent-primary); padding-inline-start: 12px; }
+.retrieval-query h2 { margin: 0; color: var(--text-secondary); font-size: .77rem; }
+.retrieval-query p { margin: 5px 0 7px; font-weight: 650; font-size: clamp(1rem, 2.4vw, 1.35rem); }
+.retrieval-terms { display: flex; flex-wrap: wrap; gap: 4px; align-items: baseline; font-size: .73rem; }
+.retrieval-terms span { color: var(--text-secondary); margin-inline-end: 3px; }
+.retrieval-terms code { background: var(--bg-elevated); border-radius: 3px; padding: 1px 4px; color: var(--text-secondary); }
+.retrieval-terms code[data-match=true] { color: var(--accent-primary); }
+.retrieval-board { margin: 0; min-width: 0; }
+.retrieval-board figcaption { font-size: .93rem; font-weight: 650; }
+.retrieval-board p { margin: 4px 0 10px; font-size: .77rem; color: var(--text-secondary); }
+.retrieval-methods, .retrieval-ranks { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.retrieval-methods { border-bottom: 1px solid var(--border-strong); }
+.retrieval-methods button { min-height: 42px; background: transparent; border: 0; border-bottom: 2px solid transparent; color: var(--text-secondary); font-size: .78rem; font-weight: 650; }
+.retrieval-methods button[aria-pressed=true] { color: var(--accent-primary); border-bottom-color: currentColor; }
+.retrieval-ranks { position: relative; background: var(--bg-canvas); }
+.retrieval-ranks svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.retrieval-lane { position: relative; min-width: 0; }
+.retrieval-rank { display: grid; place-items: center; height: 36px; }
+.retrieval-rank button { display: inline-flex; align-items: baseline; justify-content: center; gap: 5px; min-height: 28px; min-width: 58px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--bg-surface); color: var(--text-primary); font: .78rem var(--font-mono); line-height: 24px; }
+.retrieval-rank small { font-size: .64rem; color: var(--text-muted); }
+.retrieval-rank button[data-kept=true] { border-inline-start: 3px solid var(--accent-tertiary); }
+.retrieval-rank button[aria-pressed=true] { border-color: var(--accent-primary); color: var(--accent-primary); font-weight: 750; }
+.retrieval-absent { text-align: center; color: var(--text-muted); padding: 8px 1px; font-size: .72rem; }
+.retrieval-cutoff { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: .72rem; color: var(--text-secondary); }
+.retrieval-cutoff i { height: 11px; width: 3px; background: var(--accent-tertiary); }
+.retrieval-readout { padding: 12px; border: 1px solid var(--border-strong); border-radius: 6px; background: var(--bg-surface); }
+.retrieval-readout-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px 8px; margin-bottom: 7px; }
+.retrieval-readout-title code { font-size: .74rem; color: var(--accent-primary); }
+.retrieval-readout h3, .retrieval-inspector h3 { font-size: .87rem; font-weight: 650; margin: 0; }
+.retrieval-readout-title span { font-size: .72rem; color: var(--text-secondary); }
+.retrieval-readout dl { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; margin: 12px 0 0; }
+.retrieval-readout dt { color: var(--text-secondary); font-size: .69rem; }
+.retrieval-readout dd { margin: 3px 0 0; font: .84rem var(--font-mono); }
+.retrieval-readout [data-active=true] dd { color: var(--accent-primary); }
+.retrieval-inspector h4 { font-size: .77rem; margin: 14px 0 4px; }
+.retrieval-inspector table { width: 100%; border-collapse: collapse; font-size: .72rem; font-variant-numeric: tabular-nums; }
+.retrieval-inspector th, .retrieval-inspector td { padding: 4px 2px; text-align: end; border-bottom: 1px solid var(--border-subtle); overflow-wrap: anywhere; }
+.retrieval-inspector th { font-weight: 550; }
+.retrieval-inspector th:first-child { text-align: start; }
+.retrieval-inspector thead { color: var(--text-secondary); }
+.retrieval-inspector dl { margin: 0; }
+.retrieval-inspector dl div { display: flex; justify-content: space-between; gap: 4px; padding: 3px 0; font-size: .75rem; }
+.retrieval-inspector dd { margin: 0; font-family: var(--font-mono); }
+.retrieval-inspector p { font-size: .74rem; color: var(--text-secondary); }

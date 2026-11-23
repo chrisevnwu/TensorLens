@@ -10,6 +10,9 @@ import { samplingCopy } from '../i18n/labs/decoding-sampling'
 import { loraCopy } from '../i18n/labs/lora-svd'
 import { optimizerCopy } from '../i18n/labs/backprop-optimizers'
 import { diffusionCopy } from '../i18n/labs/diffusion-flow'
+import { lossCopy } from '../i18n/labs/language-model-loss'
+import { retrievalCopy } from '../i18n/labs/hybrid-retrieval'
+import { dpoCopy } from '../i18n/labs/preference-dpo'
 
 type PresetDictionary = { presets: Readonly<Record<string, string>> }
 const dictionaries: Record<string, { en: PresetDictionary; zh: PresetDictionary }> = {
@@ -25,6 +28,9 @@ const dictionaries: Record<string, { en: PresetDictionary; zh: PresetDictionary 
   'lora-svd': loraCopy,
   'backprop-optimizers': optimizerCopy,
   'diffusion-flow': diffusionCopy,
+  'language-model-loss': lossCopy,
+  'hybrid-retrieval': retrievalCopy,
+  'preference-dpo': dpoCopy,
 }
 
 export function getLabPresets(labId: string) {

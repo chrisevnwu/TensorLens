@@ -103,6 +103,27 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     description: text('Guide a shared noise cloud to data with three different generative solvers.', '让三种生成求解器从同一团噪声出发，观察通向目标数据的不同路径。'),
     tags: tags('DDPM', 'DDIM', ['Flow Matching', '流匹配'], ['Score Field', '得分场'], 'CFG'),
   },
+  {
+    component: lazy(() => import('./language-model-loss')),
+    id: 'language-model-loss', number: 13, chapter: 'training-generative', difficulty: 'foundational',
+    title: text('Next-Token Loss & Perplexity', '下一词元损失与困惑度'),
+    description: text('Score a sequence note by note and see how one confident mistake changes perplexity.', '逐个音符为预测打分，观察一次自信的错误怎样改变整段序列的困惑度。'),
+    tags: tags(['Cross-entropy', '交叉熵'], ['Perplexity', '困惑度'], ['Language modeling', '语言建模'], 'NLL'),
+  },
+  {
+    component: lazy(() => import('./hybrid-retrieval')),
+    id: 'hybrid-retrieval', number: 14, chapter: 'architecture-inference', difficulty: 'intermediate',
+    title: text('Hybrid Retrieval & Rank Fusion', '混合检索与排序融合'),
+    description: text('Find repair notes by fault code or by symptom, then compare the ranked evidence.', '用故障码或症状检索维修记录，对照关键词匹配、向量相似度和融合后的排名。'),
+    tags: tags('BM25', 'RAG', ['Rank fusion', '排序融合'], ['Recall@K', '召回率'], ['Cosine similarity', '余弦相似度']),
+  },
+  {
+    component: lazy(() => import('./preference-dpo')),
+    id: 'preference-dpo', number: 15, chapter: 'efficiency-alignment', difficulty: 'advanced',
+    title: text('Direct Preference Optimization', '直接偏好优化（DPO）'),
+    description: text('Train a two-answer policy on preference votes and compare its probabilities with a frozen reference.', '用偏好票训练一个有两种回答的策略，追踪它与固定参考策略的概率差异。'),
+    tags: tags('DPO', ['Alignment', '偏好对齐'], ['KL divergence', 'KL 散度'], ['Preference learning', '偏好学习']),
+  },
 ]
 
 export function getLabById(id: string | null | undefined) {

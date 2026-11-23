@@ -4,9 +4,9 @@
 
 [![License MIT](https://img.shields.io/badge/license-MIT-287b60)](LICENSE)
 [![CI runtime Node 24](https://img.shields.io/badge/CI_runtime-Node_24-396c3b)](.github/workflows/ci.yml)
-[![12 labs and 36 challenges](https://img.shields.io/badge/12_labs-36_challenges-266d92)](#the-labs)
+[![15 labs and 45 challenges](https://img.shields.io/badge/15_labs-45_challenges-266d92)](#the-labs)
 
-TensorLens is a bilingual, browser-based workbench for exploring how language models and generative models compute. Change a token, a weight, or a solver step and inspect the numbers that produced the picture. All twelve labs run locally against small, reproducible TypeScript models. The static site includes its equations, fonts, and simulation code.
+TensorLens is a bilingual, browser-based workbench for exploring how language models and generative models compute. Change a token, a weight, or a solver step and inspect the numbers that produced the picture. All fifteen labs run locally against small, reproducible TypeScript models. The static site includes its equations, fonts, and simulation code.
 
 ![TensorLens homepage in light mode with the interactive lab catalog](docs/images/home-light-en.png)
 
@@ -34,6 +34,9 @@ The lab names link to their numerical engines and invariant tests.
 | 10 | [LoRA and low-rank SVD](src/engine/labs/lora-svd/) | Train two low-rank factors and compare the reconstruction error with the best attainable SVD bound. |
 | 11 | [Autograd and optimizers](src/engine/labs/backprop-optimizers/) | Inspect the chain rule edge by edge, check a gradient by finite differences and race five optimizers. |
 | 12 | [Diffusion and flow matching](src/engine/labs/diffusion-flow/) | Start DDPM, DDIM and flow matching from the same 120 particles and measure path length and class purity. |
+| 13 | [Next-token loss and perplexity](src/engine/labs/language-model-loss/) | Give each of four notes equal probability, then inspect the loss on a surprising note. [Try the uniform predictor](https://chrisevnwu.github.io/TensorLens/#/labs/language-model-loss?preset=uniform) |
+| 14 | [Hybrid retrieval and rank fusion](src/engine/labs/hybrid-retrieval/) | Search the same repair cards with an error code and a paraphrase. Inspect BM25, cosine and fused ranks. [Try the synonym query](https://chrisevnwu.github.io/TensorLens/#/labs/hybrid-retrieval?preset=synonym) |
+| 15 | [Direct preference optimization](src/engine/labs/preference-dpo/) | Give a two-answer policy conflicting votes and follow its probability relative to a frozen reference. [Try the split vote](https://chrisevnwu.github.io/TensorLens/#/labs/preference-dpo?preset=split) |
 
 The residual lab reports gradients for the **first output channel**. Its separate Pre-LayerNorm invariant uses an all-ones probe and the block's response to a uniform shift. RMSNorm gradient ratios are measured for the selected input and weights. The KV and LoRA memory charts use explicit storage assumptions. Inference timing uses an idealized hardware roofline, so the selected capacity and peak rates govern the estimate. [Residual tests](src/engine/labs/norm-residual/__tests__/network.test.ts) · [Inference model](src/engine/labs/kv-cache-profiler/engine.ts) · [Training memory model](src/engine/labs/lora-svd/memory.ts)
 

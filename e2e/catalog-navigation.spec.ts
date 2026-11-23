@@ -1,3 +1,4 @@
+import { LAB_REGISTRY } from '../src/labs/registry'
 import { expect, test } from './fixture'
 
 test('keeps a filtered catalog and restores focus to the card when returning from a lab', async ({ page }) => {
@@ -6,7 +7,7 @@ test('keeps a filtered catalog and restores focus to the card when returning fro
   await catalog.getByRole('button', { name: /Sequence & Attention/ }).click()
   await catalog.getByRole('combobox', { name: 'Difficulty' }).selectOption('intermediate')
   const card = catalog.getByRole('link', { name: /Embeddings & RoPE Geometry/ })
-  await expect(catalog.getByRole('status')).toHaveText('Showing 1 of 12 labs')
+  await expect(catalog.getByRole('status')).toHaveText(`Showing 1 of ${LAB_REGISTRY.length} labs`)
   await expect(catalog.getByRole('link')).toHaveCount(1)
   await card.press('Enter')
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Embeddings & RoPE Geometry')
@@ -17,7 +18,7 @@ test('keeps a filtered catalog and restores focus to the card when returning fro
   await expect(catalog.getByRole('combobox')).toHaveValue('intermediate')
   await expect(catalog.getByRole('link')).toHaveCount(1)
   await catalog.getByRole('button', { name: 'Clear filters' }).click()
-  await expect(catalog.getByRole('link')).toHaveCount(12)
+  await expect(catalog.getByRole('link')).toHaveCount(LAB_REGISTRY.length)
   await expect(catalog.getByRole('heading', { level: 2 })).toBeFocused()
 })
 
@@ -42,7 +43,7 @@ test('recovers from an empty search and finds presets by lab name across languag
 test('keeps the complete palette and the selected result in view on a short landscape screen', async ({ page }) => {
   await page.setViewportSize({ width: 667, height: 320 })
   await page.goto('./')
-  await page.getByRole('button', { name: 'Browse all 12 labs' }).click()
+  await page.getByRole('button', { name: `Browse all ${LAB_REGISTRY.length} labs` }).click()
   const trigger = page.getByRole('button', { name: 'Command palette' })
   await trigger.click()
   const dialog = page.getByRole('dialog')

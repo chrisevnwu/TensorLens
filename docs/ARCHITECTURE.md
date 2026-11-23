@@ -30,11 +30,11 @@ This document defines the locked technology stack, folder structure, pure TypeSc
 ```text
 tensorlens/
 ├── AGENTS.md                        # Autonomous Codex execution contract
-├── ROADMAP.md                       # 16 atomic milestones (M0–M15) with verification gates
+├── ROADMAP.md                       # Milestones and their verification gates
 ├── PROGRESS.md                      # Live execution log updated by agent per milestone
 ├── README.md                        # English GitHub README (finalized in M15)
 ├── README.zh-CN.md                  # Chinese GitHub README (finalized in M15)
-├── CONTRIBUTING.md                  # Contributor & "Add Lab #13" guide (M15)
+├── CONTRIBUTING.md                  # Contributor & "Add a Lab" guide (M15)
 ├── LICENSE                          # MIT License
 ├── package.json
 ├── tsconfig.json
@@ -53,7 +53,7 @@ tensorlens/
 │   └── LAB_SPECS.md
 ├── e2e/
 │   ├── smoke.spec.ts                # Core shell, routing, theme, i18n, Cmd+K
-│   └── labs.spec.ts                 # All 12 labs render, interact, zero console/overflow errors
+│   └── labs.spec.ts                 # All registered labs render, interact, zero console/overflow errors
 └── src/
     ├── main.tsx
     ├── App.tsx
@@ -119,7 +119,7 @@ tensorlens/
     │   │   ├── MatrixHeatmap.tsx    # Interactive Canvas/SVG heatmap + hover coordinate
     │   │   ├── MetricCard.tsx       # Tabular-nums KPI readout with delta/status tone
     │   │   ├── ChallengePanel.tsx   # Guided challenges with live status badges
-    │   │   └── LabPreviewIcon.tsx   # Crisp schematic SVG icons for the 12 landing cards
+    │   │   └── LabPreviewIcon.tsx   # Crisp schematic SVG icons for the catalog cards
     │   └── utils/
     │       ├── useThemePalette.ts   # Reads live CSS variables for Canvas rendering
     │       ├── useSimulationLoop.ts # Visibility-aware requestAnimationFrame hook
@@ -130,7 +130,7 @@ tensorlens/
     │   └── LabPage.tsx              # Route loader resolving registry + Suspense fallback
     └── labs/
         ├── types.ts                 # LabDefinition, ChapterId, ChallengeItem contracts
-        ├── registry.ts              # Central ordered array of all 12 lazy-loaded labs
+        ├── registry.ts              # Central ordered array of all lazy-loaded labs
         └── <lab-id>/                # Lab component + focused viz subcomponents
 ```
 
@@ -312,7 +312,7 @@ export interface LabDefinition {
 }
 ```
 
-- `src/labs/registry.ts` exports `LAB_REGISTRY: readonly LabDefinition[]` ordered `01` to `12`, plus helper selectors `getLabById(id)`, `getAdjacentLabs(id)`, `CHAPTER_ORDER`.
+- `src/labs/registry.ts` exports `LAB_REGISTRY: readonly LabDefinition[]` ordered by lab number, plus helper selectors `getLabById(id)`, `getAdjacentLabs(id)`, `CHAPTER_ORDER`.
 - Every lab route `#/labs/:labId` renders through `LabPage.tsx` wrapped in `<ErrorBoundary>` and `<Suspense fallback={<LabSkeleton />}>`.
 
 ---

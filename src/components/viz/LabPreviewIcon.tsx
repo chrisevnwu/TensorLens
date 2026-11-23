@@ -108,6 +108,34 @@ function Flow() {
   </>
 }
 
+function TokenLoss() {
+  return <>
+    <path className="glyph-faint" d="M13 61h93 M16 61V18" />
+    {[13, 13, 13, 13, 13, 39].map((height, i) =>
+      <rect key={i} className={i === 5 ? 'glyph-secondary' : undefined}
+        x={22 + i * 13} y={60 - height} width="7" height={height} rx="1.5" />)}
+    <path className="glyph-faint" d="M18 41h86" strokeDasharray="3 3" />
+  </>
+}
+
+function RankFusion() {
+  return <>
+    <path className="glyph-faint" d="M18 24h24 M18 43h16 M18 62h22 M80 24h22 M80 43h15 M80 62h18" />
+    <path d="M40 24C55 24 60 43 78 43 M38 62C53 62 63 62 78 62" />
+    <path className="glyph-secondary" d="M32 43C53 43 57 24 78 24" />
+    <Nodes points={[[40,24],[32,43],[38,62],[78,24],[78,43],[78,62]]} radius={2.6} />
+  </>
+}
+
+function Preference() {
+  return <>
+    <path className="glyph-faint" d="M13 19v46h91 M16 42h85" strokeDasharray="3 3" />
+    <path d="M17 42C39 42 41 22 66 21s28 0 36 0" />
+    <path className="glyph-secondary" d="M17 42C39 42 41 60 66 61s28 0 36 0" />
+    <Nodes points={[[17,42],[100,21],[100,61]]} />
+  </>
+}
+
 const glyphs: Record<string, ReactNode> = {
   'bpe-tokenizer': <Tree />,
   'embeddings-rope': <Rotation />,
@@ -121,6 +149,9 @@ const glyphs: Record<string, ReactNode> = {
   'lora-svd': <LowRank />,
   'backprop-optimizers': <Contours />,
   'diffusion-flow': <Flow />,
+  'language-model-loss': <TokenLoss />,
+  'hybrid-retrieval': <RankFusion />,
+  'preference-dpo': <Preference />,
 }
 
 export default function LabPreviewIcon({ id }: { id: string }) {

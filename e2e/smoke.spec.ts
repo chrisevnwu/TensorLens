@@ -1,3 +1,4 @@
+import { LAB_REGISTRY } from '../src/labs/registry'
 import { expect, test } from './fixture'
 
 test('explores the catalog, persists language and theme, and searches both languages', async ({ page }) => {
@@ -32,13 +33,13 @@ test('explores the catalog, persists language and theme, and searches both langu
 test('combines chapter and difficulty filters and recovers from an empty catalog', async ({ page }) => {
   await page.goto('./')
   const catalog = page.getByRole('region', { name: 'Lab explorer' })
-  await expect(catalog.getByRole('link')).toHaveCount(12)
+  await expect(catalog.getByRole('link')).toHaveCount(LAB_REGISTRY.length)
   await catalog.getByRole('button', { name: /Sequence & Attention/ }).click()
   await expect(catalog.getByRole('link')).toHaveCount(3)
   await catalog.getByRole('combobox', { name: 'Difficulty' }).selectOption('advanced')
   await expect(catalog.getByRole('status')).toHaveText(/No labs match/)
   await catalog.getByRole('button', { name: 'Clear filters' }).click()
-  await expect(catalog.getByRole('link')).toHaveCount(12)
+  await expect(catalog.getByRole('link')).toHaveCount(LAB_REGISTRY.length)
 })
 
 test('opens presets across languages and restores same-lab history', async ({ page }) => {

@@ -1,6 +1,6 @@
-# TensorLens — 12 Interactive Lab Specifications
+# TensorLens — 15 Interactive Lab Specifications
 
-This document is the authoritative mathematical, functional, visual, and testing specification for every lab (`01` through `12`). Every formula here MUST be implemented authentically in `src/engine/labs/<lab-id>/` with zero faked numbers.
+This document is the authoritative mathematical, functional, visual, and testing specification for every lab (`01` through `15`). Every formula here MUST be implemented authentically in `src/engine/labs/<lab-id>/` with zero faked numbers.
 
 ---
 
@@ -583,3 +583,25 @@ This document is the authoritative mathematical, functional, visual, and testing
 - Under `Two Moons` with `targetClass = 'Class A'` and `cfgScale = 2.0`, `>= 85%` of final denoised particles are closer to Class A than Class B.
 - Flow Matching trajectory path-length-to-displacement ratio (straightness) is strictly smaller (straighter) than stochastic DDPM at `numSteps = 20`.
 - Zero `NaN` or `Infinity` coordinates across all datasets, step counts (`5..40`), and CFG values (`0..5`).
+
+---
+
+## Curriculum expansion
+
+### Lab 13 — Next-Token Loss & Perplexity (`language-model-loss`)
+
+Use a four-symbol vocabulary and a fixed labeled sequence. At position $i$, the score of the observed next token $y_i$ is $\ell_i=\log\sum_j e^{z_{ij}}-z_{i,y_i}$. Apply log-sum-exp stably. For the enabled positions $S$, report $H=\sum_{i\in S}\ell_i/|S|$ in nats per token and perplexity $e^H$. A uniform four-way prediction has perplexity 4. When no positions are scored, the aggregate is undefined. Changing confidence without changing the winning token can change the loss while preserving top-one accuracy. Make the selected position, mask, observed target, predicted distribution and comparison model inspectable. [Jurafsky and Martin, language-model evaluation](https://web.stanford.edu/~jurafsky/slp3/old_jan25/3.pdf)
+
+The three challenges are to reach perplexity 4 with equal logits, inspect the last position at a logit gap of 8 with all seven targets scored, and exclude just that position to bring perplexity below 1.01. Reopening a link restores the preset, gap, mask and selected position.
+
+### Lab 14 — Hybrid Retrieval & Rank Fusion (`hybrid-retrieval`)
+
+Rank a small, labeled document collection by BM25 and by cosine similarity over explicit, hand-authored concept features. Use positive BM25 inverse document frequency $\log(1+(N-df+0.5)/(df+0.5))$ with term-frequency saturation and length normalization. Fuse ordinal ranks by reciprocal rank fusion, with each participating rank $r$ contributing $1/(k+r)$ in the equal-weight case. Explain missing scores and ties. Compare results against a query's relevance judgments using Recall@K and Precision@K. Precision divides relevant hits by K, counting unfilled positions as misses. The corpus contains six bicycle repair cards. The lexical index stays in English in both interface languages. The three feature coordinates represent fault codes, batteries and docking. Documents with a nonpositive method score receive no rank in that list. Ties use document ID order. [Lucene BM25 IDF](https://lucene.apache.org/core/10_1_0/core/org/apache/lucene/search/similarities/BM25Similarity.html) · [Cormack, Clarke and Büttcher, reciprocal rank fusion](https://cormack.uwaterloo.ca/cormack/cormacksigir09-rrf.pdf)
+
+The challenges use the exact code to retrieve D01 first, the paraphrase to retrieve both relevant docking notes in the top two by cosine, and the mixed query to recover D02 as the first fused result. The workbench exposes K, the fusion constant, the battery coordinate of the query and the selected document, including its per-list contributions.
+
+### Lab 15 — Direct Preference Optimization (`preference-dpo`)
+
+Use one prompt, two possible completions and a frozen reference. The trainable scalar $u$ is the policy log-odds of A over B, with $P(A)=\sigma(u)$. Given reference log-odds $u_0$, let $m=\beta(u-u_0)$ and let $a$ be the observed fraction of comparisons preferring A. The mean DPO loss is $a\,\mathrm{softplus}(-m)+(1-a)\,\mathrm{softplus}(m)$ and its derivative with respect to $u$ is $\beta(\sigma(m)-a)$. Trace gradient descent and report the policy probabilities, comparison probability and $D_{\rm KL}(\pi\Vert\pi_{\rm ref})$ in nats. At initialization, when policy equals reference, the loss is $\log 2$ for any preference split. Test that identity, finite-difference derivatives and conflicting labels. [Rafailov et al., Direct Preference Optimization](https://arxiv.org/abs/2305.18290)
+
+The three challenges train on unanimous votes until $P(A)$ reaches 90%, fit a 15–5 split to within one percentage point of the observed preference frequency, and reverse a reference that originally assigns at least 80% probability to A. Learners can switch among generation probability, predicted preference and mean loss while stepping through the same 60 updates.

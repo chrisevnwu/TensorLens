@@ -1,0 +1,39 @@
+.loss-stage { display: grid; gap: 18px; }
+.loss-stage section { min-width: 0; }
+.loss-stage section + section { border-top: 1px solid var(--border-strong); padding-top: 16px; }
+.loss-stage h2 { margin: 0; font-size: .92rem; }
+.loss-section-head, .loss-key, .loss-dist-key { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px 16px; }
+.loss-section-head { justify-content: space-between; }
+.loss-section-head span, .loss-key, .loss-dist-key, .loss-sequence { font-size: .75rem; color: var(--text-secondary); }
+.loss-sequence { margin: 8px 0 12px; }
+.loss-sequence b { margin-inline-start: 5px; color: var(--text-primary); font-family: var(--font-mono); }
+.loss-key span::before { content: ''; display: inline-block; width: 10px; height: 4px; margin-inline-end: 5px; vertical-align: middle; background: var(--accent-primary); }
+.loss-key span+span::before { background: var(--accent-secondary); }
+.loss-plot { display: grid; grid-template-columns: 15px 1fr; margin-top: 6px; }
+.loss-axis { height: 94px; display: flex; flex-direction: column; justify-content: space-between; font: .67rem var(--font-mono); color: var(--text-muted); }
+.loss-columns { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 2px; }
+.loss-columns button { display: grid; gap: 4px; min-width: 0; padding: 0 1px 4px; color: var(--text-secondary); background: transparent; border: 1px solid transparent; border-radius: 4px; }
+.loss-columns button[aria-pressed=true] { border-color: var(--accent-primary); color: var(--accent-primary); background: var(--bg-elevated); }
+.loss-bars { height: 92px; display: flex; align-items: flex-end; justify-content: center; gap: 2px; border-bottom: 1px solid var(--border-strong); }
+.loss-bars i { display: block; width: 27%; max-width: 23px; min-height: 1px; background: var(--accent-primary); }
+.loss-bars i+i { background: var(--accent-secondary); }
+.loss-columns button[data-included=false] .loss-bars { opacity: .35; }
+.loss-columns button[data-included=false] .loss-note { text-decoration: line-through; }
+.loss-note { font: 700 .77rem var(--font-mono); white-space: nowrap; }
+.loss-note small { font-weight: 400; }
+.loss-prob-rows { display: grid; gap: 7px; margin: 12px 0; }
+.loss-prob-rows > div { display: grid; align-items: center; grid-template-columns: 1rem 1fr 4.5rem; gap: 8px; font: .77rem var(--font-mono); }
+.loss-prob-rows output { text-align: end; }
+.loss-track { position: relative; height: 10px; display: block; background: var(--bg-elevated); }
+.loss-track i:first-child { display: block; height: 100%; background: var(--accent-primary); }
+.loss-prob-rows [data-observed=true] .loss-track i:first-child { background: var(--accent-tertiary); }
+.loss-track i+i { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--accent-secondary); }
+.loss-dist-key b { color: var(--text-primary); }
+.loss-comparison { width: 100%; margin-top: 8px; border-collapse: collapse; table-layout: fixed; font: .77rem var(--font-mono); }
+.loss-comparison th, .loss-comparison td { padding: .4em .24em; text-align: end; overflow-wrap: anywhere; }
+.loss-comparison th { font: 500 .76rem var(--font-sans); color: var(--text-secondary); }
+.loss-comparison tbody th { text-align: start; }
+.loss-comparison tr+tr, .loss-comparison tbody { border-top: 1px solid var(--border-subtle); }
+.loss-comparison tr:first-child td:last-child { color: var(--accent-primary); font-weight: 700; }
+.loss-detail { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; align-items: baseline; }
+.loss-detail dd { margin: 0; text-align: end; font-family: var(--font-mono); }
