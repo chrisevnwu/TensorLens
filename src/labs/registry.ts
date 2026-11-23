@@ -55,6 +55,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags(['KV Cache', 'KV 缓存'], ['Prefill', '预填充'], ['Decode', '解码'], ['Roofline', '屋顶线模型'], 'GQA/MLA'),
   },
   {
+    component: lazy(() => import('./flash-attention')),
     id: 'flash-attention', number: 6, chapter: 'architecture-inference', difficulty: 'advanced',
     title: text('FlashAttention Tiling & SRAM Simulator', 'FlashAttention 分块与显存层级模拟'),
     description: text('Step through SRAM tiles and count memory transfers for exact attention.', '逐块观察片上 SRAM 的计算，统计精确注意力所需的显存传输。'),

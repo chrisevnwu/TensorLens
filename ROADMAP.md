@@ -110,11 +110,11 @@
 ## Milestone 8 (`M8`): Lab 06 — FlashAttention Tiling & SRAM Simulator (`flash-attention`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 06
 
-- [ ] Implement `src/engine/labs/flash-attention/` (exact block-tiled FlashAttention-2 Online Softmax trace with causal block-skipping, HBM IO byte accounting, asymptotic scaling curve) + Vitest invariant suite proving `maxAbsDiff(flash, naive) < 1e-10`.
-- [ ] Add `src/i18n/labs/flash-attention.ts` (100% EN + ZH).
-- [ ] Build `src/labs/flash-attention/` (HBM ↔ On-Chip SRAM hardware block diagram SVG, live $m_i, l_i, e^{m_i - m_i^{\text{new}}}$ tile inspector, virtual $N \times N$ tile status grid, HBM IO race counter, Stepper, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/flash-attention/` (exact block-tiled FlashAttention-2 Online Softmax trace with causal block-skipping, HBM IO byte accounting, asymptotic scaling curve) + Vitest invariant suite proving `maxAbsDiff(flash, naive) < 1e-10`.
+- [x] Add `src/i18n/labs/flash-attention.ts` (100% EN + ZH).
+- [x] Build `src/labs/flash-attention/` (HBM ↔ On-Chip SRAM hardware block diagram SVG, live $m_i, l_i, e^{m_i - m_i^{\text{new}}}$ tile inspector, virtual $N \times N$ tile status grid, HBM IO race counter, Stepper, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

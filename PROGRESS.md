@@ -11,8 +11,8 @@
 | `M4` | Complete | visualize RoPE rotations and relative-position invariance | 95 Vitest + 12 Playwright | Pass | `981e9cc` |
 | `M5` | Complete | trace real multi-head attention and shared KV projections | 118 Vitest + 16 Playwright | Pass | `351ea6b` |
 | `M6` | Complete | inspect exact layer Jacobians and residual signal propagation | 144 Vitest + 20 Playwright | Pass | `100fd2b` |
-| `M7` | Complete | profile cache reuse, memory budgets and hardware rooflines | 161 Vitest + 24 Playwright | Pass | `feat(M7)` |
-| `M8` | Pending | Lab 06: FlashAttention Tiling & SRAM Simulator | — | — | — |
+| `M7` | Complete | profile cache reuse, memory budgets and hardware rooflines | 161 Vitest + 24 Playwright | Pass | `51c5b5f` |
+| `M8` | Complete | trace tiled FlashAttention and SRAM traffic | 175 Vitest + 28 Playwright | Pass | `feat(M8)` |
 | `M9` | Pending | Lab 07: MoE Router & Load Balancing Sandbox | — | — | — |
 | `M10` | Pending | Lab 08: Quantization & Precision Loss Lab | — | — | — |
 | `M11` | Pending | Lab 09: Decoding & Sampling Playground | — | — | — |
@@ -72,3 +72,9 @@ All five gates passed. 144 Vitest + 20 Playwright. Built JavaScript totals 212.2
 Added nine deterministic prefill/decode frames with equal cached and uncached outputs, exact storage calculators, hardware profiles, editable architectures and a log-log roofline. High-level throughput is a peak-rate estimate, with two BF16 activation buffers; the MoE preset uses a dense-equivalent timing estimate. Tests verify real FLOP counts, OOM thresholds, cache rescue, and custom-model URL replay. Engine-first checkpoint: 157 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 161 Vitest + 24 Playwright. Built JavaScript totals 222.6 KiB gzip across all chunks.
+
+### M8 — trace tiled FlashAttention and SRAM traffic
+
+Implemented exact online-softmax tile updates, causal skips, an independent materialized baseline, per-phase memory transfers and an SRAM-constrained real-scale IO chart. An additional 162-case sweep across seeds, dimensions, tile sizes and masks matched analytical byte counts and found maximum absolute output error 6.67e-16. Engine-first checkpoint: 172 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 175 Vitest + 28 Playwright. Built JavaScript totals 231.7 KiB gzip across all chunks.

@@ -1,0 +1,42 @@
+.flash-stage { display:grid; gap:14px; }
+.flash-stage > section + section,.flash-io { border-top:1px solid var(--border-subtle); padding-top:10px; }
+.flash-stage h2,.flash-stage h3,.flash-inspector h3 { margin:0 0 8px; font-size:.91rem; font-weight:630; }
+.flash-stage h2 small { margin-left:8px; color:var(--text-secondary); font-size:.72rem; }
+.flash-hardware svg { width:100%; max-height:203px; display:block; }
+.flash-hardware text { font:8.6px var(--font-mono); fill:var(--text-primary); }
+.flash-chip-box { fill:var(--bg-canvas); stroke:var(--border-strong); }
+.flash-transfer { stroke-dasharray:3 2; animation:flash-bus 900ms linear 1; }
+@keyframes flash-bus { to{stroke-dashoffset:-20} }
+.flash-layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:9px; align-items:start; }
+.flash-sram,.flash-map { min-width:0; border:1px solid var(--border-subtle); border-radius:5px; background:var(--bg-canvas); padding:8px; }
+.flash-tiles { display:flex; flex-wrap:wrap; gap:7px; }
+.flash-tiles figure { flex:1 1 65px; min-width:0; margin:0; }
+.flash-tiles figcaption { font-size:.69rem; color:var(--text-secondary); margin:2px 0 5px; }
+.flash-tiles svg { width:100%; max-height:88px; }
+.flash-map svg { width:100%; max-height:155px; }
+.flash-map g[role=button] { cursor:pointer; }
+.flash-state-pending { fill:var(--bg-elevated); background:var(--bg-elevated); }
+.flash-state-active { fill:var(--accent-primary); background:var(--accent-primary); }
+.flash-state-done { fill:var(--accent-tertiary); background:var(--accent-tertiary); }
+.flash-state-skipped { fill:var(--accent-warn); background:var(--accent-warn); }
+.flash-key { display:flex; flex-wrap:wrap; gap:3px 7px; font-size:.65rem; color:var(--text-secondary); }
+.flash-key span { display:inline-flex; align-items:center; gap:3px; }
+.flash-key i { width:7px;height:7px; border:1px solid var(--border-strong); }
+.flash-sram p,.flash-io p,.flash-io details,.flash-inspector details { color:var(--text-secondary); font-size:.73rem; margin:6px 0; }
+.flash-current,.flash-inspector code,.flash-inspector dd,.flash-counter output { font:.7rem/1.5 var(--font-mono); }
+.flash-current { margin-top:7px; }
+.flash-counter { display:grid; grid-template-columns:minmax(92px,1fr) minmax(30px,2fr) auto; gap:6px; align-items:center; font-size:.72rem; color:var(--text-secondary); margin:5px 0; }
+.flash-counter > div { height:7px; background:var(--bg-elevated); border-radius:4px; overflow:hidden; }
+.flash-counter i { height:100%; display:block; transition:width .15s ease; }
+.flash-counter output { color:var(--text-primary); }
+.flash-io .numeric-chart { margin-top:13px; }
+.flash-inspector dl { margin:0 0 8px; }
+.flash-inspector dl div { display:flex; gap:8px; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding:3px 0; }
+.flash-inspector dt { font-size:.75rem; color:var(--text-secondary); }
+.flash-inspector dd { margin:0; }
+.flash-number-scroll { max-width:100%; overflow:auto; }
+.flash-number-scroll table { width:100%; text-align:start; font:.67rem/1.45 var(--font-mono); }
+.flash-number-scroll th,.flash-number-scroll td { text-align:start; padding:3px 2px; border-bottom:1px solid var(--border-subtle); }
+.flash-vectors h4 { font-size:.75rem; margin:4px 0; }
+.flash-vectors code { display:block; overflow-wrap:anywhere; }
+@media(max-width:767px){.flash-layout{grid-template-columns:1fr}.flash-map svg{max-height:132px}.flash-tiles svg{max-height:85px}}

@@ -16,6 +16,7 @@ interface Band {
 export interface LineChartProps {
   label: string
   xLabel: string
+  xValues?: readonly number[]
   series: readonly ChartSeries[]
   band?: Band
   selectedIndex: number
@@ -32,7 +33,7 @@ export function formatPlotValue(n: number) {
 }
 
 /** Equally spaced observations on a shared y-axis. Symlog retains signs and zero. */
-export function LineChart({label,xLabel,series,band,selectedIndex,onSelectIndex,scale='linear',logThreshold=1}: LineChartProps) {
+export function LineChart({label,xLabel,xValues,series,band,selectedIndex,onSelectIndex,scale='linear',logThreshold=1}: LineChartProps) {
   const length = series[0]?.values.length ?? 0
   if (!length) return null
   const left=60, right=492, top=14, bottom=111, width=510
@@ -70,7 +71,7 @@ export function LineChart({label,xLabel,series,band,selectedIndex,onSelectIndex,
     </div>
     <svg viewBox={`0 0 ${width} 146`} role={onSelectIndex?'slider':'img'} tabIndex={onSelectIndex?0:undefined}
       aria-label={label} aria-valuemin={onSelectIndex?0:undefined} aria-valuemax={onSelectIndex?length-1:undefined}
-      aria-valuenow={onSelectIndex?point:undefined} aria-valuetext={onSelectIndex?`${xLabel} ${point}`:undefined}
+      aria-valuenow={onSelectIndex?point:undefined} aria-valuetext={onSelectIndex?`${xLabel} ${xValues?.[point] ?? point}`:undefined}
       onPointerDown={event=>{if(onSelectIndex){event.currentTarget.setPointerCapture(event.pointerId);choose(event)}}}
       onPointerMove={event=>{if(onSelectIndex && event.currentTarget.hasPointerCapture(event.pointerId))choose(event)}}
       onKeyDown={navigate}>
@@ -80,7 +81,7 @@ export function LineChart({label,xLabel,series,band,selectedIndex,onSelectIndex,
       {series.map(s=><polyline key={s.label} fill="none" stroke={s.color} strokeWidth="2" strokeDasharray={s.dashed?'4 3':undefined} points={polyline(s.values).join(' ')}/>)}
       <line x1={x(point)} x2={x(point)} y1={top} y2={bottom} stroke="var(--text-secondary)" strokeDasharray="2 3"/>
       {series.map(s=><circle key={s.label} cx={x(point)} cy={y(s.values[point]!)} r="3.5" fill={s.color}/>)}
-      {[...new Set([0,Math.floor((length-1)/2),length-1])].map(n=><text key={n} x={x(n)} y="128" textAnchor="middle">{n}</text>)}
+      {[...new Set([0,Math.floor((length-1)/2),length-1])].map(n=><text key={n} x={x(n)} y="128" textAnchor="middle">{xValues?.[n] ?? n}</text>)}
       <text x={(left+right)/2} y="143" textAnchor="middle">{xLabel}</text>
     </svg>
   </figure>
