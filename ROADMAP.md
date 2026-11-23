@@ -99,11 +99,11 @@
 ## Milestone 7 (`M7`): Lab 05 — KV Cache & Prefill/Decode Profiler (`kv-cache-profiler`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 05
 
-- [ ] Implement `src/engine/labs/kv-cache-profiler/` (autoregressive Prefill/Decode trace comparing Cache vs No-Cache, real-scale VRAM & arithmetic intensity calculator for MHA/GQA/MQA/MLA + H100/A100/4090/M4 Max hardware profiles) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/kv-cache-profiler.ts` (100% EN + ZH).
-- [ ] Build `src/labs/kv-cache-profiler/` (animated Prefill/Decode token-step matrix SVG, VRAM budget bar with OOM alert, interactive Log-Log GPU Roofline SVG plot, Stepper, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/kv-cache-profiler/` (autoregressive Prefill/Decode trace comparing Cache vs No-Cache, real-scale VRAM & arithmetic intensity calculator for MHA/GQA/MQA/MLA + H100/A100/4090/M4 Max hardware profiles) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/kv-cache-profiler.ts` (100% EN + ZH).
+- [x] Build `src/labs/kv-cache-profiler/` (animated Prefill/Decode token-step matrix SVG, VRAM budget bar with OOM alert, interactive Log-Log GPU Roofline SVG plot, Stepper, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 

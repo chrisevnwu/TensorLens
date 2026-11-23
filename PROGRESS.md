@@ -10,8 +10,8 @@
 | `M3` | Complete | teach byte-level BPE through ranked merges and byte inspection | 75 Vitest + 8 Playwright | Pass | `e4b01df` |
 | `M4` | Complete | visualize RoPE rotations and relative-position invariance | 95 Vitest + 12 Playwright | Pass | `981e9cc` |
 | `M5` | Complete | trace real multi-head attention and shared KV projections | 118 Vitest + 16 Playwright | Pass | `351ea6b` |
-| `M6` | Complete | inspect exact layer Jacobians and residual signal propagation | 144 Vitest + 20 Playwright | Pass | `feat(M6)` |
-| `M7` | Pending | Lab 05: KV Cache & Prefill/Decode Profiler | — | — | — |
+| `M6` | Complete | inspect exact layer Jacobians and residual signal propagation | 144 Vitest + 20 Playwright | Pass | `100fd2b` |
+| `M7` | Complete | profile cache reuse, memory budgets and hardware rooflines | 161 Vitest + 24 Playwright | Pass | `feat(M7)` |
 | `M8` | Pending | Lab 06: FlashAttention Tiling & SRAM Simulator | — | — | — |
 | `M9` | Pending | Lab 07: MoE Router & Load Balancing Sandbox | — | — | — |
 | `M10` | Pending | Lab 08: Quantization & Precision Loss Lab | — | — | — |
@@ -66,3 +66,9 @@ All five gates passed. 118 Vitest + 16 Playwright. Built JavaScript totals 204.0
 Added a seeded 32-channel network, analytic normalization and activation VJPs, signed trajectory plots and layer/channel inspection. Independent finite differences validate the default output-channel probe. The unit lower bound is proven and tested for the translation direction of a Pre-LayerNorm residual network; arbitrary RMSNorm residual derivatives can contract. A 216-configuration depth-32 sweep stayed finite, with declared ±1e12 branch saturation in 16 extreme combinations. Engine-first checkpoint: 141 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 144 Vitest + 20 Playwright. Built JavaScript totals 212.2 KiB gzip across all chunks.
+
+### M7 — profile cache reuse, memory budgets and hardware rooflines
+
+Added nine deterministic prefill/decode frames with equal cached and uncached outputs, exact storage calculators, hardware profiles, editable architectures and a log-log roofline. High-level throughput is a peak-rate estimate, with two BF16 activation buffers; the MoE preset uses a dense-equivalent timing estimate. Tests verify real FLOP counts, OOM thresholds, cache rescue, and custom-model URL replay. Engine-first checkpoint: 157 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 161 Vitest + 24 Playwright. Built JavaScript totals 222.6 KiB gzip across all chunks.

@@ -1,0 +1,2 @@
+.kv-custom { display: grid; gap: .5rem; border-inline-start: 2px solid var(--border-strong); padding-inline-start: 8px; }
+.kv-number input { width: 100%; min-width: 0; background: var(--bg-elevated); color: var(--text-primary); border: 1px solid var(--border-strong); border-radius: 4px; padding: .3rem .45rem; font: inherit; }

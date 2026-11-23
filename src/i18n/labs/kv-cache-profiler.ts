@@ -1,0 +1,53 @@
+import type { ExactStringTree } from '../types'
+
+const en = {
+  presets: { single:'Single-sequence decode', batch:'Long-context batch', latent:'Latent cache' },
+  model:'Model profile', hardware:'Hardware profile', custom:'Custom architecture', attention:'Attention type',
+  precision:'KV precision', context:'Context length', batch:'Batch size', mode:'Toy trace focus',
+  modes:{both:'Side by side',cached:'With KV cache',uncached:'No KV cache'},
+  params:'Parameters (billions)', layers:'Transformer layers', qHeads:'Query heads', kvHeads:'GQA KV heads',
+  headDim:'Head dimension', latent:'MLA latent dimension', rope:'MLA positional channels', weightBytes:'Weight bytes / parameter',
+  hidden:'Hidden width (0 = query heads × head dimension)',
+  cache:'KV cache (GB)', speed:'Decode speed (tok/s)', ttft:'Prefill TTFT (ms)', bound:'Decode bottleneck',
+  regimes:{memory:'Memory bandwidth',compute:'Compute'}, aggregate:'Batch total; {speed} tok/s per sequence, {latency} ms per token.',
+  ttftHint:'Concurrent prompts prefill together. Model estimate at peak roofline throughput.',
+  toyGuide:'The stepper runs a separate one-layer, eight-channel toy model. Prefill processes four prompt tokens. Each decode step reuses earlier keys and values when the cache is enabled.',
+  analyticGuide:'Full-scale estimates use decimal GB and two live BF16 hidden-state buffers during prefill. The roofline gives an ideal throughput ceiling for the selected hardware.',
+  noFit:'The modeled allocation exceeds device capacity. Timing estimates show the theoretical compute and bandwidth limits.',
+  deepseek:'DeepSeek storage uses total parameters. Its timing uses a dense-equivalent estimate across all parameters; real MoE routing activates a subset.',
+  apple:'The M4 Max budget uses its gross 128 GB unified memory capacity, shared with the operating system.',
+  missions:{
+    oom:{title:'Exceed the memory budget',description:'Select MHA and FP16 KV. Increase context length or batch size until the total exceeds device memory.',
+      insight:'Every additional token and sequence needs a key and a value for each KV head at every layer.'},
+    rescue:{title:'Reduce cache size by 75%',description:'Switch to GQA or MLA with FP8 or INT4 KV. Reduce KV storage by at least 75% against MHA FP16 at the same context and batch.',
+      insight:'KV sharing or latent compression reduces stored channels. Lower precision reduces the bytes required for each stored value.'},
+    roofline:{title:'Climb the roofline',description:'Use a batch of at least 32 and raise decode arithmetic intensity to ten times the single-sequence value. A shorter context reduces KV traffic.',
+      insight:'One batch reuses the same model weights across many sequences. Longer contexts increase cache traffic for each sequence, limiting this gain.'},
+  },
+} as const
+const zh: ExactStringTree<typeof en> = {
+  presets:{single:'单序列解码',batch:'长上下文批处理',latent:'潜在 KV 缓存'},
+  model:'模型配置', hardware:'硬件配置', custom:'自定义架构', attention:'注意力类型',
+  precision:'KV 缓存精度',context:'上下文长度',batch:'批量大小',mode:'关注的执行路径',
+  modes:{both:'并排比较',cached:'使用 KV Cache',uncached:'无 KV Cache'},
+  params:'参数量（十亿）',layers:'Transformer 层数',qHeads:'查询头数',kvHeads:'GQA 的 KV 头数',
+  headDim:'注意力头维度',latent:'MLA 潜在维度',rope:'MLA 位置通道数',weightBytes:'每个权重的字节数',
+  hidden:'隐藏宽度（0 表示查询头数 × 注意力头维度）',
+  cache:'KV 缓存（GB）',speed:'解码速度（词元/秒）',ttft:'预填充首词元时延（毫秒）',bound:'解码瓶颈',
+  regimes:{memory:'显存带宽',compute:'计算吞吐'},aggregate:'全批量合计；每个序列 {speed} 词元/秒，每词元 {latency} 毫秒。',
+  ttftHint:'各序列并行预填充。此处按理想 Roofline 吞吐量估算。',
+  toyGuide:'步进器单独运行一层、八通道的小模型。预填充先处理四个输入词元，启用缓存后，每次解码都能复用此前的键和值。',
+  analyticGuide:'实际规模估算使用十进制 GB，并假定预填充期间同时保留两个 BF16 隐藏状态缓冲区。Roofline 给出所选硬件的理想吞吐上限。',
+  noFit:'预计内存分配超过设备容量。此处时延仅反映理论计算和带宽上限。',
+  deepseek:'DeepSeek 存储量按全部参数计算。时延采用全参数稠密等效估算，实际 MoE 路由仅激活部分参数。',
+  apple:'M4 Max 的预算按 128 GB 统一内存总容量计算，其中一部分需供操作系统使用。',
+  missions:{
+    oom:{title:'超过显存预算',description:'选择 MHA 和 FP16 KV。增大上下文或批量，直到总占用超过设备容量。',
+      insight:'对每个新增的词元和序列，每一层的每个 KV 头都需要保存一组键和值。'},
+    rescue:{title:'节省至少 75% KV 缓存',description:'在相同批量和上下文下，选择 GQA 或 MLA，搭配 FP8 或 INT4，比 MHA FP16 基线至少节省 75% KV 缓存。',
+      insight:'共享 KV 或潜在压缩减少了需要保存的通道，降低精度则进一步减少每个值占用的字节。'},
+    roofline:{title:'提高解码计算强度',description:'将批量调至至少 32，使解码计算强度达到单序列的十倍。缩短上下文可以降低缓存读取量。',
+      insight:'批量中的多个序列共用模型权重。更长的上下文会增加每个序列的缓存读取量，从而限制批处理的收益。'},
+  },
+}
+export const kvCopy = {en,zh}

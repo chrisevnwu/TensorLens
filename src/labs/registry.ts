@@ -48,6 +48,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags(['Pre-Norm', '前置归一化'], 'RMSNorm', ['Residual', '残差连接'], 'SwiGLU'),
   },
   {
+    component: lazy(() => import('./kv-cache-profiler')),
     id: 'kv-cache-profiler', number: 5, chapter: 'architecture-inference', difficulty: 'intermediate',
     title: text('KV Cache & Prefill/Decode Profiler', 'KV Cache 与推理显存剖析器'),
     description: text('Compare cached decoding costs and locate the GPU bandwidth ceiling.', '对比有无缓存的解码开销，在屋顶线图上定位显存带宽瓶颈。'),
