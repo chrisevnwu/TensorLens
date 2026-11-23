@@ -1,0 +1,14 @@
+.lora-memory { padding: 12px clamp(8px,1.8vw,18px); min-width: 0; border-top: 1px solid var(--border-subtle); }
+.lora-memory h3 { margin: 0 0 5px; font-size: .92rem; }
+.lora-mem-legend { display: flex; flex-wrap: wrap; gap: 4px 10px; padding: 0; list-style: none; margin: 6px 0; }
+.lora-mem-legend li, .lora-memory details { font-size: .75rem; color: var(--text-secondary); }
+.lora-mem-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-inline-end: 4px; }
+.lora-mem-row { display: grid; grid-template-columns: minmax(56px,auto) minmax(0,1fr) minmax(72px,auto); gap: 6px; align-items: center; font: .78rem var(--font-mono); margin: 7px 0; }
+.lora-mem-track { height: 12px; display: flex; overflow: hidden; background: var(--bg-elevated); border-radius: 2px; }
+.lora-mem-track i { height: 100%; }
+.lora-mem-row output { text-align: end; }
+.lora-memory summary { cursor: pointer; }
+.lora-memory details p { margin: 4px 0; }
+.lora-memory table { width: 100%; margin: 6px 0; font-size: .72rem; }
+.lora-memory th, .lora-memory td { padding: 3px 4px; border-bottom: 1px solid var(--border-subtle); text-align: end; }
+.lora-memory th:first-child { text-align: start; }

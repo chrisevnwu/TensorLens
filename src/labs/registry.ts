@@ -83,6 +83,7 @@ export const LAB_REGISTRY: readonly LabDefinition[] = [
     tags: tags(['Temperature', '温度'], 'Top-K', ['Top-P', 'Top-P 核采样'], 'Min-P', ['Beam Search', '束搜索']),
   },
   {
+    component: lazy(() => import('./lora-svd')),
     id: 'lora-svd', number: 10, chapter: 'efficiency-alignment', difficulty: 'intermediate',
     title: text('LoRA & Low-Rank SVD Lab', 'LoRA 低秩微调与 SVD 谱分析'),
     description: text('Train low-rank adapters and compare their error to the optimal SVD bound.', '训练低秩适配器，将重构误差与 SVD 的理论最优值进行比较。'),

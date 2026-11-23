@@ -15,8 +15,8 @@
 | `M8` | Complete | trace tiled FlashAttention and SRAM traffic | 175 Vitest + 28 Playwright | Pass | `84acfbd` |
 | `M9` | Complete | simulate sparse expert routing and load balancing | 190 Vitest + 32 Playwright | Pass | `ff036ec` |
 | `M10` | Complete | inspect floating-point encodings and quantify tensor precision loss | 235 Vitest + 36 Playwright | Pass | `557f53d` |
-| `M11` | Complete | trace sampling filters and search competing token sequences | 255 Vitest + 40 Playwright | Pass | `feat(M11)` |
-| `M12` | Pending | Lab 10: LoRA & Low-Rank SVD Lab | — | — | — |
+| `M11` | Complete | trace sampling filters and search competing token sequences | 255 Vitest + 40 Playwright | Pass | `a7851a1` |
+| `M12` | Complete | fit low-rank adapters against exact SVD reconstruction bounds | 282 Vitest + 44 Playwright | Pass | `feat(M12)` |
 | `M13` | Pending | Lab 11: Autograd & Optimizers Arena | — | — | — |
 | `M14` | Pending | Lab 12: Diffusion & Flow Matching Denoising Lab | — | — | — |
 | `M15` | Pending | Final polish, 12-lab audit & open-source release pack | — | — | — |
@@ -96,3 +96,9 @@ All five gates passed. 235 Vitest + 36 Playwright. Built JavaScript totals 250.7
 Added six ordered probability stages, editable logits for 16-token contexts, seeded draws and length-normalized beam expansion with early terminal paths. The width-two trap solution has joint probability 0.33626 versus 0.108864 for greedy decoding. Independent sweeps checked 648 sampling configurations and 300 beam searches against exhaustive enumeration. Engine-first checkpoint: 252 tests passed before implementing the lab UI and translations.
 
 All five gates passed. 255 Vitest + 40 Playwright. Built JavaScript totals 262.2 KiB gzip across all chunks.
+
+### M12 — fit low-rank adapters against exact SVD reconstruction bounds
+
+Added three seeded update families, Jacobi decompositions, analytical gradients and alternating gradient descent with exact per-factor line searches. At rank 3 the intrinsic task reached MSE 5.272601327e-6 at step 100, matching the SVD floor. Reviewed 90 training configurations and separate BF16/FP32/NF4 memory estimates. The physical diagram compares W0 + (alpha/r)BA with W0 + deltaW; the residual compares only the two updates. Engine-first checkpoint: 279 tests passed before implementing the lab UI and translations.
+
+All five gates passed. 282 Vitest + 44 Playwright. Built JavaScript totals 271.2 KiB gzip across all chunks.

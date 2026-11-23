@@ -154,11 +154,11 @@
 ## Milestone 12 (`M12`): Lab 10 — LoRA & Low-Rank SVD Lab (`lora-svd`)
 **Spec**: `docs/LAB_SPECS.md` § Lab 10
 
-- [ ] Implement `src/engine/labs/lora-svd/` (Jacobi SVD target decomposition, Eckart-Young rank-$r$ floor, live analytical-gradient $B \cdot A$ adapter trainer with toggleable $B=0$ init, Full FT vs LoRA vs QLoRA LLM VRAM calculator) + Vitest invariant suite.
-- [ ] Add `src/i18n/labs/lora-svd.ts` (100% EN + ZH).
-- [ ] Build `src/labs/lora-svd/` (physical $W_0 + \frac{\alpha}{r}BA$ heatmap factorization diagram, SVD scree plot + live training loss curve vs SVD floor, 7B–70B VRAM comparison bar, Stepper, URL codec, 3 Guided Challenges).
-- [ ] Wire lazy route in `src/labs/registry.ts` and add E2E check.
-- [ ] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
+- [x] Implement `src/engine/labs/lora-svd/` (Jacobi SVD target decomposition, Eckart-Young rank-$r$ floor, live analytical-gradient $B \cdot A$ adapter trainer with toggleable $B=0$ init, Full FT vs LoRA vs QLoRA LLM VRAM calculator) + Vitest invariant suite.
+- [x] Add `src/i18n/labs/lora-svd.ts` (100% EN + ZH).
+- [x] Build `src/labs/lora-svd/` (physical $W_0 + \frac{\alpha}{r}BA$ heatmap factorization diagram, SVD scree plot + live training loss curve vs SVD floor, 7B–70B VRAM comparison bar, Stepper, URL codec, 3 Guided Challenges).
+- [x] Wire lazy route in `src/labs/registry.ts` and add E2E check.
+- [x] **Gate**: `npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e`.
 
 ---
 
